@@ -7,7 +7,7 @@
 
 **Preconditions:** The application starts and file tree view is opened.
 
-**Postconditions:** Working directory is changed based on users actions. 
+**Postconditions:** Working directory is changed based on users actions. User can procede to any other user case.
 
 **Main path:**
 1. The user opens the application.
