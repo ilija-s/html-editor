@@ -8,11 +8,11 @@
 **Postconditions:** Editor properties are changed to selected values.
 
 **Main path:**
-1. Application is running (blank doc or editing mod)
-2. User clicks on EDIT SETTING icon from Menu
+1. Application is running (blank document or editing mod)
+2. User clicks on EDIT SETTINGS icon from Menu
 3. Menu with three choices is opened.
 	3.1 Split screen view. Editor window size is changed to fit split screen mod. Go back to step 1.
-		3.2. Setting theme
+	3.2. Setting theme
 		3.2.1. Window with offered values is opened.
 		3.2.2. If one of the themes is selected, editor property is changed. Go back to step 1.
 	3.3. Setting font size.
