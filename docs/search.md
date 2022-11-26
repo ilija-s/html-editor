@@ -13,11 +13,11 @@
 1. The User clicks on a *Search* icon.
 2. The application opens a search prompt.
 3. Until the User presses the `enter` key or `escape` key:
-    3.1. The User types a word they want to search for.
+    1. The User types a word they want to search for.
 4. If the User pressed the `enter` key:
-    4.1. Application highlights all of the words that match the search.
+    1. Application highlights all of the words that match the search.
 5. Otherwise if the User pressed the `escape` key:
-    5.1. The search is canceled and the prompt is removed.
+    1. The search is canceled and the prompt is removed.
 
 **Alternative path**:
 - A1: Unexpected application exit: The search is discarded and the applications closes.
