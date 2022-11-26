@@ -13,7 +13,9 @@
 1. The user opens the application.
 2. File tree view is opened and user can see it.
 3. The user edits the content of the working tree.
+
     3.1. The user can right click inside file tree view and context menu will show. Now user can do one of the following actions:
+        
         3.1.1. Create a new file. 
             A new empty document is created in folder where right click happened 
             and it is opened in a new tab in the editor. Go back to step 3.
