@@ -9,7 +9,7 @@
 
 **Main path:**
 1. Application is running (blank document or editing mod)
-2. User clicks on EDIT SETTINGS icon from Menu
+2. User clicks on EDITOR SETTINGS icon from Menu
 3. Menu with three choices is opened.
 	3.1 Split screen view. Editor window size is changed to fit split screen mod. Go back to step 1.
 	3.2. Setting theme
