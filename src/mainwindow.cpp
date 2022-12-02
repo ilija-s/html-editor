@@ -6,11 +6,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->pbFileName->setVisible(false);
-    ui->inputFileName->setVisible(false);
-
-    connect(ui->pbFileName, &QAbstractButton::clicked, this, &MainWindow::slInputFileNameRead);
-    connect(this, &MainWindow::siInputFileNameProccesed, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
 
     // Menu bar signals
     connect(ui->actionNew_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slNewFileMenuBar);
@@ -23,19 +18,4 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::slSetInputFileNameVisible()
-{
-    ui->pbFileName->setVisible(true);
-    ui->inputFileName->setVisible(true);
-}
-
-void MainWindow::slInputFileNameRead()
-{
-    QString s = ui->inputFileName->text();
-    ui->inputFileName->setText(QString{});
-    ui->inputFileName->setVisible(false);
-    ui->pbFileName->setVisible(false);
-    emit siInputFileNameProccesed(s);
 }

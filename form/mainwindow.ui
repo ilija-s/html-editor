@@ -27,38 +27,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="inputFileName">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>140</y>
-      <width>231</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>type file name...</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pbFileName">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>140</y>
-      <width>81</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>OK</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -66,7 +34,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

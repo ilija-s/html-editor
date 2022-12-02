@@ -2,8 +2,7 @@
 #include <QFileDialog>
 
 HtmlEditor::HtmlEditor(QWidget *parent) :
-    QPlainTextEdit(parent),
-    file_name(QString{})
+    QPlainTextEdit(parent)
 {
 
 }
