@@ -20,9 +20,10 @@ private:
     QFile html_file;
     QString file_name;
     void SaveFile();
+    void OpenFile();
 
 public slots:
-    void slOpenFileMenuBar(const QString& file_name);
+    void slOpenFileMenuBar();
     void slSaveFileMenuBar();
 
 protected:

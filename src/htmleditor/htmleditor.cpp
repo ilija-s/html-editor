@@ -1,4 +1,5 @@
 #include "htmleditor.h"
+#include <QFileDialog>
 
 HtmlEditor::HtmlEditor(QWidget *parent) :
     QPlainTextEdit(parent),
@@ -34,7 +35,35 @@ void HtmlEditor::SaveFile(){
     this->html_file.close();
 }
 
+void HtmlEditor::OpenFile() {
 
+    QFileDialog dialog(this);
+    dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
+    dialog.setFileMode(QFileDialog::FileMode::ExistingFile);
+    dialog.setMimeTypeFilters({"text/html"});
+
+    if(dialog.exec()) {
+
+        QString file_name = dialog.selectedFiles()[0];
+
+        this->html_file.setFileName(file_name);
+        this->html_file.open(QIODevice::ReadOnly);
+
+        QTextStream in(&this->html_file);
+        QString file_content;
+
+        file_content = in.readAll();
+
+        this->setPlainText(file_content);
+
+        /*
+         * TODO:
+         * Set cursor to point behind the last character.
+        */
+
+        this->html_file.close();
+    }
+}
 
 /*
  * TODO:
@@ -42,28 +71,9 @@ void HtmlEditor::SaveFile(){
  * Add HtmlEditor::slSaveAsMenuBar()
 */
 
-
-void HtmlEditor::slOpenFileMenuBar(const QString& name)
+void HtmlEditor::slOpenFileMenuBar()
 {
-    this->html_file.setFileName(name);
-    this->html_file.open(QIODevice::ReadOnly);
-    this->file_name = name;
-
-    QTextStream in(&this->html_file);
-    QString file_content;
-    QString line;
-    while(in.readLineInto(&line)){
-        file_content.push_back(line);
-    }
-    this->setPlainText(file_content);
-
-    /*
-     * TODO:
-     * Set cursor to point behind the last character.
-    */
-
-    this->html_file.close();
-
+    this->OpenFile();
 }
 
 void HtmlEditor::slSaveFileMenuBar()

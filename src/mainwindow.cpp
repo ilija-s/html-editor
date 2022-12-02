@@ -9,11 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pbFileName->setVisible(false);
     ui->inputFileName->setVisible(false);
 
-    connect(ui->actionSave_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveFileMenuBar);
-    connect(ui->actionOpen_file, &QAction::triggered, this, &MainWindow::slSetInputFileNameVisible);
     connect(ui->pbFileName, &QAbstractButton::clicked, this, &MainWindow::slInputFileNameRead);
     connect(this, &MainWindow::siInputFileNameProccesed, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
 
+    // Menu bar signals
+    connect(ui->actionOpen_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
+    connect(ui->actionSave_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveFileMenuBar);
 
 }
 
