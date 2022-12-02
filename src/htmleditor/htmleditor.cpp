@@ -17,6 +17,12 @@ HtmlEditor::~HtmlEditor()
 {
 }
 
+void HtmlEditor::NewFile() {
+
+    this->html_file.setFileName(QString{});
+    this->setPlainText(QString{});
+}
+
 void HtmlEditor::SaveFile(){
 
     if (this->html_file.exists()) {
@@ -93,6 +99,10 @@ void HtmlEditor::OpenFile() {
  * Add HtmlEditor::slNewFileMenuBar()
  * Add HtmlEditor::slSaveAsMenuBar()
 */
+
+void HtmlEditor::slNewFileMenuBar() {
+    this->NewFile();
+}
 
 void HtmlEditor::slOpenFileMenuBar()
 {
