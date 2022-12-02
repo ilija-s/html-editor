@@ -20,11 +20,13 @@ private:
     QFile html_file;
     QString file_name;
     void SaveFile();
+    void SaveAsFile();
     void OpenFile();
 
 public slots:
     void slOpenFileMenuBar();
     void slSaveFileMenuBar();
+    void slSaveAsFileMenuBar();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
