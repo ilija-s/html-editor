@@ -29,7 +29,7 @@
    </widget>
    <widget class="QLineEdit" name="inputFileName">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -45,7 +45,7 @@
    </widget>
    <widget class="QPushButton" name="pbFileName">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>

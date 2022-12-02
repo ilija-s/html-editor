@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QFile>
 #include <iostream>
+#include <QTextStream>
 
 class HtmlEditor : public QPlainTextEdit
 {
@@ -17,11 +18,11 @@ public:
 
 private:
     QFile html_file;
+    QString file_name;
     void SaveFile();
 
 public slots:
-    void slSaveFileMenuBar();
-    void slOpenFileMenuBar();
+    void slOpenFileMenuBar(const QString& file_name);
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;

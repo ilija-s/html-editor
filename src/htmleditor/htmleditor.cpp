@@ -1,7 +1,8 @@
 #include "htmleditor.h"
 
 HtmlEditor::HtmlEditor(QWidget *parent) :
-    QPlainTextEdit(parent)
+    QPlainTextEdit(parent),
+    file_name(QString{})
 {
 
 }
@@ -20,7 +21,10 @@ void HtmlEditor::SaveFile(){
      * TODO:
      * store file name as private field which will be set on first save (a.k.a save as)
     */
-    this->html_file.setFileName("Untitled.html");
+    if(this->file_name.length() == 0){
+        this->file_name = "Untitled.html";
+    }
+    this->html_file.setFileName(this->file_name);
     this->html_file.open(QIODevice::ReadWrite | QIODevice::Truncate);
 
     QString content = this->toPlainText();
@@ -36,20 +40,12 @@ void HtmlEditor::SaveFile(){
  * Add HtmlEditor::slSaveAsMenuBar()
 */
 
-void HtmlEditor::slSaveFileMenuBar()
-{
-    this->SaveFile();
-}
 
-void HtmlEditor::slOpenFileMenuBar()
+void HtmlEditor::slOpenFileMenuBar(const QString& name)
 {
-    /*
-     * TODO:
-     * get file name from MainWindow::siInputFileNameProcessed
-     * instead of hard coding
-    */
-    this->html_file.setFileName("Untitled.html");
+    this->html_file.setFileName(name);
     this->html_file.open(QIODevice::ReadOnly);
+    this->file_name = name;
 
     QTextStream in(&this->html_file);
     QString file_content;
@@ -73,6 +69,7 @@ void HtmlEditor::keyPressEvent(QKeyEvent *event)
     if((event->modifiers() & Qt::ControlModifier) && (event->key() == Qt::Key_S)){
         //TODO: Handle "save" and "save as" separately
         this->SaveFile();
+
     }else{
         QPlainTextEdit::keyPressEvent(event);
     }
