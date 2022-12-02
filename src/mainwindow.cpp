@@ -13,6 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveFileMenuBar);
     connect(ui->actionSave_file_as, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveAsFileMenuBar);
 
+    // Menu bar shortcuts
+    ui->actionNew_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
+    ui->actionOpen_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_O));
+    ui->actionSave_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
+    ui->actionSave_file_as->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_S));
 }
 
 MainWindow::~MainWindow()

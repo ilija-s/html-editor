@@ -93,12 +93,6 @@ void HtmlEditor::OpenFile() {
     }
 }
 
-/*
- * TODO:
- * Add HtmlEditor::slNewFileMenuBar()
- * Add HtmlEditor::slSaveAsMenuBar()
-*/
-
 void HtmlEditor::slNewFileMenuBar() {
     this->NewFile();
 }
@@ -116,15 +110,4 @@ void HtmlEditor::slSaveFileMenuBar()
 void HtmlEditor::slSaveAsFileMenuBar()
 {
     this->SaveAsFile();
-}
-
-void HtmlEditor::keyPressEvent(QKeyEvent *event)
-{
-    if((event->modifiers() & Qt::ControlModifier) && (event->key() == Qt::Key_S)){
-        //TODO: Handle "save" and "save as" separately
-        this->SaveFile();
-
-    }else{
-        QPlainTextEdit::keyPressEvent(event);
-    }
 }

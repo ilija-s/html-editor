@@ -30,9 +30,6 @@ public slots:
     void slSaveFileMenuBar();
     void slSaveAsFileMenuBar();
 
-protected:
-    void keyPressEvent(QKeyEvent* event) override;
-
 };
 
 #endif // HTMLEDITOR_H
