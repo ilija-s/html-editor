@@ -34,6 +34,8 @@ void HtmlEditor::SaveFile(){
     this->html_file.close();
 }
 
+
+
 /*
  * TODO:
  * Add HtmlEditor::slNewFileMenuBar()
@@ -62,6 +64,11 @@ void HtmlEditor::slOpenFileMenuBar(const QString& name)
 
     this->html_file.close();
 
+}
+
+void HtmlEditor::slSaveFileMenuBar()
+{
+    this->SaveFile();
 }
 
 void HtmlEditor::keyPressEvent(QKeyEvent *event)

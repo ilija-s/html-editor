@@ -23,6 +23,7 @@ private:
 
 public slots:
     void slOpenFileMenuBar(const QString& file_name);
+    void slSaveFileMenuBar();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
