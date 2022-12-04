@@ -16,6 +16,11 @@ HtmlEditor::~HtmlEditor()
 {
 }
 
+void HtmlEditor::setSize(int s)
+{
+    this->size = s;
+}
+
 void HtmlEditor::SaveFile(){
     /*
      * TODO:
@@ -80,4 +85,12 @@ void HtmlEditor::keyPressEvent(QKeyEvent *event)
     }else{
         QPlainTextEdit::keyPressEvent(event);
     }
+}
+
+void HtmlEditor::fontSizeChange()
+{
+     QFont font = QFont();
+     font.setPointSize(size);
+     this->setFont(font);
+
 }

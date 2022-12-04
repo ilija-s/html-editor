@@ -16,10 +16,14 @@ public:
     HtmlEditor();
     ~HtmlEditor();
 
+    void setSize(int s);
+    void fontSizeChange();
+
 private:
     QFile html_file;
     QString file_name;
     void SaveFile();
+    int size = 10;
 
 public slots:
     void slOpenFileMenuBar(const QString& file_name);

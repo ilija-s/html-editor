@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbFileName, &QAbstractButton::clicked, this, &MainWindow::slInputFileNameRead);
     connect(this, &MainWindow::siInputFileNameProccesed, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
     connect(ui->actionFont_size, &QAction::triggered, this, &MainWindow::slFontSizeEnter);
-    connect(ui->pbfontSize,  &QAbstractButton::clicked, this, &MainWindow::slFontSizeChange);
+    connect(ui->pbfontSize, &QAbstractButton::clicked, this, &MainWindow::slFontSizeChange);
 
 }
 
@@ -39,26 +39,26 @@ void MainWindow::slInputFileNameRead()
     emit siInputFileNameProccesed(s);
 }
 
-void MainWindow::slFontSizeEnter(){
-    ui->fontSize->setVisible(true);
+void MainWindow::slFontSizeEnter()
+{
+     ui->fontSize->setVisible(true);
+     ui->lnotEntered->setVisible(false);
 }
 
-void MainWindow::slFontSizeChange(){
+void MainWindow::slFontSizeChange()
+{
+    bool flag;
+    int tmp = ui->lEfontSize->text().trimmed().toInt(&flag);
+    ui->lEfontSize->clear();
 
-     bool flag;
-     this->size = ui->lEfontSize->text().trimmed().toInt(&flag);
+    if(!flag || tmp <= 0){
+       ui->lnotEntered->setVisible(true);
+       return;
+    }
 
-     if(!flag){
-         ui->lEfontSize->setText("Nije proslo dobro");
-         return;
-     }
-
-     ui->fontSize->setVisible(false);
-
-     //QTextCursor cursor = ui->htmlEditor->textCursor();
-     //ui->htmlEditor->selectAll();
-     QFont font = QFont();
-     font.setPointSize(size);
-     ui->htmlEditor->setFont(font);
-
+    ui->htmlEditor->setSize(tmp);
+    ui->fontSize->setVisible(false);
+    ui->htmlEditor->fontSizeChange();
 }
+
+
