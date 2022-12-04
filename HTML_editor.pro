@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += uitools
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,15 +11,19 @@ CONFIG += c++17
 
 SOURCES += \
     src/htmleditor/htmleditor.cpp \
+    src/search/editorsearch.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
     src/htmleditor/htmleditor.h \
+    src/search/editorsearch.h \
     src/mainwindow.h
 
 FORMS += \
     form/mainwindow.ui
+
+RESOURCES = form/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
