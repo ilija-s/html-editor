@@ -19,14 +19,16 @@ public:
 private:
     QFile html_file;
     QString file_name;
+    void NewFile();
     void SaveFile();
+    void SaveAsFile();
+    void OpenFile();
 
 public slots:
-    void slOpenFileMenuBar(const QString& file_name);
+    void slNewFileMenuBar();
+    void slOpenFileMenuBar();
     void slSaveFileMenuBar();
-
-protected:
-    void keyPressEvent(QKeyEvent* event) override;
+    void slSaveAsFileMenuBar();
 
 };
 

@@ -1,8 +1,8 @@
 #include "htmleditor.h"
+#include <QFileDialog>
 
 HtmlEditor::HtmlEditor(QWidget *parent) :
-    QPlainTextEdit(parent),
-    file_name(QString{})
+    QPlainTextEdit(parent)
 {
 
 }
@@ -16,54 +16,90 @@ HtmlEditor::~HtmlEditor()
 {
 }
 
-void HtmlEditor::SaveFile(){
-    /*
-     * TODO:
-     * store file name as private field which will be set on first save (a.k.a save as)
-    */
-    if(this->file_name.length() == 0){
-        this->file_name = "Untitled.html";
-    }
-    this->html_file.setFileName(this->file_name);
-    this->html_file.open(QIODevice::ReadWrite | QIODevice::Truncate);
+void HtmlEditor::NewFile() {
 
-    QString content = this->toPlainText();
-    QTextStream out(&this->html_file);
-    out << content;
-
-    this->html_file.close();
+    this->html_file.setFileName(QString{});
+    this->setPlainText(QString{});
 }
 
+void HtmlEditor::SaveFile(){
 
+    if (this->html_file.exists()) {
 
-/*
- * TODO:
- * Add HtmlEditor::slNewFileMenuBar()
- * Add HtmlEditor::slSaveAsMenuBar()
-*/
+        this->html_file.open(QIODevice::WriteOnly);
 
+        QString content = this->toPlainText();
+        QTextStream out(&this->html_file);
 
-void HtmlEditor::slOpenFileMenuBar(const QString& name)
-{
-    this->html_file.setFileName(name);
-    this->html_file.open(QIODevice::ReadOnly);
-    this->file_name = name;
+        out << content;
 
-    QTextStream in(&this->html_file);
-    QString file_content;
-    QString line;
-    while(in.readLineInto(&line)){
-        file_content.push_back(line);
+        this->html_file.close();
     }
-    this->setPlainText(file_content);
+    else {
+        this->SaveAsFile();
+    }
 
-    /*
-     * TODO:
-     * Set cursor to point behind the last character.
-    */
+}
 
-    this->html_file.close();
+void HtmlEditor::SaveAsFile() {
 
+    QFileDialog dialog(this);
+    dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptSave);
+    dialog.setMimeTypeFilters({"text/html"});
+
+    if(dialog.exec()) {
+
+        this->html_file.setFileName(dialog.selectedFiles()[0]);
+
+        this->html_file.open(QIODevice::WriteOnly);
+
+        QString content = this->toPlainText();
+        QTextStream out(&this->html_file);
+
+        out << content;
+
+        this->html_file.close();
+    }
+
+}
+
+void HtmlEditor::OpenFile() {
+
+    QFileDialog dialog(this);
+    dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
+    dialog.setFileMode(QFileDialog::FileMode::ExistingFile);
+    dialog.setMimeTypeFilters({"text/html"});
+
+    if(dialog.exec()) {
+
+        QString file_name = dialog.selectedFiles()[0];
+
+        this->html_file.setFileName(file_name);
+        this->html_file.open(QIODevice::ReadOnly);
+
+        QTextStream in(&this->html_file);
+        QString file_content;
+
+        file_content = in.readAll();
+
+        this->setPlainText(file_content);
+
+        /*
+         * TODO:
+         * Set cursor to point behind the last character.
+        */
+
+        this->html_file.close();
+    }
+}
+
+void HtmlEditor::slNewFileMenuBar() {
+    this->NewFile();
+}
+
+void HtmlEditor::slOpenFileMenuBar()
+{
+    this->OpenFile();
 }
 
 void HtmlEditor::slSaveFileMenuBar()
@@ -71,13 +107,7 @@ void HtmlEditor::slSaveFileMenuBar()
     this->SaveFile();
 }
 
-void HtmlEditor::keyPressEvent(QKeyEvent *event)
+void HtmlEditor::slSaveAsFileMenuBar()
 {
-    if((event->modifiers() & Qt::ControlModifier) && (event->key() == Qt::Key_S)){
-        //TODO: Handle "save" and "save as" separately
-        this->SaveFile();
-
-    }else{
-        QPlainTextEdit::keyPressEvent(event);
-    }
+    this->SaveAsFile();
 }

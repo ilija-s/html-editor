@@ -15,13 +15,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void slSetInputFileNameVisible();
-    void slInputFileNameRead();
-
-signals:
-    void siInputFileNameProccesed(const QString& s);
-
 private:
     Ui::MainWindow *ui;
 
