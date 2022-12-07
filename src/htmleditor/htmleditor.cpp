@@ -133,9 +133,9 @@ void HtmlEditor::slNumberBarPaintEvent(QPaintEvent *event)
     while (block.isValid() && top <= event->rect().bottom()) {
         if (block.isVisible() && bottom >= event->rect().top()) {
             QString number = QString::number(blockNumber + 1);
-            painter.setPen(Qt::black);
+            painter.setPen(Qt::lightGray);
             painter.drawText(0, top, number_bar->width, fontMetrics().height(),
-                             Qt::AlignRight, number);
+                             Qt::AlignCenter, number);
         }
 
         block = block.next();
@@ -154,7 +154,7 @@ int HtmlEditor::NumberBarWidth()
         ++digits;
     }
 
-    int space = 3 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
+    int space = 9 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
 
     return space;
 }
