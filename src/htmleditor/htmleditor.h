@@ -8,6 +8,7 @@
 #include <iostream>
 #include <QTextStream>
 #include "src/numbersidebar/numbersidebar.h"
+#include "src/htmlsyntaxhighlighter.h"
 
 class HtmlEditor : public QPlainTextEdit
 {
@@ -21,6 +22,7 @@ private:
     QFile html_file;
     QString file_name;
     NumberSideBar* number_bar;
+    HtmlSyntaxHighlighter* highlighter;
     void NewFile();
     void SaveFile();
     void SaveAsFile();

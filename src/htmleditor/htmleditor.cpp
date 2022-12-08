@@ -3,18 +3,20 @@
 #include <string>
 #include <QPainter>
 #include <QTextBlock>
+#include "src/htmlsyntaxhighlighter.h"
+
 HtmlEditor::HtmlEditor(QWidget *parent) :
     QPlainTextEdit(parent)
 {
     connect(this, &HtmlEditor::blockCountChanged, this, &HtmlEditor::UpdateNumberBarWidth);
     connect(this, &HtmlEditor::updateRequest, this, &HtmlEditor::UpdateNumberBar);
 
-
+    highlighter = new HtmlSyntaxHighlighter(document());
 }
 
 HtmlEditor::~HtmlEditor()
 {
-
+    delete highlighter;
 }
 
 void HtmlEditor::SetNumberSideBar(NumberSideBar *sb)
