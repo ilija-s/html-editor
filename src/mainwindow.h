@@ -17,12 +17,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void slSetInputFileNameVisible();
-    void slInputFileNameRead();
     void searchForText();
 
 signals:
-    void siInputFileNameProccesed(const QString& s);
     void searchButtonClicked(const QString& searchString, QTextDocument *document);
 
 private:
