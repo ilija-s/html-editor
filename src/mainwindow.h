@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "search/editorsearch.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,13 +19,15 @@ public:
 private slots:
     void slSetInputFileNameVisible();
     void slInputFileNameRead();
+    void searchForText();
 
 signals:
     void siInputFileNameProccesed(const QString& s);
+    void searchButtonClicked(const QString& searchString, QTextDocument *document);
 
 private:
     Ui::MainWindow *ui;
-
+    EditorSearch *_editorSearch;
 
 };
 #endif // MAINWINDOW_H

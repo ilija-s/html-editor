@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , _editorSearch(new EditorSearch(this))
 {
     ui->setupUi(this);
     ui->pbFileName->setVisible(false);
@@ -13,13 +15,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOpen_file, &QAction::triggered, this, &MainWindow::slSetInputFileNameVisible);
     connect(ui->pbFileName, &QAbstractButton::clicked, this, &MainWindow::slInputFileNameRead);
     connect(this, &MainWindow::siInputFileNameProccesed, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
-
+    connect(this, &MainWindow::searchButtonClicked, _editorSearch, &EditorSearch::onSearchButtonClicked);
+    connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete _editorSearch;
 }
 
 void MainWindow::slSetInputFileNameVisible()
@@ -36,3 +40,11 @@ void MainWindow::slInputFileNameRead()
     ui->pbFileName->setVisible(false);
     emit siInputFileNameProccesed(s);
 }
+
+void MainWindow::searchForText()
+{
+    QString searchString = ui->leSearchInput->text();
+
+    emit searchButtonClicked(searchString, ui->htmlEditor->document());
+}
+
