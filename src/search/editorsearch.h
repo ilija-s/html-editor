@@ -2,14 +2,7 @@
 #define EDITORSEARCH_H
 
 #include <QWidget>
-
-#include <src/htmleditor/htmleditor.h>
-
-QT_BEGIN_NAMESPACE
-class QLineEdit;
-class QPushButton;
-class QPlainTextEdit;
-QT_END_NAMESPACE
+#include <QTextDocument>
 
 class EditorSearch : public QWidget
 {
@@ -19,12 +12,9 @@ public:
     EditorSearch(QWidget *parent = nullptr);
 
 public slots:
-    void on_pbFind_clicked();
+    void onSearchButtonClicked(const QString& searchString, QTextDocument *document);
 
 private:
-    QPushButton *findButton;
-    HtmlEditor *text;
-    QLineEdit *lineEdit;
 };
 
 #endif // EDITORSEARCH_H
