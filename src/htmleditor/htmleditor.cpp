@@ -16,11 +16,6 @@ HtmlEditor::~HtmlEditor()
 {
 }
 
-void HtmlEditor::setSize(int s)
-{
-    this->size = s;
-}
-
 void HtmlEditor::SaveFile(){
     /*
      * TODO:
@@ -87,8 +82,10 @@ void HtmlEditor::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void HtmlEditor::fontSizeChange()
+void HtmlEditor::fontSizeChange(int mainSize)
 {
+     this->size = mainSize;
+
      QFont font = QFont();
      font.setPointSize(size);
      this->setFont(font);

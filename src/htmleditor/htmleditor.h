@@ -16,8 +16,7 @@ public:
     HtmlEditor();
     ~HtmlEditor();
 
-    void setSize(int s);
-    void fontSizeChange();
+    void fontSizeChange(int mainSize);
 
 private:
     QFile html_file;

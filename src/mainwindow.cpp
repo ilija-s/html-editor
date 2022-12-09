@@ -56,9 +56,8 @@ void MainWindow::slFontSizeChange()
        return;
     }
 
-    ui->htmlEditor->setSize(tmp);
     ui->fontSize->setVisible(false);
-    ui->htmlEditor->fontSizeChange();
+    ui->htmlEditor->fontSizeChange(tmp);
 }
 
 
