@@ -14,6 +14,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave_file_as, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveAsFileMenuBar);
     connect(ui->numberSideBar, &NumberSideBar::siPaintEvent, ui->htmlEditor, &HtmlEditor::slNumberBarPaintEvent);
 
+    ui->fontSize->setVisible(false);
+    // Editor settings signals
+    connect(ui->actionFont_size, &QAction::triggered, this, &MainWindow::slFontSizeEnter);
+    connect(ui->pbfontSize, &QAbstractButton::clicked, this, &MainWindow::slFontSizeChange);
+
+
     // Menu bar shortcuts
     ui->actionNew_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
     ui->actionOpen_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_O));
@@ -25,3 +31,27 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::slFontSizeEnter()
+{
+     ui->fontSize->setVisible(true);
+     ui->lnotEntered->setVisible(false);
+}
+
+void MainWindow::slFontSizeChange()
+{
+    bool flag;
+    int tmp = ui->lEfontSize->text().trimmed().toInt(&flag);
+    ui->lEfontSize->clear();
+
+    if(!flag || tmp <= 0){
+       ui->lnotEntered->setVisible(true);
+       return;
+    }
+
+    ui->fontSize->setVisible(false);
+    ui->htmlEditor->fontSizeChange(tmp);
+}
+
+
+

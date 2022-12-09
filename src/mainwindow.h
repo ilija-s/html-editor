@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtGui>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,9 +16,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void slFontSizeEnter();
+    void slFontSizeChange();
+
 private:
     Ui::MainWindow *ui;
-
 
 };
 #endif // MAINWINDOW_H

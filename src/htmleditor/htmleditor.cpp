@@ -184,3 +184,13 @@ void HtmlEditor::resizeEvent(QResizeEvent *e)
     number_bar->width = NumberBarWidth();
     number_bar->setGeometry(QRect(cr.left(), cr.top(), number_bar->width, cr.height()));
 }
+
+void HtmlEditor::fontSizeChange(int mainSize)
+{
+     this->size = mainSize;
+
+     QFont font = QFont();
+     font.setPointSize(size);
+     this->setFont(font);
+
+}
