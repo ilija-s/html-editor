@@ -18,6 +18,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::searchButtonClicked, _editorSearch, &EditorSearch::onSearchButtonClicked);
     connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
 
+    ui->fontSize->setVisible(false);
+    // Editor settings signals
+    connect(ui->actionFont_size, &QAction::triggered, this, &MainWindow::slFontSizeEnter);
+    connect(ui->pbfontSize, &QAbstractButton::clicked, this, &MainWindow::slFontSizeChange);
+
+
     // Menu bar shortcuts
     ui->actionNew_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
     ui->actionOpen_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_O));
@@ -37,3 +43,27 @@ void MainWindow::searchForText()
 
     emit searchButtonClicked(searchString, ui->htmlEditor->document());
 }
+
+void MainWindow::slFontSizeEnter()
+{
+     ui->fontSize->setVisible(true);
+     ui->lnotEntered->setVisible(false);
+}
+
+void MainWindow::slFontSizeChange()
+{
+    bool flag;
+    int tmp = ui->lEfontSize->text().trimmed().toInt(&flag);
+    ui->lEfontSize->clear();
+
+    if(!flag || tmp <= 0){
+       ui->lnotEntered->setVisible(true);
+       return;
+    }
+
+    ui->fontSize->setVisible(false);
+    ui->htmlEditor->fontSizeChange(tmp);
+}
+
+
+

@@ -17,6 +17,8 @@ public:
     ~HtmlEditor();
     void SetNumberSideBar(NumberSideBar* sb);
 
+    void fontSizeChange(int mainSize);
+
 private:
     QFile html_file;
     QString file_name;
@@ -28,6 +30,8 @@ private:
     int NumberBarWidth();
     void UpdateNumberBarWidth();
     void UpdateNumberBar(const QRect &rect, int dy);
+
+    int size = 10;
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

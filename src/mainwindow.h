@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "search/editorsearch.h"
+#include <QtGui>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +26,8 @@ signals:
 private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
+    void slFontSizeEnter();
+    void slFontSizeChange();
 
 };
 #endif // MAINWINDOW_H
