@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , _editorSearch(new EditorSearch(this))
 {
     ui->setupUi(this);
     ui->htmlEditor->SetNumberSideBar(ui->numberSideBar);
@@ -13,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveFileMenuBar);
     connect(ui->actionSave_file_as, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveAsFileMenuBar);
     connect(ui->numberSideBar, &NumberSideBar::siPaintEvent, ui->htmlEditor, &HtmlEditor::slNumberBarPaintEvent);
+    connect(this, &MainWindow::searchButtonClicked, _editorSearch, &EditorSearch::onSearchButtonClicked);
+    connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
 
     ui->fontSize->setVisible(false);
     // Editor settings signals
@@ -30,6 +34,14 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete _editorSearch;
+}
+
+void MainWindow::searchForText()
+{
+    QString searchString = ui->leSearchInput->text();
+
+    emit searchButtonClicked(searchString, ui->htmlEditor->document());
 }
 
 void MainWindow::slFontSizeEnter()

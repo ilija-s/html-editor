@@ -14,5 +14,5 @@ QSize NumberSideBar::sizeHint() const
 
 void NumberSideBar::paintEvent(QPaintEvent *event)
 {
-    emit(siPaintEvent(event));
+    emit siPaintEvent(event);
 }
