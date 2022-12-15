@@ -6,9 +6,15 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , _editorSearch(new EditorSearch(this))
+    , _htmlParser(new HTMLParser())
 {
     ui->setupUi(this);
     ui->htmlEditor->SetNumberSideBar(ui->numberSideBar);
+
+    // Shortcuts
+    auto showOrHideFindInProjectShortcut = new QShortcut(QKeySequence(tr("Ctrl+F", "Find in project")), this);
+    auto showOrHideMessagesShortcut = new QShortcut(QKeySequence(tr("Ctrl+M", "Open messages")), this);
+
     // Menu bar signals
     connect(ui->actionNew_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slNewFileMenuBar);
     connect(ui->actionOpen_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
@@ -17,12 +23,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->numberSideBar, &NumberSideBar::siPaintEvent, ui->htmlEditor, &HtmlEditor::slNumberBarPaintEvent);
     connect(this, &MainWindow::searchButtonClicked, _editorSearch, &EditorSearch::onSearchButtonClicked);
     connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
+    connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
+    connect(showOrHideMessagesShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideMessagesTab);
+
+    _htmlParser->loadJsonData();
 
     ui->fontSize->setVisible(false);
     // Editor settings signals
     connect(ui->actionFont_size, &QAction::triggered, this, &MainWindow::slFontSizeEnter);
     connect(ui->pbfontSize, &QAbstractButton::clicked, this, &MainWindow::slFontSizeChange);
-
 
     // Menu bar shortcuts
     ui->actionNew_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
@@ -65,5 +74,25 @@ void MainWindow::slFontSizeChange()
     ui->htmlEditor->fontSizeChange(tmp);
 }
 
+void MainWindow::toggleShowOrHideFindInProjectTab()
+{
+    m_isBottomTabWidgetVisible = !m_isBottomTabWidgetVisible;
+    if (m_isBottomTabWidgetVisible) {
+        ui->tabWidget->setVisible(true);
+        ui->searchTab->setFocus();
+    } else {
+        ui->tabWidget->setVisible(false);
+    }
+}
 
+void MainWindow::toggleShowOrHideMessagesTab()
+{
+    m_isBottomTabWidgetVisible = !m_isBottomTabWidgetVisible;
+    if (m_isBottomTabWidgetVisible) {
+        ui->tabWidget->setVisible(true);
+        ui->messageTab->setFocus();
+    } else {
+        ui->tabWidget->setVisible(false);
+    }
+}
 
