@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <layout class="QVBoxLayout" name="leftWindow"/>
     </item>
@@ -85,42 +85,56 @@
          <widget class="NumberSideBar" name="numberSideBar" native="true"/>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Ln 1, Col 10 |</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Tab Size: 2 |</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="encoding">
-            <property name="text">
-             <string>Encoding: UTF-8</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="usesScrollButtons">
+           <bool>false</bool>
+          </property>
+          <property name="tabsClosable">
+           <bool>false</bool>
+          </property>
+          <property name="movable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="searchTab">
+           <attribute name="title">
+            <string>Find in project</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QLineEdit" name="leFindInProjectSearchQuery"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbFindInProject">
+              <property name="text">
+               <string>Find in project</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="lwLinesFound"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="messageTab">
+           <attribute name="title">
+            <string>Messages</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QListWidget" name="lwEditorMessages"/>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </item>
        </layout>
       </item>
@@ -130,10 +144,10 @@
    <widget class="QWidget" name="fontSize" native="true">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>49</y>
-      <width>201</width>
-      <height>81</height>
+      <x>9</x>
+      <y>709</y>
+      <width>1205</width>
+      <height>10</height>
      </rect>
     </property>
     <widget class="QLabel" name="lfontSize">
