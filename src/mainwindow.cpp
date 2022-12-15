@@ -19,9 +19,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
 
     ui->fontSize->setVisible(false);
+    connect(ui->actionSettings_2, &QAction::triggered, this, &MainWindow::esDialogOpen);
+    //connect(esDialog->this, &MainWindow::slSettingsSelected);
     // Editor settings signals
-    connect(ui->actionFont_size, &QAction::triggered, this, &MainWindow::slFontSizeEnter);
-    connect(ui->pbfontSize, &QAbstractButton::clicked, this, &MainWindow::slFontSizeChange);
+    //connect(ui->actionFont_size, &QAction::triggered, this, &MainWindow::slFontSizeEnter);
+    //connect(ui->pbfontSize, &QAbstractButton::clicked, this, &MainWindow::slFontSizeChange);
 
 
     // Menu bar shortcuts
@@ -44,7 +46,7 @@ void MainWindow::searchForText()
     emit searchButtonClicked(searchString, ui->htmlEditor->document());
 }
 
-void MainWindow::slFontSizeEnter()
+/*void MainWindow::slFontSizeEnter()
 {
      ui->fontSize->setVisible(true);
      ui->lnotEntered->setVisible(false);
@@ -64,6 +66,15 @@ void MainWindow::slFontSizeChange()
     ui->fontSize->setVisible(false);
     ui->htmlEditor->fontSizeChange(tmp);
 }
+*/
+
+void MainWindow::esDialogOpen(){
+    esDialog = new editor_settings(this);
+    esDialog->show();
+}
 
 
+//void MainWindow::slSettingsSelected(){
+//    this->close();
+//}
 

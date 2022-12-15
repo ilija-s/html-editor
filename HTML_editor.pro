@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    editor_settings.cpp \
     src/htmleditor/htmleditor.cpp \
     src/search/editorsearch.cpp \
     src/main.cpp \
@@ -16,12 +17,14 @@ SOURCES += \
     src/mainwindow.cpp
 
 HEADERS += \
+    editor_settings.h \
     src/htmleditor/htmleditor.h \
     src/search/editorsearch.h \
     src/numbersidebar/numbersidebar.h \
     src/mainwindow.h
 
 FORMS += \
+    editor_settings.ui \
     form/mainwindow.ui
 
 RESOURCES = form/mainwindow.ui

@@ -80,13 +80,13 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>30</y>
+      <y>40</y>
       <width>1850</width>
       <height>950</height>
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -156,6 +156,8 @@
      </rect>
     </property>
    </widget>
+   <zorder>layoutWidget</zorder>
+   <zorder>numberSideBar</zorder>
    <zorder>htmlEditor</zorder>
    <zorder>fontSize</zorder>
   </widget>
@@ -172,20 +174,12 @@
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuSettings">
-     <property name="title">
-      <string>Settings</string>
-     </property>
-     <addaction name="actionSplit_screen_view"/>
-     <addaction name="actionTheme"/>
-     <addaction name="actionFont_size"/>
-    </widget>
     <addaction name="actionNew_file"/>
     <addaction name="actionOpen_file"/>
     <addaction name="actionSave_file"/>
     <addaction name="actionSave_file_as"/>
     <addaction name="separator"/>
-    <addaction name="menuSettings"/>
+    <addaction name="actionSettings_2"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -223,6 +217,11 @@
   <action name="actionFont_size">
    <property name="text">
     <string>Font size</string>
+   </property>
+  </action>
+  <action name="actionSettings_2">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>
