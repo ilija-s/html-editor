@@ -11,7 +11,7 @@ public:
     QSize sizeHint() const override;
 
     int width;
-
+    int unit_width;
 signals:
     void siPaintEvent(QPaintEvent* event);
 

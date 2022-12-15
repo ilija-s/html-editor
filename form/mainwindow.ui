@@ -79,11 +79,17 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>16</x>
       <y>30</y>
-      <width>1850</width>
+      <width>1834</width>
       <height>950</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
     </property>
    </widget>
    <widget class="QWidget" name="">
