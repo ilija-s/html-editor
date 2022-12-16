@@ -77,10 +77,28 @@ void MainWindow::slFontSizeChange()
 
 void MainWindow::parseHtmlFileAndDisplayMessages()
 {
-    HTMLParser* htmlParser = new HTMLParser();
-    htmlParser->loadJsonData(ui->htmlEditor->document()->toPlainText().toStdString());
+    // In the future this should underscore words that have errors, also this
+    // method should work async
 
-    return;
+    // Clear all previous items
+    ui->lwEditorMessages->clear();
+
+    std::unique_ptr<HTMLParser> htmlParser = std::make_unique<HTMLParser>();
+    htmlParser.get()->loadJsonData(ui->htmlEditor->document()->toPlainText().toStdString());
+
+    // Add items to QListWidget
+    QList<QVariant> listOfMessages = htmlParser.get()->getMessages().toList();
+    QList<QString> list;
+    // TODO: This looks really bad, extract to a method or try using std::transform
+    for (int i = 0; i < listOfMessages.length(); ++i) {
+        QMap map = listOfMessages[i].toMap();
+        QString message = map["message"].toString();
+        QString type = map["type"].toString();
+        QString lastLine = map["lastLine"].toString();
+        QString str = "Type: " + type + ". Line: " + lastLine + ". Message: " + message;
+        list.append(str);
+    }
+    ui->lwEditorMessages->addItems(list);
 }
 
 void MainWindow::toggleShowOrHideFindInProjectTab()
