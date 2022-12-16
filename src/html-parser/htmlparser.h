@@ -1,16 +1,18 @@
 #ifndef HTMLPARSER_H
 #define HTMLPARSER_H
 
-#include <QJsonObject>
+#include <QVariantList>
 
 class HTMLParser
 {
 public:
     HTMLParser() = default;
-    void loadJsonData();
+    QVariantList getMessages();
+    void loadJsonData(std::string document);
+    ~HTMLParser() = default;
 
 private:
-    QJsonObject m_data;
+    QVariantList m_messages;
 };
 
 #endif // HTMLPARSER_H
