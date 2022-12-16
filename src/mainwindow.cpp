@@ -1,19 +1,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "html-parser/htmlparser.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , _editorSearch(new EditorSearch(this))
-    , _htmlParser(new HTMLParser())
 {
     ui->setupUi(this);
     ui->htmlEditor->SetNumberSideBar(ui->numberSideBar);
 
     // Shortcuts
-    auto showOrHideFindInProjectShortcut = new QShortcut(QKeySequence(tr("Ctrl+F", "Find in project")), this);
+    auto showOrHideFindInProjectShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+F", "Find in project")), this);
     auto showOrHideMessagesShortcut = new QShortcut(QKeySequence(tr("Ctrl+M", "Open messages")), this);
+    auto parseHtmlFileAndDisplayMessagesShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+P", "Parse document")), this);
 
     // Menu bar signals
     connect(ui->actionNew_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slNewFileMenuBar);
@@ -25,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
     connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
     connect(showOrHideMessagesShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideMessagesTab);
+    connect(parseHtmlFileAndDisplayMessagesShortcut , &QShortcut::activated, this, &MainWindow::parseHtmlFileAndDisplayMessages);
 
-    _htmlParser->loadJsonData();
 
     ui->fontSize->setVisible(false);
     // Editor settings signals
@@ -72,6 +73,14 @@ void MainWindow::slFontSizeChange()
 
     ui->fontSize->setVisible(false);
     ui->htmlEditor->fontSizeChange(tmp);
+}
+
+void MainWindow::parseHtmlFileAndDisplayMessages()
+{
+    HTMLParser* htmlParser = new HTMLParser();
+    htmlParser->loadJsonData(ui->htmlEditor->document()->toPlainText().toStdString());
+
+    return;
 }
 
 void MainWindow::toggleShowOrHideFindInProjectTab()
