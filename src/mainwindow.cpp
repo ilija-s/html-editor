@@ -83,8 +83,8 @@ void MainWindow::parseHtmlFileAndDisplayMessages()
     // Clear all previous items
     ui->lwEditorMessages->clear();
 
-    std::unique_ptr<HTMLParser> htmlParser = std::make_unique<HTMLParser>();
-    htmlParser.get()->loadJsonData(ui->htmlEditor->document()->toPlainText().toStdString());
+    std::string textDocument = ui->htmlEditor->document()->toPlainText().toStdString();
+    std::unique_ptr<HTMLParser> htmlParser = std::make_unique<HTMLParser>(textDocument);
 
     // Add items to QListWidget
     QList<QVariant> listOfMessages = htmlParser.get()->getMessages().toList();

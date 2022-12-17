@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "search/editorsearch.h"
-#include "html-parser/htmlparser.h"
 #include <QtGui>
 
 QT_BEGIN_NAMESPACE
@@ -30,7 +29,6 @@ signals:
 private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
-    HTMLParser *_htmlParser;
     bool m_isBottomTabWidgetVisible{ true };
     void slFontSizeEnter();
     void slFontSizeChange();
