@@ -6,9 +6,8 @@
 class HTMLParser
 {
 public:
-    HTMLParser() = default;
+    HTMLParser(std::string document);
     QVariantList getMessages();
-    void loadJsonData(std::string document);
     ~HTMLParser() = default;
 
 private:

@@ -2,10 +2,9 @@
 
 #include <cstdlib>
 #include <string>
-#include <istream>
 #include <fstream>
-#include <sstream>
 #include <iostream>
+
 #include <QString>
 #include <QFile>
 #include <QDebug>
@@ -18,6 +17,7 @@
 #include <QJsonDocument>
 #include <QJsonValue>
 #include <QJsonParseError>
+
 
 static void saveStringToFile(const std::string& str, const std::string& filepath)
 {
@@ -35,7 +35,7 @@ static void callHtml5validatorAndSaveOutput(const std::string& fullpathJson, con
 }
 
 // Reads data from a file and stores data in a list of maps
-void HTMLParser::loadJsonData(std::string document)
+HTMLParser::HTMLParser(std::string document)
 {
     std::string applicationDirPath = QCoreApplication::applicationDirPath().toStdString();
     std::string fullpathHtml = applicationDirPath + "/data.html";
