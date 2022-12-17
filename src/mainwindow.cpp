@@ -88,17 +88,17 @@ void MainWindow::parseHtmlFileAndDisplayMessages()
 
     // Add items to QListWidget
     QList<QVariant> listOfMessages = htmlParser.get()->getMessages().toList();
-    QList<QString> list;
     // TODO: This looks really bad, extract to a method or try using std::transform
     for (int i = 0; i < listOfMessages.length(); ++i) {
         QMap map = listOfMessages[i].toMap();
-        QString message = map["message"].toString();
         QString type = map["type"].toString();
+        QString message = map["message"].toString();
         QString lastLine = map["lastLine"].toString();
-        QString str = "Type: " + type + ". Line: " + lastLine + ". Message: " + message;
-        list.append(str);
+        QString text = "Line: " + lastLine + " Message: " + message;
+        QIcon icon = QIcon(":/images/" + type + ".png");
+        QListWidgetItem* item = new QListWidgetItem(icon, text);
+        ui->lwEditorMessages->addItem(item);
     }
-    ui->lwEditorMessages->addItems(list);
 }
 
 void MainWindow::toggleShowOrHideFindInProjectTab()
