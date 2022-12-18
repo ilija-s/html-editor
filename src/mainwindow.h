@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "editor_settings.h"
+#include "editorsettings.h"
 #include "search/editorsearch.h"
 #include <QtGui>
 
@@ -20,6 +20,7 @@ public:
 
 private slots:
     void searchForText();
+    void slEditorSettingsWindowOpen();
 
 signals:
     void searchButtonClicked(const QString& searchString, QTextDocument *document);
@@ -27,11 +28,10 @@ signals:
 private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
-    editor_settings *esDialog;
+    EditorSettings *editorSettingsWindow;
     //void slFontSizeEnter();
-   // void slFontSizeChange();
-    void esDialogOpen();
-//    void slSettingsSelected();
+    // void slFontSizeChange();
+
 
 };
 #endif // MAINWINDOW_H
