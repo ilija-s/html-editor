@@ -14,65 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="fontSize" native="true">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>49</y>
-      <width>251</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <widget class="QLabel" name="lfontSize">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>81</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Font size:</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pbfontSize">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>50</y>
-       <width>131</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Change font size</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lEfontSize">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>20</y>
-       <width>113</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lnotEntered">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>0</y>
-       <width>231</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Nije uneta odgovarajuca velicina</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="HtmlEditor" name="htmlEditor">
     <property name="enabled">
      <bool>true</bool>
@@ -159,7 +100,6 @@
    <zorder>layoutWidget</zorder>
    <zorder>numberSideBar</zorder>
    <zorder>htmlEditor</zorder>
-   <zorder>fontSize</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

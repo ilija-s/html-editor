@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -18,9 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::searchButtonClicked, _editorSearch, &EditorSearch::onSearchButtonClicked);
     connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
 
-    ui->fontSize->setVisible(false);
+    // Editor settings
     connect(ui->actionSettings_2, &QAction::triggered, this, &MainWindow::MainWindow::slEditorSettingsWindowOpen);
-
 
     // Menu bar shortcuts
     ui->actionNew_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
@@ -45,28 +43,15 @@ void MainWindow::searchForText()
 void MainWindow::slEditorSettingsWindowOpen(){
     editorSettingsWindow = new EditorSettings(this);
     editorSettingsWindow->show();
+
+    connect(editorSettingsWindow, &EditorSettings::siFontSizeAccepted, this, &MainWindow::slFontSizeAccepted);
 }
 
-/*void MainWindow::slFontSizeEnter()
-{
-     ui->fontSize->setVisible(true);
-     ui->lnotEntered->setVisible(false);
-}
-
-void MainWindow::slFontSizeChange()
-{
-    bool flag;
-    int tmp = ui->lEfontSize->text().trimmed().toInt(&flag);
-    ui->lEfontSize->clear();
-
-    if(!flag || tmp <= 0){
-       ui->lnotEntered->setVisible(true);
-       return;
+void MainWindow::slFontSizeAccepted(int fontSize, int ind){
+    if(ind){
+        ui->htmlEditor->fontSizeChange(fontSize);
     }
-
-    ui->fontSize->setVisible(false);
-    ui->htmlEditor->fontSizeChange(tmp);
 }
-*/
+
 
 

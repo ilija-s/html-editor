@@ -21,6 +21,7 @@ public:
 private slots:
     void searchForText();
     void slEditorSettingsWindowOpen();
+    void slFontSizeAccepted(int fontSize, int ind);
 
 signals:
     void searchButtonClicked(const QString& searchString, QTextDocument *document);
@@ -29,8 +30,6 @@ private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
     EditorSettings *editorSettingsWindow;
-    //void slFontSizeEnter();
-    // void slFontSizeChange();
 
 
 };
