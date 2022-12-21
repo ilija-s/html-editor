@@ -10,16 +10,20 @@ CONFIG += c++17
 
 SOURCES += \
     src/htmleditor/htmleditor.cpp \
-    src/htmlsyntaxhighlighter.cpp \
     src/main.cpp \
     src/numbersidebar/numbersidebar.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/syntaxhighlighting/htmlsyntaxhighlighter.cpp \
+    src/syntaxhighlighting/tagparser.cpp \
+    src/syntaxhighlighting/tokenizer.cpp
 
 HEADERS += \
     src/htmleditor/htmleditor.h \
-    src/htmlsyntaxhighlighter.h \
     src/numbersidebar/numbersidebar.h \
-    src/mainwindow.h
+    src/mainwindow.h \
+    src/syntaxhighlighting/htmlsyntaxhighlighter.h \
+    src/syntaxhighlighting/tagparser.h \
+    src/syntaxhighlighting/tokenizer.h
 
 FORMS += \
     form/mainwindow.ui
