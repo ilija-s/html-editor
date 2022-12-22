@@ -19,6 +19,9 @@ public:
 
 private slots:
     void searchForText();
+    void toggleShowOrHideFindInProjectTab();
+    void toggleShowOrHideMessagesTab();
+    void parseHtmlFileAndDisplayMessages();
 
 signals:
     void searchButtonClicked(const QString& searchString, QTextDocument *document);
@@ -26,6 +29,7 @@ signals:
 private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
+    bool m_isBottomTabWidgetVisible{ true };
     void slFontSizeEnter();
     void slFontSizeChange();
 

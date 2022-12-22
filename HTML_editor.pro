@@ -9,24 +9,34 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/html-parser/htmlparser.cpp \
     src/htmleditor/htmleditor.cpp \
+    src/line-data/linedata.cpp \
     src/search/editorsearch.cpp \
     src/main.cpp \
     src/numbersidebar/numbersidebar.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/text-file/textfile.cpp
 
 HEADERS += \
+    src/html-parser/htmlparser.h \
     src/htmleditor/htmleditor.h \
+    src/line-data/linedata.h \
     src/search/editorsearch.h \
     src/numbersidebar/numbersidebar.h \
-    src/mainwindow.h
+    src/mainwindow.h \
+    src/text-file/textfile.h
 
 FORMS += \
     form/mainwindow.ui
 
-RESOURCES = form/mainwindow.ui
+RESOURCES = form/mainwindow.ui \
+            resources/res.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    data.json

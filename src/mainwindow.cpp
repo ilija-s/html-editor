@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "html-parser/htmlparser.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -9,6 +10,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->htmlEditor->SetNumberSideBar(ui->numberSideBar);
+
+    // Shortcuts
+    auto showOrHideFindInProjectShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+F", "Find in project")), this);
+    auto showOrHideMessagesShortcut = new QShortcut(QKeySequence(tr("Ctrl+M", "Open messages")), this);
+    auto parseHtmlFileAndDisplayMessagesShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+P", "Parse document")), this);
+
     // Menu bar signals
     connect(ui->actionNew_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slNewFileMenuBar);
     connect(ui->actionOpen_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
@@ -17,12 +24,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->numberSideBar, &NumberSideBar::siPaintEvent, ui->htmlEditor, &HtmlEditor::slNumberBarPaintEvent);
     connect(this, &MainWindow::searchButtonClicked, _editorSearch, &EditorSearch::onSearchButtonClicked);
     connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
+    connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
+    connect(showOrHideMessagesShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideMessagesTab);
+    connect(parseHtmlFileAndDisplayMessagesShortcut , &QShortcut::activated, this, &MainWindow::parseHtmlFileAndDisplayMessages);
+
 
     ui->fontSize->setVisible(false);
     // Editor settings signals
     connect(ui->actionFont_size, &QAction::triggered, this, &MainWindow::slFontSizeEnter);
     connect(ui->pbfontSize, &QAbstractButton::clicked, this, &MainWindow::slFontSizeChange);
-
 
     // Menu bar shortcuts
     ui->actionNew_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
@@ -65,5 +75,51 @@ void MainWindow::slFontSizeChange()
     ui->htmlEditor->fontSizeChange(tmp);
 }
 
+void MainWindow::parseHtmlFileAndDisplayMessages()
+{
+    // In the future this should underscore words that have errors, also this
+    // method should work async
 
+    // Clear all previous items
+    ui->lwEditorMessages->clear();
+
+    std::string textDocument = ui->htmlEditor->document()->toPlainText().toStdString();
+    std::unique_ptr<HTMLParser> htmlParser = std::make_unique<HTMLParser>(textDocument);
+
+    // Add items to QListWidget
+    QList<QVariant> listOfMessages = htmlParser.get()->getMessages().toList();
+    // TODO: This looks really bad, extract to a method or try using std::transform
+    for (int i = 0; i < listOfMessages.length(); ++i) {
+        QMap map = listOfMessages[i].toMap();
+        QString type = map["type"].toString();
+        QString message = map["message"].toString();
+        QString lastLine = map["lastLine"].toString();
+        QString text = "Line: " + lastLine + " Message: " + message;
+        QIcon icon = QIcon(":/images/" + type + ".png");
+        QListWidgetItem* item = new QListWidgetItem(icon, text);
+        ui->lwEditorMessages->addItem(item);
+    }
+}
+
+void MainWindow::toggleShowOrHideFindInProjectTab()
+{
+    m_isBottomTabWidgetVisible = !m_isBottomTabWidgetVisible;
+    if (m_isBottomTabWidgetVisible) {
+        ui->tabWidget->setVisible(true);
+        ui->searchTab->setFocus();
+    } else {
+        ui->tabWidget->setVisible(false);
+    }
+}
+
+void MainWindow::toggleShowOrHideMessagesTab()
+{
+    m_isBottomTabWidgetVisible = !m_isBottomTabWidgetVisible;
+    if (m_isBottomTabWidgetVisible) {
+        ui->tabWidget->setVisible(true);
+        ui->messageTab->setFocus();
+    } else {
+        ui->tabWidget->setVisible(false);
+    }
+}
 
