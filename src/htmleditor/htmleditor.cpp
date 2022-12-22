@@ -20,6 +20,7 @@ HtmlEditor::~HtmlEditor()
 void HtmlEditor::SetNumberSideBar(NumberSideBar *sb)
 {
     number_bar = sb;
+    number_bar->unit_width = 9 + fontMetrics().horizontalAdvance(QLatin1Char('9'));
     UpdateNumberBarWidth();
 }
 
@@ -161,7 +162,8 @@ int HtmlEditor::NumberBarWidth()
 void HtmlEditor::UpdateNumberBarWidth()
 {
     number_bar->width = NumberBarWidth();
-    setViewportMargins(number_bar->width, 0, 0, 0);
+    setViewportMargins(number_bar->width - number_bar->unit_width, 0, 0, 0);
+
 }
 
 void HtmlEditor::UpdateNumberBar(const QRect &rect, int dy)
