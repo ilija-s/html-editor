@@ -3,15 +3,14 @@
 
 #include <QVariantList>
 
-class HTMLParser
-{
+class HTMLParser {
 public:
-    HTMLParser(std::string document);
-    QVariantList getMessages();
-    ~HTMLParser() = default;
+  HTMLParser(std::string document);
+  QVariantList getMessages();
+  ~HTMLParser() = default;
 
 private:
-    QVariantList m_messages;
+  QVariantList m_messages;
 };
 
 #endif // HTMLPARSER_H
