@@ -11,17 +11,21 @@ CONFIG += c++17
 SOURCES += \
     src/html-parser/htmlparser.cpp \
     src/htmleditor/htmleditor.cpp \
+    src/line-data/linedata.cpp \
     src/search/editorsearch.cpp \
     src/main.cpp \
     src/numbersidebar/numbersidebar.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/text-file/textfile.cpp
 
 HEADERS += \
     src/html-parser/htmlparser.h \
     src/htmleditor/htmleditor.h \
+    src/line-data/linedata.h \
     src/search/editorsearch.h \
     src/numbersidebar/numbersidebar.h \
-    src/mainwindow.h
+    src/mainwindow.h \
+    src/text-file/textfile.h
 
 FORMS += \
     form/mainwindow.ui
