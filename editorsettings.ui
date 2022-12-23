@@ -94,7 +94,7 @@
      <item>
       <widget class="QRadioButton" name="rbFontSize">
        <property name="text">
-        <string>Front size</string>
+        <string>Font size</string>
        </property>
       </widget>
      </item>
@@ -102,13 +102,6 @@
       <widget class="QRadioButton" name="rbTheme">
        <property name="text">
         <string>Theme</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="rbSplitScreenView">
-       <property name="text">
-        <string>Split screen view</string>
        </property>
       </widget>
      </item>
