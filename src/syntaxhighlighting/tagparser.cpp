@@ -115,7 +115,6 @@ bool TagParser::parse_tag() {
         }
 
         m_tokens->push_back(lookahead);
-        lookahead = m_tokenizer.next();
 
         return true;
     }
