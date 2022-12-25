@@ -27,6 +27,7 @@ void EditorSettings::slOKClicked(){
 }
 
 void EditorSettings::fFontSize(){
+    ui->cbSize->setEditable(true);
     ui->wInitial->setVisible(false);
     ui->wFontSize->setVisible(true);
     ui->lNotValid->setVisible(false);
@@ -34,13 +35,17 @@ void EditorSettings::fFontSize(){
 
 void EditorSettings::slFontSizeAccepted(){
     bool ind = true;
-    int fontSize = ui->leTest->text().toInt(&ind);
+    //bool index = ui->cbSize->currentIndex();
+    int fontSize = ui->cbSize->currentText().toInt(&ind);
+    //int fontSize = ui->leTest->text().toInt(&ind);
 
     if(!ind || fontSize < 5){
         ui->lNotValid->setVisible(true);
         ind = fontSize > 5 ? ind : false;
+        return;
     }
 
     emit siFontSizeAccepted(fontSize, ind);
+    close();
 }
 
