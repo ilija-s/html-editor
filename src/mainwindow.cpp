@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include "html-parser/htmlparser.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -33,10 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, ui->treeView, &FileTreeView::SetFolder);
 
-    ui->fontSize->setVisible(false);
-    // Editor settings signals
-    connect(ui->actionFont_size, &QAction::triggered, this, &MainWindow::slFontSizeEnter);
-    connect(ui->pbfontSize, &QAbstractButton::clicked, this, &MainWindow::slFontSizeChange);
+
+    // Editor settings
+    connect(ui->actionSettings_2, &QAction::triggered, this, &MainWindow::MainWindow::slEditorSettingsWindowOpen);
 
     // Menu bar shortcuts
     ui->actionNew_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
@@ -58,25 +56,17 @@ void MainWindow::searchForText()
     emit searchButtonClicked(searchString, ui->htmlEditor->document());
 }
 
-void MainWindow::slFontSizeEnter()
-{
-     ui->fontSize->setVisible(true);
-     ui->lnotEntered->setVisible(false);
+void MainWindow::slEditorSettingsWindowOpen(){
+    editorSettingsWindow = new EditorSettings(this);
+    editorSettingsWindow->show();
+
+    connect(editorSettingsWindow, &EditorSettings::siFontSizeAccepted, this, &MainWindow::slFontSizeAccepted);
 }
 
-void MainWindow::slFontSizeChange()
-{
-    bool flag;
-    int tmp = ui->lEfontSize->text().trimmed().toInt(&flag);
-    ui->lEfontSize->clear();
-
-    if(!flag || tmp <= 0){
-       ui->lnotEntered->setVisible(true);
-       return;
+void MainWindow::slFontSizeAccepted(int fontSize, int ind){
+    if(ind){
+        ui->htmlEditor->fontSizeChange(fontSize);
     }
-
-    ui->fontSize->setVisible(false);
-    ui->htmlEditor->fontSizeChange(tmp);
 }
 
 void MainWindow::parseHtmlFileAndDisplayMessages()

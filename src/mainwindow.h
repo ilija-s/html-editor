@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "editorsettings.h"
 #include "search/editorsearch.h"
 #include <QtGui>
 
@@ -19,9 +20,14 @@ public:
 
 private slots:
     void searchForText();
+
+    void slEditorSettingsWindowOpen();
+    void slFontSizeAccepted(int fontSize, int ind);
+
     void toggleShowOrHideFindInProjectTab();
     void toggleShowOrHideMessagesTab();
     void parseHtmlFileAndDisplayMessages();
+
 
 signals:
     void searchButtonClicked(const QString& searchString, QTextDocument *document);
@@ -29,9 +35,11 @@ signals:
 private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
+
+    EditorSettings *editorSettingsWindow;
+
+
     bool m_isBottomTabWidgetVisible{ true };
-    void slFontSizeEnter();
-    void slFontSizeChange();
 
 };
 #endif // MAINWINDOW_H
