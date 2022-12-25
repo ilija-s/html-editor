@@ -20,8 +20,14 @@ public:
 
 private slots:
     void searchForText();
+
     void slEditorSettingsWindowOpen();
     void slFontSizeAccepted(int fontSize, int ind);
+
+    void toggleShowOrHideFindInProjectTab();
+    void toggleShowOrHideMessagesTab();
+    void parseHtmlFileAndDisplayMessages();
+
 
 signals:
     void searchButtonClicked(const QString& searchString, QTextDocument *document);
@@ -29,8 +35,11 @@ signals:
 private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
+
     EditorSettings *editorSettingsWindow;
 
+
+    bool m_isBottomTabWidgetVisible{ true };
 
 };
 #endif // MAINWINDOW_H
