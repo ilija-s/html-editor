@@ -8,7 +8,7 @@
 #include <iostream>
 #include <QTextStream>
 #include "src/numbersidebar/numbersidebar.h"
-#include "src/htmlsyntaxhighlighter.h"
+#include "src/syntaxhighlighting/htmlsyntaxhighlighter.h"
 
 class HtmlEditor : public QPlainTextEdit
 {

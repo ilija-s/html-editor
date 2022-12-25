@@ -1,9 +1,9 @@
 #include "htmleditor.h"
+#include "src/syntaxhighlighting/htmlsyntaxhighlighter.h"
 #include <QFileDialog>
 #include <string>
 #include <QPainter>
 #include <QTextBlock>
-#include "src/htmlsyntaxhighlighter.h"
 
 HtmlEditor::HtmlEditor(QWidget *parent) :
     QPlainTextEdit(parent)
