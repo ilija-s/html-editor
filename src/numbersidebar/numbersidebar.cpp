@@ -9,7 +9,7 @@ NumberSideBar::NumberSideBar(QWidget *parent)
 
 QSize NumberSideBar::sizeHint() const
 {
-    return QSize(width, 0);
+    return QSize(width, 1080);
 }
 
 void NumberSideBar::paintEvent(QPaintEvent *event)

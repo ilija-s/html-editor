@@ -27,7 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
     connect(showOrHideMessagesShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideMessagesTab);
     connect(parseHtmlFileAndDisplayMessagesShortcut , &QShortcut::activated, this, &MainWindow::parseHtmlFileAndDisplayMessages);
-
+    connect(ui->htmlEditor, &HtmlEditor::siFileExists, ui->treeView, &FileTreeView::SetModel);
+    connect(ui->treeView, &FileTreeView::doubleClicked, ui->treeView, &FileTreeView::slDoubleClicked);
+    connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
 
     ui->fontSize->setVisible(false);
     // Editor settings signals

@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/filetreeview/filetreeview.cpp \
     src/html-parser/htmlparser.cpp \
     src/htmleditor/htmleditor.cpp \
     src/line-data/linedata.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     src/text-file/textfile.cpp
 
 HEADERS += \
+    src/filetreeview/filetreeview.h \
     src/html-parser/htmlparser.h \
     src/htmleditor/htmleditor.h \
     src/line-data/linedata.h \
