@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "html-parser/htmlparser.h"
+#include "project/project.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -32,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->treeView, &FileTreeView::doubleClicked, ui->treeView, &FileTreeView::slDoubleClicked);
     connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, ui->treeView, &FileTreeView::SetFolder);
+    connect(ui->pbFindInProject, &QPushButton::clicked, this, &MainWindow::findInProjectClicked);
 
     ui->fontSize->setVisible(false);
     // Editor settings signals
@@ -77,6 +79,29 @@ void MainWindow::slFontSizeChange()
 
     ui->fontSize->setVisible(false);
     ui->htmlEditor->fontSizeChange(tmp);
+}
+
+void MainWindow::findInProjectClicked()
+{
+    // This is not optimal solution
+    // Read directory path from current file
+    QFileInfo fileinfo(ui->htmlEditor->fileName());
+    QDir absoluteDir = fileinfo.absoluteDir();
+    QString absoluteFilePath = absoluteDir.absolutePath();
+    QString needle = ui->leFindInProjectSearchQuery->text();
+    qDebug() << "Needle: " << needle;
+
+    // This should maybe be a member variable
+    Project project;
+    project.loadFileContents(absoluteFilePath);
+
+    QVector<LineData> matches;
+    foreach (TextFile textfile, project.fileContents()) {
+        foreach (LineData data, textfile.find(needle.toStdString())) {
+            matches.push_back(data);
+            qDebug() << data.lineNumber << " " << data.content << " " << data.filename;
+       }
+    }
 }
 
 void MainWindow::parseHtmlFileAndDisplayMessages()

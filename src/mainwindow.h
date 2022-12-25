@@ -22,6 +22,7 @@ private slots:
     void toggleShowOrHideFindInProjectTab();
     void toggleShowOrHideMessagesTab();
     void parseHtmlFileAndDisplayMessages();
+    void findInProjectClicked();
 
 signals:
     void searchButtonClicked(const QString& searchString, QTextDocument *document);
