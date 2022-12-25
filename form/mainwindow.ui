@@ -237,6 +237,7 @@
     </widget>
     <addaction name="actionNew_file"/>
     <addaction name="actionOpen_file"/>
+    <addaction name="actionOpen_folder"/>
     <addaction name="actionSave_file"/>
     <addaction name="actionSave_file_as"/>
     <addaction name="separator"/>
@@ -278,6 +279,11 @@
   <action name="actionFont_size">
    <property name="text">
     <string>Font size</string>
+   </property>
+  </action>
+  <action name="actionOpen_folder">
+   <property name="text">
+    <string>Open folder</string>
    </property>
   </action>
  </widget>

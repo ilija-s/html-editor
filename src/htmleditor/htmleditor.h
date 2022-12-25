@@ -26,7 +26,8 @@ private:
     void NewFile();
     void SaveFile();
     void SaveAsFile();
-    void OpenFile(QString path = nullptr);
+    void OpenFile(QString path = "");
+    void OpenFolder();
     int NumberBarWidth();
     void UpdateNumberBarWidth();
     void UpdateNumberBar(const QRect &rect, int dy);
@@ -37,12 +38,14 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 signals:
-    void siFileExists(QString file_name);
-
+    void siOpenFolder(QString dir_path);
+    void siFileExists(QString file_path);
+    void siTreeViewFolder(QString dir_path);
 public slots:
     void slTreeViewDoubleClicked(const QString& path);
     void slNewFileMenuBar();
     void slOpenFileMenuBar();
+    void slOpenFolderMenuBar();
     void slSaveFileMenuBar();
     void slSaveAsFileMenuBar();
     void slNumberBarPaintEvent(QPaintEvent *event);

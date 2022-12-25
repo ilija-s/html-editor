@@ -3,7 +3,14 @@
 FileTreeView::FileTreeView(QWidget* parent)
     : QTreeView(parent)
 {
-    setHidden(true);
+    model = new QFileSystemModel;
+    model->setRootPath(QDir::currentPath());
+    this->setModel(model);
+    this->setRootIndex(model->index(QDir::currentPath()));
+    this->setHeaderHidden(true);
+    for (int i = 1; i < model->columnCount(); ++i)
+        this->hideColumn(i);
+
 }
 
 FileTreeView::~FileTreeView()
@@ -11,23 +18,27 @@ FileTreeView::~FileTreeView()
 
 }
 
+void FileTreeView::SetFolder(QString path)
+{
+    SetModel(path);
+}
+
 void FileTreeView::SetModel(QString path)
 {
-    setVisible(true);
+
     QFileInfo fi(path);
-    QString dir_name = fi.dir().absolutePath();
-    QFileSystemModel *model = new QFileSystemModel;
-    model->setRootPath(dir_name);
-    this->setModel(model);
-    this->setRootIndex(model->index(dir_name));
-    this->setHeaderHidden(true);
-    for (int i = 1; i < model->columnCount(); ++i)
-        this->hideColumn(i);
+    if(!fi.isDir())
+        path = fi.dir().absolutePath();
+    model->setRootPath(path);
+    this->setRootIndex(model->index(path));
+
 }
 
 void FileTreeView::slDoubleClicked(const QModelIndex &index)
 {
-    QString path = model->filePath(index);
-    emit siDoubleClicked(path);
+    if(!model->fileInfo(index).isDir()){
+        QString path = model->filePath(index);
+        emit siDoubleClicked(path);
+    }
 }
 

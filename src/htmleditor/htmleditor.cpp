@@ -46,7 +46,7 @@ void HtmlEditor::SaveFile(){
         this->SaveAsFile();
     }
 
-    emit siFileExists(this->file_name);
+    emit siFileExists(this->html_file.fileName());
 
 }
 
@@ -69,13 +69,13 @@ void HtmlEditor::SaveAsFile() {
 
         this->html_file.close();
     }
-        emit siFileExists(this->file_name);
+        emit siFileExists(this->html_file.fileName());
 
 }
 
 void HtmlEditor::OpenFile(QString path) {
 
-    if(path != nullptr){
+    if(!path.isEmpty()){
         this->html_file.setFileName(path);
         this->html_file.open(QIODevice::ReadOnly);
 
@@ -86,18 +86,20 @@ void HtmlEditor::OpenFile(QString path) {
 
         this->setPlainText(file_content);
         this->html_file.close();
-        emit siFileExists(this->file_name);
+        emit siFileExists(this->html_file.fileName());
         return;
     }
 
     QFileDialog dialog(this);
     dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
-    dialog.setFileMode(QFileDialog::FileMode::ExistingFile);
+    dialog.setFileMode(QFileDialog::ExistingFile);
     dialog.setMimeTypeFilters({"text/html"});
 
     if(dialog.exec()) {
 
         QString file_name = dialog.selectedFiles()[0];
+
+        QFileInfo fi(file_name);
 
         this->html_file.setFileName(file_name);
         this->html_file.open(QIODevice::ReadOnly);
@@ -116,7 +118,15 @@ void HtmlEditor::OpenFile(QString path) {
 
         this->html_file.close();
     }
-    emit siFileExists(this->file_name);
+    emit siFileExists(this->html_file.fileName());
+}
+
+void HtmlEditor::OpenFolder()
+{
+    QFileDialog dialog(this);
+    dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
+    QString dir = QFileDialog::getExistingDirectory(0, ("Select Output Folder"), QDir::currentPath());
+    emit siOpenFolder(dir);
 }
 
 void HtmlEditor::slNewFileMenuBar() {
@@ -126,6 +136,11 @@ void HtmlEditor::slNewFileMenuBar() {
 void HtmlEditor::slOpenFileMenuBar()
 {
     this->OpenFile();
+}
+
+void HtmlEditor::slOpenFolderMenuBar()
+{
+    this->OpenFolder();
 }
 
 void HtmlEditor::slSaveFileMenuBar()

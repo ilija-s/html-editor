@@ -18,6 +18,7 @@ public:
     ~FileTreeView();
 
 public slots:
+    void SetFolder(QString path);
     void SetModel(QString path);
     void slDoubleClicked(const QModelIndex &index);
 
