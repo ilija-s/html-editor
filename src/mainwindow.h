@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "editorsettings.h"
+#include "editorsettings/editorsettings.h"
 #include "search/editorsearch.h"
 #include <QtGui>
 
