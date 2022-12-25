@@ -13,6 +13,7 @@ SOURCES += \
     src/html-parser/htmlparser.cpp \
     src/htmleditor/htmleditor.cpp \
     src/line-data/linedata.cpp \
+    src/project/project.cpp \
     src/search/editorsearch.cpp \
     src/main.cpp \
     src/numbersidebar/numbersidebar.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     src/html-parser/htmlparser.h \
     src/htmleditor/htmleditor.h \
     src/line-data/linedata.h \
+    src/project/project.h \
     src/search/editorsearch.h \
     src/numbersidebar/numbersidebar.h \
     src/mainwindow.h \
