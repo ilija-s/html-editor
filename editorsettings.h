@@ -26,6 +26,7 @@ private slots:
 private:
     Ui::EditorSettings *ui;
     void fFontSize();
+    void fTheme();
 };
 
 #endif // EDITORSETTINGS_H

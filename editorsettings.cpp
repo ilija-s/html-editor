@@ -7,6 +7,7 @@ EditorSettings::EditorSettings(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->wFontSize->setVisible(false);
+    ui->wTheme->setVisible(false);
     connect(ui->pbOK, &QAbstractButton::clicked, this, &EditorSettings::slOKClicked);
     connect(ui->pbOKFontSize, &QAbstractButton::clicked, this, &EditorSettings::slFontSizeAccepted);
 }
@@ -22,14 +23,18 @@ void EditorSettings::slOKClicked(){
         fFontSize();
     }
 
+    if(ui->rbTheme->isChecked()){
+        fTheme();
+    }
+
     //emit siDialogChecked(parameter, ind);
     //close();
 }
 
 void EditorSettings::fFontSize(){
-    ui->cbSize->setEditable(true);
     ui->wInitial->setVisible(false);
     ui->wFontSize->setVisible(true);
+    ui->cbSize->setEditable(true);
     ui->lNotValid->setVisible(false);
 }
 
@@ -49,3 +54,7 @@ void EditorSettings::slFontSizeAccepted(){
     close();
 }
 
+void EditorSettings::fTheme(){
+    ui->wInitial->setVisible(false);
+     ui->wTheme->setVisible(true);
+}
