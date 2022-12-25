@@ -23,6 +23,10 @@ void HtmlEditor::SetNumberSideBar(NumberSideBar *sb)
 
 }
 
+QString HtmlEditor::fileName()
+{
+    return file_name;
+}
 
 void HtmlEditor::NewFile() {
     this->html_file.setFileName(QString{});
@@ -77,6 +81,7 @@ void HtmlEditor::OpenFile(QString path) {
 
     if(!path.isEmpty()){
         this->html_file.setFileName(path);
+        file_name = path;
         this->html_file.open(QIODevice::ReadOnly);
 
         QTextStream in(&this->html_file);
