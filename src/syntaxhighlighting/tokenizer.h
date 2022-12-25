@@ -11,6 +11,7 @@ enum TokenType
     tag_close_bracket,
     tag_name,
     attribute_name,
+    tag_or_attribute_name,
     equals,
     attribute_value,
     none,
@@ -23,7 +24,7 @@ class Token
 public:
 
     Token()
-        :m_type(TokenType::none), m_start(0), m_length(0)
+        :m_type(TokenType::no_match), m_start(0), m_length(0)
     {}
 
     Token(TokenType type, int start, int length)
@@ -47,10 +48,11 @@ class Tokenizer
 public:
 
     Tokenizer(const QString& text)
-        :m_text(text), m_offset(0)
+        :m_text(text), m_offset(0), m_current_token(Token())
     {}
 
     Token next();
+    Token peek();
 
 private:
 
@@ -58,15 +60,30 @@ private:
 
     const QString& m_text;
     int m_offset;
+    Token m_current_token;
 
-    QRegularExpression m_tag_open_bracket_re {"<!|<\\/|<"};
-    QRegularExpression m_tag_close_bracket_re {">|\\/>"};
-    QRegularExpression m_tag_name_re {"[a-zA-Z0-9]+"};
-    QRegularExpression m_attribute_name_re {"[a-zA-Z]+"};
-    QRegularExpression m_equals_re {"="};
-    QRegularExpression m_attribute_value_re {"[0-9]+|[\"][^\"]+[\"]"};
     QRegularExpression m_white_space_re {"\\s+"};
-    QRegularExpression m_none_re {"."};
+
+    QPair<QRegularExpression, TokenType> m_token_regular_expressions[6] = {
+        QPair<QRegularExpression, TokenType>(
+                    QRegularExpression("<!|<\\/|<"), TokenType::tag_open_bracket
+        ),
+        QPair<QRegularExpression, TokenType>(
+                    QRegularExpression("[a-zA-Z0-9]+"), TokenType::tag_or_attribute_name
+        ),
+        QPair<QRegularExpression, TokenType>(
+                    QRegularExpression("="), TokenType::equals
+        ),
+        QPair<QRegularExpression, TokenType>(
+                    QRegularExpression("[0-9]+|[\"][^\"]+[\"]"), TokenType::attribute_value
+        ),
+        QPair<QRegularExpression, TokenType>(
+                    QRegularExpression(">|\\/>"), TokenType::tag_close_bracket
+        ),
+        QPair<QRegularExpression, TokenType>(
+                    QRegularExpression("."), TokenType::none
+        )
+    };
 };
 
 #endif // TOKENIZER_H

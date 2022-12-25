@@ -24,7 +24,11 @@ private:
     Tokenizer m_tokenizer;
     QSharedPointer<QVector<Token>> m_tokens;
 
-    void parse_tags();
+    bool parse_all_tags();
+    bool parse_tag();
+    bool parse_attribute_list();
+    bool parse_attribute();
+    bool parse_attribute_declaration();
 };
 
 #endif // TAGPARSER_H

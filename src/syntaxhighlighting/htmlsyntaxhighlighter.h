@@ -14,13 +14,10 @@ protected:
 
 private:
 
-    QRegularExpression tagNameExpression;
-    QRegularExpression attributeNameExpression;
-    QRegularExpression atributeValueExpression;
-
-    QTextCharFormat tagNameFormat;
-    QTextCharFormat attributeNameFormat;
-    QTextCharFormat attributeValueFormat;
+    QTextCharFormat m_bracket_format;
+    QTextCharFormat m_tag_name_format;
+    QTextCharFormat m_attribute_name_format;
+    QTextCharFormat m_attribute_value_format;
 };
 
 #endif // HTMLSYNTAXHIGHLIGHTER_H
