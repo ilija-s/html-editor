@@ -14,6 +14,8 @@ enum TokenType
     tag_or_attribute_name,
     equals,
     attribute_value,
+    comment_start,
+    comment_end,
     none,
     no_match,
     eof
@@ -64,7 +66,13 @@ private:
 
     QRegularExpression m_white_space_re {"\\s+"};
 
-    QPair<QRegularExpression, TokenType> m_token_regular_expressions[6] = {
+    QPair<QRegularExpression, TokenType> m_token_regular_expressions[8] = {
+        QPair<QRegularExpression, TokenType>(
+                    QRegularExpression("<!--"), TokenType::comment_start
+        ),
+        QPair<QRegularExpression, TokenType>(
+                    QRegularExpression("-->"), TokenType::comment_end
+        ),
         QPair<QRegularExpression, TokenType>(
                     QRegularExpression("<!|<\\/|<"), TokenType::tag_open_bracket
         ),
@@ -80,6 +88,7 @@ private:
         QPair<QRegularExpression, TokenType>(
                     QRegularExpression(">|\\/>"), TokenType::tag_close_bracket
         ),
+
         QPair<QRegularExpression, TokenType>(
                     QRegularExpression("."), TokenType::none
         )

@@ -19,6 +19,8 @@ Attribute ->                AttributeName AttributeDeclaration { AttributeName }
 AttributeDeclaration ->     '=' AttributeValue { '=' }
                             eps { AttributeName CloseTagBracket }
 
+Comment ->                  "<!--" .*? "-->"
+
 Tag:
     First { OpenTagBracket }
     Follow { eoi }
@@ -55,15 +57,25 @@ bool TagParser::parse_all_tags() {
         do {
             lookahead = m_tokenizer.next();
         } while (lookahead.type() != TokenType::tag_open_bracket
-                 && lookahead.type() != TokenType::eof);
+                 && lookahead.type() != TokenType::eof
+                 && lookahead.type() != TokenType::comment_start
+                 && lookahead.type() != TokenType::comment_end);
 
         if (lookahead.type() == TokenType::eof) {
             continue;
         }
+        else if (lookahead.type() == TokenType::comment_end
+            || lookahead.type() == TokenType::comment_start) {
 
-        bool parse_success = parse_tag();
-        if (!parse_success) {
-            return false;
+            m_tokens->push_back(lookahead);
+
+            continue;
+        }
+        else {
+            bool parse_success = parse_tag();
+            if (!parse_success) {
+                return false;
+            }
         }
     }
 
