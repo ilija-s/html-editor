@@ -95,11 +95,12 @@ void MainWindow::findInProjectClicked()
     Project project;
     project.loadFileContents(absoluteFilePath);
 
-    QVector<LineData> matches;
     foreach (TextFile textfile, project.fileContents()) {
         foreach (LineData data, textfile.find(needle.toStdString())) {
-            matches.push_back(data);
-            qDebug() << data.lineNumber << " " << data.content << " " << data.filename;
+            QString content(data.content.trimmed());
+            QString text(data.filename + ": " + std::to_string(data.lineNumber).c_str() + "\t" + content);
+            QListWidgetItem* item = new QListWidgetItem(text);
+            ui->lwLinesFound->addItem(item);
        }
     }
 }
