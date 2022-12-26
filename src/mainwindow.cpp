@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "html-parser/htmlparser.h"
+#include "project/project.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->treeView, &FileTreeView::doubleClicked, ui->treeView, &FileTreeView::slDoubleClicked);
     connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, ui->treeView, &FileTreeView::SetFolder);
+    connect(ui->pbFindInProject, &QPushButton::clicked, this, &MainWindow::findInProjectClicked);
 
 
     // Editor settings
@@ -66,6 +68,30 @@ void MainWindow::slEditorSettingsWindowOpen(){
 void MainWindow::slFontSizeAccepted(int fontSize, int ind){
     if(ind){
         ui->htmlEditor->fontSizeChange(fontSize);
+    }
+}
+
+void MainWindow::findInProjectClicked()
+{
+    // This is not optimal solution
+    // Read directory path from current file
+    QFileInfo fileinfo(ui->htmlEditor->fileName());
+    QDir absoluteDir = fileinfo.absoluteDir();
+    QString absoluteFilePath = absoluteDir.absolutePath();
+    QString needle = ui->leFindInProjectSearchQuery->text();
+    qDebug() << "Needle: " << needle;
+
+    // This should maybe be a member variable
+    Project project;
+    project.loadFileContents(absoluteFilePath);
+
+    foreach (TextFile textfile, project.fileContents()) {
+        foreach (LineData data, textfile.find(needle.toStdString())) {
+            QString content(data.content.trimmed());
+            QString text(data.filename + ": " + std::to_string(data.lineNumber).c_str() + "\t" + content);
+            QListWidgetItem* item = new QListWidgetItem(text);
+            ui->lwLinesFound->addItem(item);
+       }
     }
 }
 

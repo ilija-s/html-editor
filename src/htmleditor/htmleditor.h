@@ -16,7 +16,7 @@ public:
     HtmlEditor(QWidget *parent = nullptr);
     ~HtmlEditor();
     void SetNumberSideBar(NumberSideBar* sb);
-
+    QString fileName();
     void fontSizeChange(int mainSize);
 
 private:

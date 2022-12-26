@@ -1,13 +1,19 @@
 #include "textfile.h"
 
 #include <QFile>
+#include <QDebug>
+#include <sstream>
 
-TextFile::TextFile() {}
+TextFile::TextFile(QString filename, QString absoluteFilePath)
+    : m_filename(filename)
+    , m_absoluteFilePath(absoluteFilePath)
+{
+}
 
 std::string TextFile::content() {
   if (m_content.empty()) {
-    auto file = QFile(m_filename);
-    if (!file.open(QFile::ReadOnly)) {
+    auto file = QFile(m_absoluteFilePath);
+    if (file.open(QFile::ReadOnly)) {
       m_content = file.readAll().toStdString();
     }
   }
@@ -16,22 +22,15 @@ std::string TextFile::content() {
 
 QVector<LineData> TextFile::find(const std::string &needle) {
   content();
-  int currentLine = 0;
-  int startOfLine = 0;
-  QVector<LineData> matches;
 
-  for (int i = 0; i < m_content.size(); ++i) {
-    char ch = m_content.at(i);
-    if (ch == '\n') {
-      ++currentLine;
-      std::string currentLineContent =
-          m_content.substr(startOfLine, i - startOfLine);
-      startOfLine += i + 1;
-      if (currentLineContent.find(needle) != std::string::npos) {
-        matches.push_back(LineData{m_filename, currentLine,
-                                   QString(currentLineContent.data())});
-      }
-      continue;
+  int currentLine = 0;
+  QVector<LineData> matches;
+  std::istringstream content(m_content);
+  std::string line;
+  while (std::getline(content, line)) {
+    ++currentLine;
+    if (line.find(needle) != std::string::npos) {
+      matches.push_back(LineData{m_filename, currentLine, QString(line.c_str())});
     }
   }
   return matches;
