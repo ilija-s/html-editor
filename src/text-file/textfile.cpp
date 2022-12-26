@@ -30,7 +30,7 @@ QVector<LineData> TextFile::find(const std::string &needle) {
   while (std::getline(content, line)) {
     ++currentLine;
     if (line.find(needle) != std::string::npos) {
-      matches.push_back(LineData{m_filename, currentLine, QString(line.c_str())});
+      matches.push_back(LineData{m_filename, m_absoluteFilePath, currentLine, QString(line.c_str())});
     }
   }
   return matches;

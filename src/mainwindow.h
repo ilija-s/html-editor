@@ -2,9 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtGui>
 #include "editorsettings/editorsettings.h"
 #include "search/editorsearch.h"
-#include <QtGui>
+#include "project/project.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +30,7 @@ private slots:
     void parseHtmlFileAndDisplayMessages();
     void findInProjectClicked();
     void updateProjectFolder(QString projectDirPath);
+    void setCursorAtLine(int linenumber);
 
 
 signals:
@@ -38,6 +40,7 @@ private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
     QString m_projectDirPath;
+    Project m_project;
 
     EditorSettings *editorSettingsWindow;
 

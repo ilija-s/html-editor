@@ -23,8 +23,8 @@ void EditorSearch::onSearchButtonClicked(const QString &searchString,
                                      QTextDocument::FindWholeWords);
 
     if (!highlightCursor.isNull()) {
-      highlightCursor.movePosition(QTextCursor::EndOfWord,
-                                   QTextCursor::KeepAnchor);
+        highlightCursor.movePosition(QTextCursor::NoMove,
+                                     QTextCursor::KeepAnchor);
       highlightCursor.mergeCharFormat(colorFormat);
     }
   }

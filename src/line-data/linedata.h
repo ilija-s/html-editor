@@ -9,6 +9,7 @@ public:
   LineData() = default;
 
   QString filename;
+  QString absoluteFilePath;
   int lineNumber{-1};
   QString content;
 };

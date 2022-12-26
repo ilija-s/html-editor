@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "html-parser/htmlparser.h"
-#include "project/project.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->htmlEditor->SetNumberSideBar(ui->numberSideBar);
+    ui->htmlEditor->setTabStopDistance(QFontMetricsF(ui->htmlEditor->font()).horizontalAdvance(' ') * 2);
 
     // Shortcuts
     auto showOrHideFindInProjectShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+F", "Find in project")), this);
@@ -28,12 +28,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
     connect(showOrHideMessagesShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideMessagesTab);
     connect(parseHtmlFileAndDisplayMessagesShortcut , &QShortcut::activated, this, &MainWindow::parseHtmlFileAndDisplayMessages);
-    connect(ui->htmlEditor, &HtmlEditor::siFileExists, ui->treeView, &FileTreeView::SetModel);
     connect(ui->treeView, &FileTreeView::doubleClicked, ui->treeView, &FileTreeView::slDoubleClicked);
     connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, ui->treeView, &FileTreeView::SetFolder);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, this, &MainWindow::updateProjectFolder);
+    connect(ui->htmlEditor, &HtmlEditor::siSetCursorAtLine, this, &MainWindow::setCursorAtLine);
     connect(ui->pbFindInProject, &QPushButton::clicked, this, &MainWindow::findInProjectClicked);
+    connect(ui->lwLinesFound, &QListWidget::itemDoubleClicked, ui->htmlEditor, &HtmlEditor::slOpenFileAtLine);
 
 
     // Editor settings
@@ -75,6 +76,16 @@ void MainWindow::slFontSizeAccepted(int fontSize, int ind){
 void MainWindow::updateProjectFolder(QString projectDirPath)
 {
     m_projectDirPath = projectDirPath;
+    m_project.deleteFileContents();
+    m_project.loadFileContents(m_projectDirPath);
+}
+
+void MainWindow::setCursorAtLine(int linenumber)
+{
+    ui->htmlEditor->setFocus();
+    QTextCursor cursor = ui->htmlEditor->textCursor();
+    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, linenumber - 1);
+    ui->htmlEditor->setTextCursor(cursor);
 }
 
 void MainWindow::findInProjectClicked()
@@ -86,15 +97,12 @@ void MainWindow::findInProjectClicked()
     }
     QString needle = ui->leFindInProjectSearchQuery->text();
 
-    // This should maybe be a member variable
-    Project project;
-    project.loadFileContents(m_projectDirPath);
-
-    foreach (TextFile textfile, project.textFiles()) {
+    foreach (TextFile textfile, m_project.textFiles()) {
         foreach (LineData data, textfile.find(needle.toStdString())) {
             QString content(data.content.trimmed());
             QString text(data.filename + ": " + std::to_string(data.lineNumber).c_str() + "\t" + content);
             QListWidgetItem* item = new QListWidgetItem(text);
+            item->setWhatsThis(data.absoluteFilePath);
             ui->lwLinesFound->addItem(item);
        }
     }

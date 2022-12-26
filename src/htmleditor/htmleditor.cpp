@@ -243,3 +243,13 @@ void HtmlEditor::fontSizeChange(int mainSize)
      this->setFont(font);
 
 }
+
+void HtmlEditor::slOpenFileAtLine(QListWidgetItem *item)
+{
+    QString filenameAndLineNumber = item->text().split("\t")[0];
+    int  linenumber = filenameAndLineNumber.split(" ")[1].toInt();
+    QString filename = item->whatsThis();
+    this->SaveFile();
+    this->OpenFile(filename);
+    emit siSetCursorAtLine(linenumber);
+}

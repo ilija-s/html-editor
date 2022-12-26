@@ -10,6 +10,7 @@ FileTreeView::FileTreeView(QWidget* parent)
     this->setHeaderHidden(true);
     for (int i = 1; i < model->columnCount(); ++i)
         this->hideColumn(i);
+    this->setVisible(false);
 
 }
 
@@ -21,6 +22,7 @@ FileTreeView::~FileTreeView()
 void FileTreeView::SetFolder(QString path)
 {
     SetModel(path);
+    this->setVisible(true);
 }
 
 void FileTreeView::SetModel(QString path)
