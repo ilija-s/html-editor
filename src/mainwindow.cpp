@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->htmlEditor->SetNumberSideBar(ui->numberSideBar);
+    ui->htmlEditor->setTabStopDistance(QFontMetricsF(ui->htmlEditor->font()).horizontalAdvance(' ') * 2);
 
     // Shortcuts
     auto showOrHideFindInProjectShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+F", "Find in project")), this);
