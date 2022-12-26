@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "html-parser/htmlparser.h"
-#include "project/project.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -75,6 +74,8 @@ void MainWindow::slFontSizeAccepted(int fontSize, int ind){
 void MainWindow::updateProjectFolder(QString projectDirPath)
 {
     m_projectDirPath = projectDirPath;
+    m_project.deleteFileContents();
+    m_project.loadFileContents(m_projectDirPath);
 }
 
 void MainWindow::findInProjectClicked()
@@ -86,11 +87,7 @@ void MainWindow::findInProjectClicked()
     }
     QString needle = ui->leFindInProjectSearchQuery->text();
 
-    // This should maybe be a member variable
-    Project project;
-    project.loadFileContents(m_projectDirPath);
-
-    foreach (TextFile textfile, project.textFiles()) {
+    foreach (TextFile textfile, m_project.textFiles()) {
         foreach (LineData data, textfile.find(needle.toStdString())) {
             QString content(data.content.trimmed());
             QString text(data.filename + ": " + std::to_string(data.lineNumber).c_str() + "\t" + content);
