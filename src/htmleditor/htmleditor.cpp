@@ -165,22 +165,20 @@ void HtmlEditor::slSaveAsFileMenuBar()
 void HtmlEditor::slNumberBarPaintEvent(QPaintEvent *event)
 {
 
-    QRect cr = contentsRect();
     number_bar->width = NumberBarWidth();
-    number_bar->setGeometry(QRect(cr.left(), cr.top(), number_bar->width, cr.height()));
 
     QPainter painter(number_bar);
     painter.fillRect(event->rect(), QPlainTextEdit::palette(). color(QPlainTextEdit::backgroundRole()));
 
     QTextBlock block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
-    int top = this->y();
+    int top = 0;
     int bottom = top + qRound(blockBoundingRect(block).height());
-    while (block.isValid() && top <= event->rect().bottom() + 10) {
-        if (block.isVisible() && bottom >= event->rect().top() + 10) {
+    while (block.isValid() && top <= event->rect().bottom()) {
+        if (block.isVisible() && bottom >= event->rect().top()) {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(Qt::lightGray);
-            painter.drawText(0, top, number_bar->width, fontMetrics().height() - 3,
+            painter.drawText(0, top, number_bar->width, fontMetrics().height(),
                              Qt::AlignCenter, number);
         }
 
@@ -227,9 +225,8 @@ void HtmlEditor::resizeEvent(QResizeEvent *e)
 {
     QPlainTextEdit::resizeEvent(e);
 
-    QRect cr = contentsRect();
     number_bar->width = NumberBarWidth();
-    number_bar->setGeometry(QRect(cr.left(), cr.top(), number_bar->width, cr.height()));
+    number_bar->setFixedWidth(number_bar->width);
 }
 
 void HtmlEditor::slTreeViewDoubleClicked(const QString &path)
