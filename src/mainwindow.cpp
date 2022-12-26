@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->treeView, &FileTreeView::doubleClicked, ui->treeView, &FileTreeView::slDoubleClicked);
     connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, ui->treeView, &FileTreeView::SetFolder);
+    connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, this, &MainWindow::updateProjectFolder);
     connect(ui->pbFindInProject, &QPushButton::clicked, this, &MainWindow::findInProjectClicked);
 
 
@@ -71,21 +72,25 @@ void MainWindow::slFontSizeAccepted(int fontSize, int ind){
     }
 }
 
+void MainWindow::updateProjectFolder(QString projectDirPath)
+{
+    m_projectDirPath = projectDirPath;
+}
+
 void MainWindow::findInProjectClicked()
 {
-    // This is not optimal solution
-    // Read directory path from current file
-    QFileInfo fileinfo(ui->htmlEditor->fileName());
-    QDir absoluteDir = fileinfo.absoluteDir();
-    QString absoluteFilePath = absoluteDir.absolutePath();
+    ui->lwLinesFound->clear();
+    if (m_projectDirPath.isEmpty()) {
+        qDebug() << "Project directory is not set.";
+        return;
+    }
     QString needle = ui->leFindInProjectSearchQuery->text();
-    qDebug() << "Needle: " << needle;
 
     // This should maybe be a member variable
     Project project;
-    project.loadFileContents(absoluteFilePath);
+    project.loadFileContents(m_projectDirPath);
 
-    foreach (TextFile textfile, project.fileContents()) {
+    foreach (TextFile textfile, project.textFiles()) {
         foreach (LineData data, textfile.find(needle.toStdString())) {
             QString content(data.content.trimmed());
             QString text(data.filename + ": " + std::to_string(data.lineNumber).c_str() + "\t" + content);
@@ -97,8 +102,7 @@ void MainWindow::findInProjectClicked()
 
 void MainWindow::parseHtmlFileAndDisplayMessages()
 {
-    // In the future this should underscore words that have errors, also this
-    // method should work async
+    // In the future this should underscore words that have errors
 
     // Clear all previous items
     ui->lwEditorMessages->clear();

@@ -28,6 +28,7 @@ private slots:
     void toggleShowOrHideMessagesTab();
     void parseHtmlFileAndDisplayMessages();
     void findInProjectClicked();
+    void updateProjectFolder(QString projectDirPath);
 
 
 signals:
@@ -36,6 +37,7 @@ signals:
 private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
+    QString m_projectDirPath;
 
     EditorSettings *editorSettingsWindow;
 
