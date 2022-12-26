@@ -24,6 +24,11 @@ void Project::loadFileContents(QString directoryPath)
     }
 }
 
+void Project::deleteFileContents()
+{
+    m_textfiles.clear();
+}
+
 std::vector<TextFile> Project::textFiles()
 {
     return m_textfiles;

@@ -12,6 +12,7 @@ class Project
 public:
     Project();
     void loadFileContents(QString directoryPath);
+    void deleteFileContents();
     std::vector<TextFile> textFiles();
 
 private:
