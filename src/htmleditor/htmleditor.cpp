@@ -82,7 +82,6 @@ void HtmlEditor::SaveAsFile() {
 }
 
 void HtmlEditor::OpenFile(QString path) {
-
     if(!path.isEmpty()){
         this->html_file.setFileName(path);
         file_name = path;

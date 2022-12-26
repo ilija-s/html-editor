@@ -14,27 +14,27 @@ MainWindow::MainWindow(QWidget *parent)
     // Shortcuts
     auto showOrHideFindInProjectShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+F", "Find in project")), this);
     auto showOrHideMessagesShortcut = new QShortcut(QKeySequence(tr("Ctrl+M", "Open messages")), this);
-    auto parseHtmlFileAndDisplayMessagesShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+P", "Parse document")), this);
 
     // Menu bar signals
     connect(ui->actionNew_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slNewFileMenuBar);
     connect(ui->actionOpen_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
     connect(ui->actionOpen_folder, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFolderMenuBar);
     connect(ui->actionSave_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveFileMenuBar);
+    connect(ui->actionSave_file, &QAction::triggered, this, &MainWindow::parseHtmlFileAndDisplayMessages);
     connect(ui->actionSave_file_as, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveAsFileMenuBar);
     connect(ui->numberSideBar, &NumberSideBar::siPaintEvent, ui->htmlEditor, &HtmlEditor::slNumberBarPaintEvent);
     connect(this, &MainWindow::searchButtonClicked, _editorSearch, &EditorSearch::onSearchButtonClicked);
     connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
-    connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
-    connect(showOrHideMessagesShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideMessagesTab);
-    connect(parseHtmlFileAndDisplayMessagesShortcut , &QShortcut::activated, this, &MainWindow::parseHtmlFileAndDisplayMessages);
     connect(ui->treeView, &FileTreeView::doubleClicked, ui->treeView, &FileTreeView::slDoubleClicked);
     connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, ui->treeView, &FileTreeView::SetFolder);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, this, &MainWindow::updateProjectFolder);
     connect(ui->htmlEditor, &HtmlEditor::siSetCursorAtLine, this, &MainWindow::setCursorAtLine);
+    connect(ui->htmlEditor, &HtmlEditor::siFileExists, this, &MainWindow::updateWindowTitle);
     connect(ui->pbFindInProject, &QPushButton::clicked, this, &MainWindow::findInProjectClicked);
     connect(ui->lwLinesFound, &QListWidget::itemDoubleClicked, ui->htmlEditor, &HtmlEditor::slOpenFileAtLine);
+    connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
+    connect(showOrHideMessagesShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideMessagesTab);
 
 
     // Editor settings
@@ -51,6 +51,12 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete _editorSearch;
+}
+
+void MainWindow::updateWindowTitle(QString filename)
+{
+    QStringList tokens = filename.split("/");
+    this->setWindowTitle(tokens[tokens.length()-1] + " - HtmlEditor");
 }
 
 void MainWindow::searchForText()

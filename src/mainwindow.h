@@ -31,7 +31,7 @@ private slots:
     void findInProjectClicked();
     void updateProjectFolder(QString projectDirPath);
     void setCursorAtLine(int linenumber);
-
+    void updateWindowTitle(QString filename);
 
 signals:
     void searchButtonClicked(const QString& searchString, QTextDocument *document);
