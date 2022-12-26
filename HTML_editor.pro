@@ -21,7 +21,7 @@ SOURCES += \
     src/mainwindow.cpp \
     src/syntaxhighlighting/htmlsyntaxhighlighter.cpp \
     src/syntaxhighlighting/tagparser.cpp \
-    src/syntaxhighlighting/tokenizer.cpp
+    src/syntaxhighlighting/tokenizer.cpp \
     src/text-file/textfile.cpp
 
 HEADERS += \
@@ -36,7 +36,7 @@ HEADERS += \
     src/mainwindow.h \
     src/syntaxhighlighting/htmlsyntaxhighlighter.h \
     src/syntaxhighlighting/tagparser.h \
-    src/syntaxhighlighting/tokenizer.h
+    src/syntaxhighlighting/tokenizer.h \
     src/text-file/textfile.h
 
 FORMS += \
