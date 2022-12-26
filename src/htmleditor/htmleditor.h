@@ -4,6 +4,7 @@
 #include <QPlainTextEdit>
 #include <QObject>
 #include <QWidget>
+#include <QListWidgetItem>
 #include <QFile>
 #include <iostream>
 #include <QTextStream>
@@ -43,6 +44,7 @@ signals:
     void siOpenFolder(QString dir_path);
     void siFileExists(QString file_path);
     void siTreeViewFolder(QString dir_path);
+    void siSetCursorAtLine(int linenumber);
 public slots:
     void slTreeViewDoubleClicked(const QString& path);
     void slNewFileMenuBar();
@@ -51,6 +53,7 @@ public slots:
     void slSaveFileMenuBar();
     void slSaveAsFileMenuBar();
     void slNumberBarPaintEvent(QPaintEvent *event);
+    void slOpenFileAtLine(QListWidgetItem *item);
 
 };
 
