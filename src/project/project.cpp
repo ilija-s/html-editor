@@ -14,7 +14,7 @@ void Project::loadFileContents(QString directoryPath)
                                                   QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
     foreach (QFileInfo fileinfo, files) {
         TextFile textfile(fileinfo.fileName(), fileinfo.absoluteFilePath());
-        m_fileContents.push_back(textfile);
+        m_textfiles.push_back(textfile);
     }
     QFileInfoList directoryInfoList = directory.entryInfoList(QStringList("*"),
                                                               QDir::AllDirs | QDir::NoDotAndDotDot | QDir::NoSymLinks,
@@ -24,7 +24,7 @@ void Project::loadFileContents(QString directoryPath)
     }
 }
 
-std::vector<TextFile> Project::fileContents()
+std::vector<TextFile> Project::textFiles()
 {
-    return m_fileContents;
+    return m_textfiles;
 }

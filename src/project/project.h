@@ -12,10 +12,10 @@ class Project
 public:
     Project();
     void loadFileContents(QString directoryPath);
-    std::vector<TextFile> fileContents();
+    std::vector<TextFile> textFiles();
 
 private:
-    std::vector<TextFile> m_fileContents;
+    std::vector<TextFile> m_textfiles;
 };
 
 #endif // PROJECT_H
