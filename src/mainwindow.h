@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "editorsettings/editorsettings.h"
+#include "search/editorsearch.h"
+#include <QtGui>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,9 +18,29 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void searchForText();
+
+    void slEditorSettingsWindowOpen();
+    void slFontSizeAccepted(int fontSize, int ind);
+
+    void toggleShowOrHideFindInProjectTab();
+    void toggleShowOrHideMessagesTab();
+    void parseHtmlFileAndDisplayMessages();
+    void findInProjectClicked();
+
+
+signals:
+    void searchButtonClicked(const QString& searchString, QTextDocument *document);
+
 private:
     Ui::MainWindow *ui;
+    EditorSearch *_editorSearch;
 
+    EditorSettings *editorSettingsWindow;
+
+
+    bool m_isBottomTabWidgetVisible{ true };
 
 };
 #endif // MAINWINDOW_H

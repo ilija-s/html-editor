@@ -17,6 +17,8 @@ public:
     HtmlEditor(QWidget *parent = nullptr);
     ~HtmlEditor();
     void SetNumberSideBar(NumberSideBar* sb);
+    QString fileName();
+    void fontSizeChange(int mainSize);
 
 private:
     QFile html_file;
@@ -26,17 +28,26 @@ private:
     void NewFile();
     void SaveFile();
     void SaveAsFile();
-    void OpenFile();
+    void OpenFile(QString path = "");
+    void OpenFolder();
     int NumberBarWidth();
     void UpdateNumberBarWidth();
     void UpdateNumberBar(const QRect &rect, int dy);
 
+    int size = 10;
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
 
+signals:
+    void siOpenFolder(QString dir_path);
+    void siFileExists(QString file_path);
+    void siTreeViewFolder(QString dir_path);
 public slots:
+    void slTreeViewDoubleClicked(const QString& path);
     void slNewFileMenuBar();
     void slOpenFileMenuBar();
+    void slOpenFolderMenuBar();
     void slSaveFileMenuBar();
     void slSaveAsFileMenuBar();
     void slNumberBarPaintEvent(QPaintEvent *event);

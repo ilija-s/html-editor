@@ -22,12 +22,17 @@ HtmlEditor::~HtmlEditor()
 void HtmlEditor::SetNumberSideBar(NumberSideBar *sb)
 {
     number_bar = sb;
+    number_bar->unit_width = 9 + fontMetrics().horizontalAdvance(QLatin1Char('9'));
     UpdateNumberBarWidth();
+
 }
 
+QString HtmlEditor::fileName()
+{
+    return file_name;
+}
 
 void HtmlEditor::NewFile() {
-
     this->html_file.setFileName(QString{});
     this->setPlainText(QString{});
 }
@@ -48,6 +53,8 @@ void HtmlEditor::SaveFile(){
     else {
         this->SaveAsFile();
     }
+
+    emit siFileExists(this->html_file.fileName());
 
 }
 
@@ -70,19 +77,38 @@ void HtmlEditor::SaveAsFile() {
 
         this->html_file.close();
     }
+        emit siFileExists(this->html_file.fileName());
 
 }
 
-void HtmlEditor::OpenFile() {
+void HtmlEditor::OpenFile(QString path) {
+
+    if(!path.isEmpty()){
+        this->html_file.setFileName(path);
+        file_name = path;
+        this->html_file.open(QIODevice::ReadOnly);
+
+        QTextStream in(&this->html_file);
+        QString file_content;
+
+        file_content = in.readAll();
+
+        this->setPlainText(file_content);
+        this->html_file.close();
+        emit siFileExists(this->html_file.fileName());
+        return;
+    }
 
     QFileDialog dialog(this);
     dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
-    dialog.setFileMode(QFileDialog::FileMode::ExistingFile);
+    dialog.setFileMode(QFileDialog::ExistingFile);
     dialog.setMimeTypeFilters({"text/html"});
 
     if(dialog.exec()) {
 
         QString file_name = dialog.selectedFiles()[0];
+
+        QFileInfo fi(file_name);
 
         this->html_file.setFileName(file_name);
         this->html_file.open(QIODevice::ReadOnly);
@@ -101,6 +127,15 @@ void HtmlEditor::OpenFile() {
 
         this->html_file.close();
     }
+    emit siFileExists(this->html_file.fileName());
+}
+
+void HtmlEditor::OpenFolder()
+{
+    QFileDialog dialog(this);
+    dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
+    QString dir = QFileDialog::getExistingDirectory(0, ("Select Output Folder"), QDir::currentPath());
+    emit siOpenFolder(dir);
 }
 
 void HtmlEditor::slNewFileMenuBar() {
@@ -110,6 +145,11 @@ void HtmlEditor::slNewFileMenuBar() {
 void HtmlEditor::slOpenFileMenuBar()
 {
     this->OpenFile();
+}
+
+void HtmlEditor::slOpenFolderMenuBar()
+{
+    this->OpenFolder();
 }
 
 void HtmlEditor::slSaveFileMenuBar()
@@ -124,19 +164,23 @@ void HtmlEditor::slSaveAsFileMenuBar()
 
 void HtmlEditor::slNumberBarPaintEvent(QPaintEvent *event)
 {
+
+    QRect cr = contentsRect();
+    number_bar->width = NumberBarWidth();
+    number_bar->setGeometry(QRect(cr.left(), cr.top(), number_bar->width, cr.height()));
+
     QPainter painter(number_bar);
     painter.fillRect(event->rect(), QPlainTextEdit::palette(). color(QPlainTextEdit::backgroundRole()));
 
     QTextBlock block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
-    int top = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
+    int top = this->y();
     int bottom = top + qRound(blockBoundingRect(block).height());
-
-    while (block.isValid() && top <= event->rect().bottom()) {
-        if (block.isVisible() && bottom >= event->rect().top()) {
+    while (block.isValid() && top <= event->rect().bottom() + 10) {
+        if (block.isVisible() && bottom >= event->rect().top() + 10) {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(Qt::lightGray);
-            painter.drawText(0, top, number_bar->width, fontMetrics().height(),
+            painter.drawText(0, top, number_bar->width, fontMetrics().height() - 3,
                              Qt::AlignCenter, number);
         }
 
@@ -164,7 +208,8 @@ int HtmlEditor::NumberBarWidth()
 void HtmlEditor::UpdateNumberBarWidth()
 {
     number_bar->width = NumberBarWidth();
-    setViewportMargins(number_bar->width, 0, 0, 0);
+    setViewportMargins(number_bar->width - number_bar->unit_width, 0, 0, 0);
+
 }
 
 void HtmlEditor::UpdateNumberBar(const QRect &rect, int dy)
@@ -185,4 +230,19 @@ void HtmlEditor::resizeEvent(QResizeEvent *e)
     QRect cr = contentsRect();
     number_bar->width = NumberBarWidth();
     number_bar->setGeometry(QRect(cr.left(), cr.top(), number_bar->width, cr.height()));
+}
+
+void HtmlEditor::slTreeViewDoubleClicked(const QString &path)
+{
+    this->OpenFile(path);
+}
+
+void HtmlEditor::fontSizeChange(int mainSize)
+{
+     this->size = mainSize;
+
+     QFont font = QFont();
+     font.setPointSize(size);
+     this->setFont(font);
+
 }
