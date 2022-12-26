@@ -19,6 +19,9 @@ SOURCES += \
     src/main.cpp \
     src/numbersidebar/numbersidebar.cpp \
     src/mainwindow.cpp \
+    src/syntaxhighlighting/htmlsyntaxhighlighter.cpp \
+    src/syntaxhighlighting/tagparser.cpp \
+    src/syntaxhighlighting/tokenizer.cpp
     src/text-file/textfile.cpp
 
 HEADERS += \
@@ -31,6 +34,9 @@ HEADERS += \
     src/search/editorsearch.h \
     src/numbersidebar/numbersidebar.h \
     src/mainwindow.h \
+    src/syntaxhighlighting/htmlsyntaxhighlighter.h \
+    src/syntaxhighlighting/tagparser.h \
+    src/syntaxhighlighting/tokenizer.h
     src/text-file/textfile.h
 
 FORMS += \
