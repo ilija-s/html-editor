@@ -30,6 +30,7 @@ private slots:
     void parseHtmlFileAndDisplayMessages();
     void findInProjectClicked();
     void updateProjectFolder(QString projectDirPath);
+    void setCursorAtLine(int linenumber);
 
 
 signals:

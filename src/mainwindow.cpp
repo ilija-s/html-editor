@@ -27,12 +27,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
     connect(showOrHideMessagesShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideMessagesTab);
     connect(parseHtmlFileAndDisplayMessagesShortcut , &QShortcut::activated, this, &MainWindow::parseHtmlFileAndDisplayMessages);
-    connect(ui->htmlEditor, &HtmlEditor::siFileExists, ui->treeView, &FileTreeView::SetModel);
     connect(ui->treeView, &FileTreeView::doubleClicked, ui->treeView, &FileTreeView::slDoubleClicked);
     connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, ui->treeView, &FileTreeView::SetFolder);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, this, &MainWindow::updateProjectFolder);
+    connect(ui->htmlEditor, &HtmlEditor::siSetCursorAtLine, this, &MainWindow::setCursorAtLine);
     connect(ui->pbFindInProject, &QPushButton::clicked, this, &MainWindow::findInProjectClicked);
+    connect(ui->lwLinesFound, &QListWidget::itemDoubleClicked, ui->htmlEditor, &HtmlEditor::slOpenFileAtLine);
 
 
     // Editor settings
@@ -78,6 +79,14 @@ void MainWindow::updateProjectFolder(QString projectDirPath)
     m_project.loadFileContents(m_projectDirPath);
 }
 
+void MainWindow::setCursorAtLine(int linenumber)
+{
+    ui->htmlEditor->setFocus();
+    QTextCursor cursor = ui->htmlEditor->textCursor();
+    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, linenumber - 1);
+    ui->htmlEditor->setTextCursor(cursor);
+}
+
 void MainWindow::findInProjectClicked()
 {
     ui->lwLinesFound->clear();
@@ -92,6 +101,7 @@ void MainWindow::findInProjectClicked()
             QString content(data.content.trimmed());
             QString text(data.filename + ": " + std::to_string(data.lineNumber).c_str() + "\t" + content);
             QListWidgetItem* item = new QListWidgetItem(text);
+            item->setWhatsThis(data.absoluteFilePath);
             ui->lwLinesFound->addItem(item);
        }
     }
