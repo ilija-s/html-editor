@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
+#include <QString>
 #include "../../src/syntaxhighlighting/tokenizer.h"
-#include "../../src/syntaxhighlighting/tokenizer.cpp"
 
 TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 {
@@ -51,17 +51,27 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
         QString input3 {"accept-charset"};
         Tokenizer tokenizer1 = Tokenizer(input1);
         Tokenizer tokenizer2 = Tokenizer(input2);
-        Tokenizer tokenizer3 = Tokenizer(input2);
+        Tokenizer tokenizer3 = Tokenizer(input3);
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
+        TokenType result1_eof = tokenizer1.next().type();
+
         TokenType result2_type = tokenizer2.next().type();
+        TokenType result2_eof = tokenizer2.next().type();
+
         TokenType result3_type = tokenizer3.next().type();
+        TokenType result3_eof = tokenizer3.next().type();
 
         // Assert
-        REQUIRE(result1_type == TokenType::tag_close_bracket);
-        REQUIRE(result2_type == TokenType::tag_close_bracket);
-        REQUIRE(result3_type == TokenType::tag_close_bracket);
+        REQUIRE(result1_type == TokenType::tag_or_attribute_name);
+        REQUIRE(result1_eof == TokenType::eof);
+
+        REQUIRE(result2_type == TokenType::tag_or_attribute_name);
+        REQUIRE(result2_eof == TokenType::eof);
+
+        REQUIRE(result3_type == TokenType::tag_or_attribute_name);
+        REQUIRE(result3_eof == TokenType::eof);
     }
 
     SECTION("Tokenizer matches equals sign")
@@ -88,7 +98,7 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
-        TokenType result2_type = tokenizer1.next().type();
+        TokenType result2_type = tokenizer2.next().type();
 
         // Assert
         REQUIRE(result1_type == TokenType::attribute_value);

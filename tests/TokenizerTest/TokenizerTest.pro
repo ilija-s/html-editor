@@ -11,4 +11,5 @@ isEmpty(CATCH_INCLUDE_DIR): {
 }
 
 SOURCES +=     main.cpp \
-    tst_tokens.cpp
+    tst_tokens.cpp \
+    tst_whitespace.cpp
