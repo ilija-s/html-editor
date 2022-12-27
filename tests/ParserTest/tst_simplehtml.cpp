@@ -5,7 +5,7 @@
 #include "../../src/syntaxhighlighting/tokenizer.h"
 #include "../../src/syntaxhighlighting/tagparser.h"
 
-TEST_CASE("HTML parsing", "[fancy]")
+TEST_CASE("HTML parsing", "[parsing]")
 {
 
     SECTION("Tag parser parses opening tag with tag name only")
