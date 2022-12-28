@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 #include <QString>
-#include "../../src/syntaxhighlighting/tokenizer.h"
+#include "syntaxhighlighting/tokenizer.h"
 
 TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 {
@@ -16,13 +16,23 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
+        TokenType result1_eof = tokenizer1.next().type();
+
         TokenType result2_type = tokenizer2.next().type();
+        TokenType result2_eof = tokenizer2.next().type();
+
         TokenType result3_type = tokenizer3.next().type();
+        TokenType result3_eof = tokenizer3.next().type();
 
         // Assert
         REQUIRE(result1_type == TokenType::tag_open_bracket);
+        REQUIRE(result1_eof == TokenType::eof);
+
         REQUIRE(result2_type == TokenType::tag_open_bracket);
+        REQUIRE(result2_eof == TokenType::eof);
+
         REQUIRE(result3_type == TokenType::tag_open_bracket);
+        REQUIRE(result3_eof == TokenType::eof);
     }
 
     SECTION("Tokenizer matches close tag brackets")
@@ -35,11 +45,17 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
+        TokenType result1_eof = tokenizer1.next().type();
+
         TokenType result2_type = tokenizer2.next().type();
+        TokenType result2_eof = tokenizer2.next().type();
 
         // Assert
         REQUIRE(result1_type == TokenType::tag_close_bracket);
+        REQUIRE(result1_eof == TokenType::eof);
+
         REQUIRE(result2_type == TokenType::tag_close_bracket);
+        REQUIRE(result2_eof == TokenType::eof);
 
     }
 
@@ -82,9 +98,11 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
+        TokenType result1_eof = tokenizer1.next().type();
 
         // Assert
         REQUIRE(result1_type == TokenType::equals);
+        REQUIRE(result1_eof == TokenType::eof);
     }
 
     SECTION("Tokenizer matches attribute value")
@@ -98,11 +116,17 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
+        TokenType result1_eof = tokenizer1.next().type();
+
         TokenType result2_type = tokenizer2.next().type();
+        TokenType result2_eof = tokenizer2.next().type();
 
         // Assert
         REQUIRE(result1_type == TokenType::attribute_value);
+        REQUIRE(result1_eof == TokenType::eof);
+
         REQUIRE(result2_type == TokenType::attribute_value);
+        REQUIRE(result2_eof == TokenType::eof);
     }
 
     SECTION("Tokenizer matches comment start")
@@ -114,9 +138,11 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
+        TokenType result1_eof = tokenizer1.next().type();
 
         // Assert
         REQUIRE(result1_type == TokenType::comment_start);
+        REQUIRE(result1_eof == TokenType::eof);
     }
 
     SECTION("Tokenizer matches comment end")
@@ -128,9 +154,11 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
+        TokenType result1_eof = tokenizer1.next().type();
 
         // Assert
         REQUIRE(result1_type == TokenType::comment_end);
+        REQUIRE(result1_eof == TokenType::eof);
     }
 
     SECTION("Tokenizer matches end of input")
@@ -142,8 +170,10 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
+        TokenType result1_eof = tokenizer1.next().type();
 
         // Assert
         REQUIRE(result1_type == TokenType::eof);
+        REQUIRE(result1_eof == TokenType::eof);
     }
 }

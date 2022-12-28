@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 #include <QString>
-#include "../../src/syntaxhighlighting/tokenizer.h"
+#include "syntaxhighlighting/tokenizer.h"
 
 TEST_CASE("Tokenizer skips all whitspace", "[tokenizer]")
 {
