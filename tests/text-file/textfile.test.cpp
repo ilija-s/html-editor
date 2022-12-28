@@ -55,6 +55,24 @@ TEST_CASE("Test the content method of TextFile", "[TextFile][content]") {
 
 TEST_CASE("Test the find method of TextFile") {
 
+    SECTION("Test the find method, when the file does not contains the query word, returns empty vector.")
+    {
+        // Arrange
+        TextFile file("test.txt", "./test.txt");
+
+        // Set up a mock file with known content
+        QFile mockFile("./test.txt");
+        mockFile.open(QIODevice::WriteOnly);
+        mockFile.write("Hello, world!\nThis file does not contain the word from the query.\n");
+        mockFile.close();
+
+        // Act
+        QVector<LineData> matches = file.find("test");
+
+        // Assert
+        REQUIRE(matches.empty());
+    }
+
     SECTION("Test the find method, when the file contains the query word once, returns the correct data.")
     {
         // Arrange
