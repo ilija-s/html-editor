@@ -10,6 +10,16 @@ TextFile::TextFile(QString filename, QString absoluteFilePath)
 {
 }
 
+QString TextFile::filename()
+{
+    return m_filename;
+}
+
+QString TextFile::absoluteFilePath()
+{
+    return m_absoluteFilePath;
+}
+
 std::string TextFile::content() {
   if (m_content.empty()) {
     auto file = QFile(m_absoluteFilePath);
