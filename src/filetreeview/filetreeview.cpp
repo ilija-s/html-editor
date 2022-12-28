@@ -14,9 +14,9 @@ FileTreeView::FileTreeView(QWidget* parent)
 
 }
 
-FileTreeView::~FileTreeView()
+QFileSystemModel *FileTreeView::getModel()
 {
-
+    return model;
 }
 
 void FileTreeView::SetFolder(QString path)
@@ -27,7 +27,6 @@ void FileTreeView::SetFolder(QString path)
 
 void FileTreeView::SetModel(QString path)
 {
-
     QFileInfo fi(path);
     if(!fi.isDir())
         path = fi.dir().absolutePath();

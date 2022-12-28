@@ -15,8 +15,8 @@ class FileTreeView : public QTreeView
     Q_OBJECT
 public:
     FileTreeView(QWidget* parent = nullptr);
-    ~FileTreeView();
-
+    ~FileTreeView() {};
+    QFileSystemModel* getModel();
 public slots:
     void SetFolder(QString path);
     void SetModel(QString path);
