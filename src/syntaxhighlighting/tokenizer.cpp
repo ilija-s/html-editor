@@ -17,6 +17,12 @@ int Token::length() const{
     return m_length;
 }
 
+bool Token::operator==(const Token &other) const {
+    return m_type == other.type()
+            && m_start == other.start()
+            && m_length == other.length();
+}
+
 /* Tokenizer */
 
 Token Tokenizer::next() {
@@ -66,3 +72,5 @@ int Tokenizer::whitespace_offset() {
         return 0;
     }
 }
+
+

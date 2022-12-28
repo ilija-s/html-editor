@@ -37,6 +37,8 @@ public:
     int start() const;
     int length() const;
 
+    bool operator==(const Token &other) const;
+
 private:
 
     TokenType m_type;
@@ -77,13 +79,13 @@ private:
                     QRegularExpression("<!|<\\/|<"), TokenType::tag_open_bracket
         ),
         QPair<QRegularExpression, TokenType>(
-                    QRegularExpression("[a-zA-Z0-9]+"), TokenType::tag_or_attribute_name
+                    QRegularExpression("[a-zA-Z0-9-]+"), TokenType::tag_or_attribute_name
         ),
         QPair<QRegularExpression, TokenType>(
                     QRegularExpression("="), TokenType::equals
         ),
         QPair<QRegularExpression, TokenType>(
-                    QRegularExpression("[0-9]+|[\"][^\"]+[\"]"), TokenType::attribute_value
+                    QRegularExpression("[\"][^\"]*[\"]"), TokenType::attribute_value
         ),
         QPair<QRegularExpression, TokenType>(
                     QRegularExpression(">|\\/>"), TokenType::tag_close_bracket
