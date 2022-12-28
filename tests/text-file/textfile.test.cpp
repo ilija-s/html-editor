@@ -2,10 +2,26 @@
 #include "tests/libs/catch2/catch.hpp"
 #include <QFile>
 
-TEST_CASE("Test the constructor of TextFile", "[TextFile]") {
-  TextFile file("test.txt", "/path/to/test.txt");
-  REQUIRE(file.filename() == "test.txt");
-  REQUIRE(file.absoluteFilePath() == "/path/to/test.txt");
+TEST_CASE("Test the constructor of TextFile", "[TextFile]")
+{
+    SECTION("Test that filename and absoluteFilePath are set correctly.")
+    {
+        // Arrange
+        // Act
+        TextFile file("test.txt", "/path/to/test.txt");
+        // Assert
+        REQUIRE(file.filename() == "test.txt");
+        REQUIRE(file.absoluteFilePath() == "/path/to/test.txt");
+    }
+
+    SECTION("Test that the content is empty.")
+    {
+        // Arrange
+        // Act
+        TextFile file("test.txt", "/path/to/test.txt");
+        // Assert
+        REQUIRE(file.content() == "");
+    }
 }
 
 TEST_CASE("Test the content function of TextFile") {
