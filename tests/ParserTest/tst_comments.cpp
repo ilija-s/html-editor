@@ -2,8 +2,9 @@
 #include <QString>
 #include <QVector>
 #include <QSharedPointer>
-#include "../../src/syntaxhighlighting/tokenizer.h"
-#include "../../src/syntaxhighlighting/tagparser.h"
+
+#include "syntaxhighlighting/tokenizer.h"
+#include "syntaxhighlighting/tagparser.h"
 
 TEST_CASE("Parsing HTML comments", "[parsing]")
 {
