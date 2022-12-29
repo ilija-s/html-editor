@@ -71,6 +71,7 @@ void MainWindow::slEditorSettingsWindowOpen(){
     editorSettingsWindow->show();
 
     connect(editorSettingsWindow, &EditorSettings::siFontSizeAccepted, this, &MainWindow::slFontSizeAccepted);
+    connect(editorSettingsWindow, &EditorSettings::siThemeAccepted, this, &MainWindow::slThemeAccepted);
 }
 
 void MainWindow::slFontSizeAccepted(int fontSize, int ind){
@@ -161,3 +162,14 @@ void MainWindow::toggleShowOrHideMessagesTab()
     }
 }
 
+void MainWindow::slThemeAccepted(int ind){
+    if(ind == 1){
+
+    }else if(ind == 2){
+        ui->htmlEditor->setStyleSheet("background-color: #606060;  color: white; border-color: black; border-style: solid");
+        ui->tabWidget->setStyleSheet("background-color: #606060; color: black; border-color: black; border-style: solid");
+        ui->pbFindInProject->setStyleSheet("background-color: #C0C0C0; color: white; border-color: black; border-style: solid");
+        ui->leSearchInput->setStyleSheet("border-color: black; border-style: solid");
+        this->repaint();
+    }
+}

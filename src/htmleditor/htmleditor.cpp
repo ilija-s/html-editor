@@ -252,3 +252,7 @@ void HtmlEditor::slOpenFileAtLine(QListWidgetItem *item)
     this->OpenFile(filename);
     emit siSetCursorAtLine(linenumber);
 }
+
+void HtmlEditor::fontThemeChanged(){
+
+}

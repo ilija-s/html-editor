@@ -24,6 +24,7 @@ private slots:
 
     void slEditorSettingsWindowOpen();
     void slFontSizeAccepted(int fontSize, int ind);
+    void slThemeAccepted( int ind);
 
     void toggleShowOrHideFindInProjectTab();
     void toggleShowOrHideMessagesTab();

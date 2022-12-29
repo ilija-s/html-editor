@@ -176,6 +176,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QRadioButton" name="rbTheme">
+       <property name="text">
+        <string>Theme</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QPushButton" name="pbOK">
@@ -185,6 +192,55 @@
       <y>130</y>
       <width>91</width>
       <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>OK</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="wTheme" native="true">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>219</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <widget class="QRadioButton" name="rbFirst">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>89</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rbSecond">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>20</y>
+      <width>89</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>2</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbOKTheme">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>60</y>
+      <width>75</width>
+      <height>24</height>
      </rect>
     </property>
     <property name="text">

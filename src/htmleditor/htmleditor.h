@@ -20,6 +20,7 @@ public:
     void SetNumberSideBar(NumberSideBar* sb);
     QString fileName();
     void fontSizeChange(int mainSize);
+    void fontThemeChanged();
 
 private:
     QFile html_file;

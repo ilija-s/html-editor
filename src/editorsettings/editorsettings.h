@@ -18,14 +18,17 @@ public:
 
 signals:
     void siFontSizeAccepted(int fontSize, bool ind);
+    void siThemeAccepted(int ind);
 
 private slots:
     void slOKClicked();
     void slFontSizeAccepted();
+    void slOKClickedTheme();
 
 private:
     Ui::EditorSettings *ui;
     void fFontSize();
+    void fTheme();
 };
 
 #endif // EDITORSETTINGS_H
