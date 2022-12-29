@@ -107,5 +107,8 @@ TEST_CASE("My first test with Catch2", "[fancy]")
         cursor.movePosition(QTextCursor::Start);
         cursor = document.find(word, cursor, QTextDocument::FindWholeWords);
         REQUIRE(cursor.isNull() == true);
+
+        QString highlightedText = document.toPlainText();
+        REQUIRE(!highlightedText.contains("<span style='background-color:yellow;color:black;'>"));
     }
 }
