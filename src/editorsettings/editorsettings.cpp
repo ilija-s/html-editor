@@ -49,3 +49,8 @@ void EditorSettings::slFontSizeAccepted(){
     close();
 }
 
+Ui::EditorSettings *EditorSettings::getUi() const
+{
+    return ui;
+}
+

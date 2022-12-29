@@ -16,16 +16,19 @@ public:
     explicit EditorSettings(QWidget *parent = nullptr);
     ~EditorSettings();
 
+    Ui::EditorSettings *getUi() const;
+    void fFontSize();
+
 signals:
     void siFontSizeAccepted(int fontSize, bool ind);
 
-private slots:
+public slots:
     void slOKClicked();
     void slFontSizeAccepted();
 
 private:
     Ui::EditorSettings *ui;
-    void fFontSize();
+
 };
 
 #endif // EDITORSETTINGS_H
