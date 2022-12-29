@@ -14,6 +14,8 @@
 2. User opens project directory through 'Open folder' option in menu bar.
 2. File tree view is opened and user can see it.
 3. The user is moving through working directory until he decides to do something else.
+
     3.1. The user can click on any folder and all contents of that folder will show.
     3.2. The user can double click on certain file and it should be opened in editor. Go back to step 3.
+    
 4. Application is running , html file is opened (if chosen), and user can procede to do whatever he wants.
