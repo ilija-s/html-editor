@@ -19,6 +19,7 @@ public:
     ~HtmlEditor();
     void SetNumberSideBar(NumberSideBar* sb);
     QString fileName();
+    NumberSideBar* getNumberBar();
     void fontSizeChange(int mainSize);
 
 private:

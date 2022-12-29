@@ -32,6 +32,11 @@ QString HtmlEditor::fileName()
     return file_name;
 }
 
+NumberSideBar *HtmlEditor::getNumberBar()
+{
+    return number_bar;
+}
+
 void HtmlEditor::NewFile() {
     this->html_file.setFileName(QString{});
     this->setPlainText(QString{});
@@ -119,10 +124,6 @@ void HtmlEditor::OpenFile(QString path) {
 
         this->setPlainText(file_content);
 
-        /*
-         * TODO:
-         * Set cursor to point behind the last character.
-        */
 
         this->html_file.close();
     }
