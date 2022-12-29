@@ -105,14 +105,7 @@ TEST_CASE("My first test with Catch2", "[fancy]")
 
         QTextCursor cursor(&document);
         cursor.movePosition(QTextCursor::Start);
+        cursor = document.find(word, cursor, QTextDocument::FindWholeWords);
         REQUIRE(cursor.isNull() == true);
-
-        while (!cursor.isNull() && !cursor.atEnd()) {
-            cursor.movePosition(QTextCursor::Right,
-                                         QTextCursor::MoveAnchor, 1);
-            QTextCharFormat format = cursor.charFormat();
-            REQUIRE(format.background().color() == Qt::yellow);
-            REQUIRE(format.foreground().color() == Qt::black);
-          }
     }
 }
