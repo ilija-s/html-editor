@@ -12,6 +12,8 @@ isEmpty(CATCH_INCLUDE_DIR): {
 
 INCLUDEPATH *= "$${PWD}/../../src"
 
+HEADERS += $${PWD}/../../src/search/*.h
+
 SOURCES +=     main.cpp\
     tst_search.cpp\
     $${PWD}/../../src/search/*.cpp
