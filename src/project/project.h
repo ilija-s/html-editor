@@ -13,7 +13,7 @@ public:
     Project();
     void loadFileContents(QString directoryPath);
     void deleteFileContents();
-    std::vector<TextFile> textFiles();
+    std::vector<TextFile> textFiles() const;
 
 private:
     std::vector<TextFile> m_textfiles;
