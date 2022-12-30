@@ -1,0 +1,59 @@
+@startuml use_case_diagram
+
+left to right direction
+
+actor :User: as user
+
+rectangle "HTML Editor" {
+
+' CODE EDITING
+usecase "Code editing" as uc_code_editing
+
+usecase "Open folder" as uc_open_folder
+usecase "Open file" as uc_open_file
+usecase "Save fila as" as uc_save_file_as
+usecase "Save file" as uc_save_file
+usecase "Create new file" as uc_create_file
+usecase "Edit file" as uc_edit_file
+
+uc_code_editing ..> uc_edit_file :<<include>>
+uc_code_editing ..> uc_create_file :<<include>>
+uc_code_editing ..> uc_save_file :<<include>>
+uc_code_editing ..> uc_save_file_as :<<include>>
+uc_code_editing ..> uc_open_file :<<include>>
+uc_code_editing ..> uc_open_folder :<<include>>
+
+' SEARCH
+usecase "Search contents" as uc_search
+usecase "Search in project" as uc_search_project
+usecase "Search in file" as uc_search_file
+
+uc_search ..> uc_search_file :<<include>>
+uc_search ..> uc_search_project :<<include>>
+
+' FILE TREE VIEW
+usecase "Manipulate file\n tree view" as uc_tree_view
+usecase "Explore content\n of current folder" as uc_tree_explore
+usecase "Open file from\n current folder" as uc_tree_open_file
+
+uc_tree_view ..> uc_tree_explore :<<include>>
+uc_tree_view ..> uc_tree_open_file :<<include>>
+
+' EDIT SETTINGS
+usecase "Edit settings" as uc_edit_settings
+usecase "Change theme" as uc_change_theme
+usecase "Change editor font style" as uc_change_font_style
+usecase "Change editor font size" as uc_change_font_size
+
+uc_edit_settings <.. uc_change_font_size :<<extend>>
+uc_edit_settings <.. uc_change_font_style :<<extend>>
+uc_edit_settings <.. uc_change_theme :<<extend>>
+
+}
+
+user --> uc_code_editing
+user --> uc_search
+user --> uc_tree_view
+user --> uc_edit_settings
+
+@enduml
