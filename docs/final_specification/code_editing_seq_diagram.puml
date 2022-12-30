@@ -24,7 +24,7 @@ loop Application running
         user ->> bar : Select option in menu bar
 
         |||
-        alt Selected option == Create new
+        alt Selected option == New file
         |||
 
             editor <<- bar : Create new document
