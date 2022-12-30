@@ -166,10 +166,70 @@ void MainWindow::slThemeAccepted(int ind){
     if(ind == 1){
 
     }else if(ind == 2){
-        ui->htmlEditor->setStyleSheet("background-color: #606060;  color: white; border-color: black; border-style: solid");
-        ui->tabWidget->setStyleSheet("background-color: #606060; color: black; border-color: black; border-style: solid");
-        ui->pbFindInProject->setStyleSheet("background-color: #C0C0C0; color: white; border-color: black; border-style: solid");
-        ui->leSearchInput->setStyleSheet("border-color: black; border-style: solid");
+        this->setStyleSheet("background-color: #4F4B4B;  color: white; border-color: black; border-style: solid white;\
+            border-width: thin;");
+        ui->htmlEditor->setStyleSheet("background-color: #352F2F;  color: white; font-weight: bold; border-color: white; \
+            border-style: solid black; border-width: thin;");
+
+        QString treeViewStyle = "QTreeView {\
+               background-color: #352F2F;\
+               color: white\
+            }\
+        QTreeView::item:selected:active{\
+            background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);\
+        }";
+
+        ui->treeView->setStyleSheet(treeViewStyle);
+
+
+        QString tabStyle = "QTabBar::tab {\
+                background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\
+                                            stop: 0 #6E6E6E, stop: 0.4 #5A5959,\
+                                            stop: 0.5 #6E6E6E, stop: 1.0 #5A5959);\
+                border: 2px solid #080808;\
+                border-bottom-style: transparent; \
+                border-top-left-radius: 1px;\
+                border-top-right-radius: 1px;\
+                min-width: 8ex;\
+                padding: 2px;\
+                color: white;\
+            }\
+                QTabWidget {\
+                    border: 2px solid #080808;\
+                    background-color: #352F2F\
+                    color: black;\
+                }\
+                QTabBar::tab:selected {\
+                    border-color: #080808;\
+                    background-color: #352F2F;\
+                }\
+                \
+                QTabBar::tab:!selected {\
+                    margin-top: 2px;\
+                }";
+        ui->tabWidget->setStyleSheet(tabStyle);
+        ui->lwLinesFound->setStyleSheet("QListWidget { border: 1px solid black; }");
+
+
+        QString pbFindInProjectStyle = "QPushButton:pressed {\
+                background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\
+                                                  stop: 0 #dadbde, stop: 1 #f6f7fa);\
+                } \
+        QPushButton {\
+            border: solid white;\
+            border-width: thin;\
+            border-radius: 6px;\
+            background-color: #A3A0A0;\
+        }";
+
+
+       ui->pbFindInProject->setStyleSheet(pbFindInProjectStyle);
+       ui->leFindInProjectSearchQuery->setStyleSheet("QLineEdit {\
+                                        border-color: white;\
+                                        border-style: solid;\
+                                        border-width: thin;\
+                                        background: #A3A0A0;}");
+
         this->repaint();
     }
 }
