@@ -15,6 +15,7 @@ class EditorSettings : public QDialog
 public:
     explicit EditorSettings(QWidget *parent = nullptr);
     ~EditorSettings();
+    void changeStyle();
 
 signals:
     void siFontSizeAccepted(int fontSize, bool ind);

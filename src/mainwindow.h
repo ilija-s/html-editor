@@ -34,6 +34,8 @@ private slots:
     void setCursorAtLine(int linenumber);
     void updateWindowTitle(QString filename);
 
+    void setInitalStyleSheet();
+
 signals:
     void searchButtonClicked(const QString& searchString, QTextDocument *document);
 
@@ -48,5 +50,12 @@ private:
 
     bool m_isBottomTabWidgetVisible{ true };
 
+    QString styleSheetInital;
+    QString styleSheetInitalHTML;
+    QString styleSheetInitalFindIn;
+    QString styleSheetInitalTab;
+    QString styleSheetInitalTreeView;
+    QString styleSheetInitalleFindIn;
+    QString styleSheetleSearch;
 };
 #endif // MAINWINDOW_H

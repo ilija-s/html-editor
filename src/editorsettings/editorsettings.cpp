@@ -60,7 +60,28 @@ void EditorSettings::fTheme(){
 }
 
 void EditorSettings::slOKClickedTheme(){
-    int ind = ui->rbSecond->isChecked() ? 2 : 0;
+    int ind = 0;
+    if(ui->rbSecond->isChecked()){
+        ind = 2;
+    } else if(ui->rbFirst->isChecked()){
+        ind = 1;
+    }
+
     emit siThemeAccepted(ind);
     close();
+}
+
+void EditorSettings::changeStyle(){
+    ui->pbOK->setStyleSheet("QPushButton {\
+                            border-color: white;\
+                            border-style: solid;\
+                            border-radius: 6px;}");
+    ui->pbOKTheme->setStyleSheet("QPushButton {\
+                                 border-color: white;\
+                                 border-style: solid;\
+                                 border-radius: 6px;}");
+    ui->pbOKFontSize->setStyleSheet("QPushButton {\
+                                    border-color: white;\
+                                    border-style: solid;\
+                                    border-radius: 6px;}");
 }

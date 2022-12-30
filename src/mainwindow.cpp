@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionOpen_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_O));
     ui->actionSave_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
     ui->actionSave_file_as->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_S));
+
+    this->setInitalStyleSheet();
 }
 
 MainWindow::~MainWindow()
@@ -164,8 +166,14 @@ void MainWindow::toggleShowOrHideMessagesTab()
 
 void MainWindow::slThemeAccepted(int ind){
     if(ind == 1){
-
-    }else if(ind == 2){
+        this->setStyleSheet(styleSheetInital);
+        ui->htmlEditor->setStyleSheet(styleSheetInitalHTML);
+        ui->pbFindInProject->setStyleSheet(styleSheetInitalFindIn);
+        ui->tabWidget->setStyleSheet(styleSheetInitalTab);
+        ui->treeView->setStyleSheet(styleSheetInitalTreeView);
+        ui->leFindInProjectSearchQuery->setStyleSheet(styleSheetInitalleFindIn);
+        ui->leSearchInput->setStyleSheet(styleSheetleSearch);
+    } else if(ind == 2){
         this->setStyleSheet("background-color: #4F4B4B;  color: white; border-color: black; border-style: solid white;\
             border-width: thin;");
         ui->htmlEditor->setStyleSheet("background-color: #352F2F;  color: white; font-weight: bold; border-color: white; \
@@ -181,27 +189,24 @@ void MainWindow::slThemeAccepted(int ind){
 
         ui->treeView->setStyleSheet(treeViewStyle);
 
-
         QString tabStyle = "QTabBar::tab {\
-                background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\
-                                            stop: 0 #6E6E6E, stop: 0.4 #5A5959,\
-                                            stop: 0.5 #6E6E6E, stop: 1.0 #5A5959);\
-                border: 2px solid #080808;\
-                border-bottom-style: transparent; \
-                border-top-left-radius: 1px;\
-                border-top-right-radius: 1px;\
+                background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #757575, stop: 1 #352F2F);\
+                border: solid white;\
+                border-top-left-radius: 10px;\
+                border-top-right-radius: 10px;\
                 min-width: 8ex;\
                 padding: 2px;\
                 color: white;\
             }\
                 QTabWidget {\
-                    border: 2px solid #080808;\
+                    border: 2px solid white;\
                     background-color: #352F2F\
                     color: black;\
                 }\
                 QTabBar::tab:selected {\
                     border-color: #080808;\
                     background-color: #352F2F;\
+                    border-bottom-style: transparent; \
                 }\
                 \
                 QTabBar::tab:!selected {\
@@ -209,7 +214,6 @@ void MainWindow::slThemeAccepted(int ind){
                 }";
         ui->tabWidget->setStyleSheet(tabStyle);
         ui->lwLinesFound->setStyleSheet("QListWidget { border: 1px solid black; }");
-
 
         QString pbFindInProjectStyle = "QPushButton:pressed {\
                 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\
@@ -222,7 +226,6 @@ void MainWindow::slThemeAccepted(int ind){
             background-color: #A3A0A0;\
         }";
 
-
        ui->pbFindInProject->setStyleSheet(pbFindInProjectStyle);
        ui->leFindInProjectSearchQuery->setStyleSheet("QLineEdit {\
                                         border-color: white;\
@@ -230,6 +233,30 @@ void MainWindow::slThemeAccepted(int ind){
                                         border-width: thin;\
                                         background: #A3A0A0;}");
 
+        QString searchStyle = "QLineEdit {\
+                border: 2px solid white;\
+                color: white;\
+                background: #4F4B4B;\
+            }";
+        ui->leSearchInput->setStyleSheet(searchStyle);
+
+
+        ui->lwEditorMessages->setStyleSheet("QLineWidget { border-color: white;\
+                                            border-style: solid;\
+                                            background: #A3A0A0;}");
+
+        this->editorSettingsWindow->changeStyle();
+
         this->repaint();
     }
 }
+
+void MainWindow::setInitalStyleSheet(){
+    this->styleSheetInital = this->styleSheet();
+    styleSheetInitalHTML = ui->htmlEditor->styleSheet();
+    styleSheetInitalFindIn = ui->pbFindInProject->styleSheet();
+    styleSheetInitalTab = ui->tabWidget->styleSheet();
+    styleSheetInitalTreeView = ui->treeView->styleSheet();
+    styleSheetleSearch = ui->leSearchInput->styleSheet();
+}
+
