@@ -9,8 +9,8 @@
 class TextFile {
 public:
   TextFile(QString filename, QString absoluteFilePath);
-  QString filename();
-  QString absoluteFilePath();
+  QString filename() const;
+  QString absoluteFilePath() const;
   std::string content();
   QVector<LineData> find(const std::string &needle);
 
