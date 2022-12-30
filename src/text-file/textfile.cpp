@@ -10,12 +10,12 @@ TextFile::TextFile(QString filename, QString absoluteFilePath)
 {
 }
 
-QString TextFile::filename()
+QString TextFile::filename() const
 {
     return m_filename;
 }
 
-QString TextFile::absoluteFilePath()
+QString TextFile::absoluteFilePath() const
 {
     return m_absoluteFilePath;
 }

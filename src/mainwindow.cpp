@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, this, &MainWindow::updateProjectFolder);
     connect(ui->htmlEditor, &HtmlEditor::siSetCursorAtLine, this, &MainWindow::setCursorAtLine);
     connect(ui->htmlEditor, &HtmlEditor::siFileExists, this, &MainWindow::updateWindowTitle);
+    connect(ui->leFindInProjectSearchQuery, &QLineEdit::returnPressed, this, &MainWindow::findInProjectClicked);
     connect(ui->pbFindInProject, &QPushButton::clicked, this, &MainWindow::findInProjectClicked);
     connect(ui->lwLinesFound, &QListWidget::itemDoubleClicked, ui->htmlEditor, &HtmlEditor::slOpenFileAtLine);
     connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
