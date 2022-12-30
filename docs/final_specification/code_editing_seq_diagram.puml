@@ -1,0 +1,70 @@
+@startuml code_editing_seq_diagram
+
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+actor "User" as user
+
+create ":HTML Editor" as editor
+user -->> editor :Open application
+
+|||
+loop Application running
+|||
+
+    user -> editor : Edit opened document
+    user <<-- editor : Changes displayed on screen
+
+    |||
+    opt Menu bar opened
+    |||
+        
+        create "Menu bar" as bar
+        user -->> bar : Open menu bar
+        user ->> bar : Select option in menu bar
+
+        |||
+        alt Selected option == New file
+        |||
+
+            editor <<- bar : Create new document
+            user <<- editor : New document opened in editor
+
+            destroy bar
+
+        |||
+        else Selected option == Open file
+        |||
+
+            editor <<- bar : Open file
+            user <<- editor : File opened in new tab
+            destroy bar
+
+        |||
+        else Selected option == Open folder
+        |||
+
+            ?o<- bar : Open folder \nin file tree view
+            destroy bar
+
+        |||
+        else Selected option == Save file or Selected option == Save file as
+        |||
+
+            editor <<- bar : Save file
+            ?o<- editor  : Changes saved to file
+            destroy bar
+
+        |||
+        end
+        |||
+
+        user -> bar : Close menu bar
+        destroy bar
+
+    |||
+    end
+
+end
+
+@enduml
