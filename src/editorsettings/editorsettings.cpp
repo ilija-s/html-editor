@@ -42,6 +42,7 @@ void EditorSettings::slFontSizeAccepted(){
     if(!ind || fontSize < 5){
         ui->lNotValid->setVisible(true);
         ind = fontSize > 5 ? ind : false;
+        ui->cbSize->setCurrentIndex(0);
         return;
     }
 
