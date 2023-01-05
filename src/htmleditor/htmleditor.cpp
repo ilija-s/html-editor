@@ -135,7 +135,9 @@ void HtmlEditor::OpenFolder()
     QFileDialog dialog(this);
     dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
     QString dir = QFileDialog::getExistingDirectory(0, ("Select Output Folder"), QDir::currentPath());
-    emit siOpenFolder(dir);
+    if(dir != nullptr){
+        emit siOpenFolder(dir);
+    }
 }
 
 void HtmlEditor::slNewFileMenuBar() {
