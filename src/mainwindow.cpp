@@ -46,6 +46,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionOpen_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_O));
     ui->actionSave_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
     ui->actionSave_file_as->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_S));
+
+    ui->htmlEditor->setFocus();
 }
 
 MainWindow::~MainWindow()
