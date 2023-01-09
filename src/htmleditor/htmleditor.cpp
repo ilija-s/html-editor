@@ -54,12 +54,11 @@ void HtmlEditor::SaveFile(){
         out << content;
 
         this->html_file.close();
+        emit siFileExists(this->html_file.fileName());
     }
     else {
         this->SaveAsFile();
     }
-
-    emit siFileExists(this->html_file.fileName());
 
 }
 
@@ -81,8 +80,8 @@ void HtmlEditor::SaveAsFile() {
         out << content;
 
         this->html_file.close();
-    }
         emit siFileExists(this->html_file.fileName());
+    }
 
 }
 
@@ -126,8 +125,9 @@ void HtmlEditor::OpenFile(QString path) {
 
 
         this->html_file.close();
+        emit siFileExists(this->html_file.fileName());
     }
-    emit siFileExists(this->html_file.fileName());
+
 }
 
 void HtmlEditor::OpenFolder()

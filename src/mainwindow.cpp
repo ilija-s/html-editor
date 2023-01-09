@@ -20,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOpen_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
     connect(ui->actionOpen_folder, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFolderMenuBar);
     connect(ui->actionSave_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveFileMenuBar);
-    connect(ui->actionSave_file, &QAction::triggered, this, &MainWindow::parseHtmlFileAndDisplayMessages);
+//connect(ui->actionSave_file, &QAction::triggered, this, &MainWindow::parseHtmlFileAndDisplayMessages);
+    connect(ui->htmlEditor, &HtmlEditor::siFileExists, this, &MainWindow::parseHtmlFileAndDisplayMessages);
     connect(ui->actionSave_file_as, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveAsFileMenuBar);
     connect(ui->numberSideBar, &NumberSideBar::siPaintEvent, ui->htmlEditor, &HtmlEditor::slNumberBarPaintEvent);
     connect(this, &MainWindow::searchButtonClicked, _editorSearch, &EditorSearch::onSearchButtonClicked);
