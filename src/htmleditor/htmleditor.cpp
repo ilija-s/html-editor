@@ -97,6 +97,12 @@ void HtmlEditor::OpenFile(QString path) {
         file_content = in.readAll();
 
         this->setPlainText(file_content);
+
+        QString content = this->toPlainText();
+        QTextCursor cursor = this->textCursor();
+        cursor.setPosition(content.length());
+        this->setTextCursor(cursor);
+
         this->html_file.close();
         emit siFileExists(this->html_file.fileName());
         return;
@@ -123,6 +129,10 @@ void HtmlEditor::OpenFile(QString path) {
 
         this->setPlainText(file_content);
 
+        QString content = this->toPlainText();
+        QTextCursor cursor = this->textCursor();
+        cursor.setPosition(content.length());
+        this->setTextCursor(cursor);
 
         this->html_file.close();
         emit siFileExists(this->html_file.fileName());
