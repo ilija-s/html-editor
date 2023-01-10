@@ -1,12 +1,16 @@
-QT       += core gui
+TEMPLATE = app
+QT += gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+isEmpty(CATCH_INCLUDE_DIR): CATCH_INCLUDE_DIR=$$(CATCH_INCLUDE_DIR)
+!isEmpty(CATCH_INCLUDE_DIR): INCLUDEPATH *= $${CATCH_INCLUDE_DIR}
+
+isEmpty(CATCH_INCLUDE_DIR): {
+    message("CATCH_INCLUDE_DIR is not set, assuming Catch2 can be found automatically in your system")
+}
 
 SOURCES += \
     src/editorsettings/editorsettings.cpp \
@@ -22,7 +26,7 @@ SOURCES += \
     src/syntaxhighlighting/htmlsyntaxhighlighter.cpp \
     src/syntaxhighlighting/tagparser.cpp \
     src/syntaxhighlighting/tokenizer.cpp \
-    src/text-file/textfile.cpp
+    src/text-file/textfile.cpp \
 
 HEADERS += \
     src/editorsettings/editorsettings.h \
@@ -43,13 +47,6 @@ FORMS += \
     src/editorsettings/editorsettings.ui \
     form/mainwindow.ui
 
-RESOURCES = form/mainwindow.ui \
-            resources/res.qrc
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
-DISTFILES += \
-    data.json
+SOURCES += \
+    tests/main.cpp \
+    tests/text-file/textfile.test.cpp
