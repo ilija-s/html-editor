@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, ui->treeView, &FileTreeView::SetFolder);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, this, &MainWindow::updateProjectFolder);
+    connect(ui->htmlEditor, &HtmlEditor::siFileSaved, this, &MainWindow::updateProjectFolder);
     connect(ui->htmlEditor, &HtmlEditor::siSetCursorAtLine, this, &MainWindow::setCursorAtLine);
     connect(ui->htmlEditor, &HtmlEditor::siFileExists, this, &MainWindow::updateWindowTitle);
     connect(ui->leFindInProjectSearchQuery, &QLineEdit::returnPressed, this, &MainWindow::findInProjectClicked);
@@ -89,7 +90,9 @@ void MainWindow::slFontSizeAccepted(int fontSize, int ind){
 
 void MainWindow::updateProjectFolder(QString projectDirPath)
 {
-    m_projectDirPath = projectDirPath;
+    if (!projectDirPath.isEmpty()) {
+        m_projectDirPath = projectDirPath;
+    }
     m_project.deleteFileContents();
     m_project.loadFileContents(m_projectDirPath);
 }

@@ -46,6 +46,7 @@ signals:
     void siFileExists(QString file_path);
     void siTreeViewFolder(QString dir_path);
     void siSetCursorAtLine(int linenumber);
+    void siFileSaved(QString dummy);
 public slots:
     void slTreeViewDoubleClicked(const QString& path);
     void slNewFileMenuBar();

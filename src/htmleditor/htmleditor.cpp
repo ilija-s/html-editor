@@ -56,6 +56,8 @@ void HtmlEditor::SaveFile(){
 
         this->html_file.close();
         emit siFileExists(this->html_file.fileName());
+        emit siFileSaved("");
+
     }
     else {
         this->SaveAsFile();
@@ -82,6 +84,7 @@ void HtmlEditor::SaveAsFile() {
 
         this->html_file.close();
         emit siFileExists(this->html_file.fileName());
+        emit siFileSaved("");
     }
 
 }
