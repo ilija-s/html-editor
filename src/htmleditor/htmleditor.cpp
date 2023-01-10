@@ -40,6 +40,7 @@ NumberSideBar *HtmlEditor::getNumberBar()
 void HtmlEditor::NewFile() {
     this->html_file.setFileName(QString{});
     this->setPlainText(QString{});
+    emit siFileExists("");
 }
 
 void HtmlEditor::SaveFile(){

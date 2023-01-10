@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOpen_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
     connect(ui->actionOpen_folder, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFolderMenuBar);
     connect(ui->actionSave_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveFileMenuBar);
-//connect(ui->actionSave_file, &QAction::triggered, this, &MainWindow::parseHtmlFileAndDisplayMessages);
     connect(ui->htmlEditor, &HtmlEditor::siFileExists, this, &MainWindow::parseHtmlFileAndDisplayMessages);
     connect(ui->actionSave_file_as, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveAsFileMenuBar);
     connect(ui->numberSideBar, &NumberSideBar::siPaintEvent, ui->htmlEditor, &HtmlEditor::slNumberBarPaintEvent);
@@ -59,8 +58,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::updateWindowTitle(QString filename)
 {
-    QStringList tokens = filename.split("/");
-    this->setWindowTitle(tokens[tokens.length()-1] + " - HtmlEditor");
+    if (filename.isEmpty()) {
+        this->setWindowTitle("HtmlEditor");
+    }
+    else {
+        QStringList tokens = filename.split("/");
+        this->setWindowTitle(tokens[tokens.length()-1] + " - HtmlEditor");
+    }
 }
 
 void MainWindow::searchForText()
