@@ -1,6 +1,6 @@
 # HTML editor
 
-Text editor for HTML documents. Basic "notepad" features along with syntax highlighting, validation, find in project, file tree view...
+##### Text editor for HTML documents. Basic "notepad" features along with syntax highlighting, validation, find in project, file tree view...
 
 ![alt text](project.png "Title")
 
