@@ -1,0 +1,37 @@
+image: ubuntu:latest
+
+stages:
+  - build
+  - test
+
+
+before_script:
+  - apt update -y
+  - apt install -y build-essential libgl1-mesa-dev
+  - apt-get install -y qt6-base-dev
+  - qtchooser -install qt6 $(which qmake6)
+  - export QT_SELECT=qt6
+
+
+build:
+  stage: build
+  script:
+    - qmake ./HTML_editor.pro
+    - make -j$(nproc)
+
+test:
+  stage: test
+  script:
+    - apt-get install -y xvfb
+    - Xvfb :99 -screen 0 1024x768x24 &
+    - export DISPLAY=:99
+    - cd tests
+    - for dir in */; do
+        if [[ $dir == *Test/ ]]; then
+          cd $dir;
+          qmake;
+          make;
+          ./$(basename $dir);
+          cd ..;
+        fi
+      done
