@@ -8,10 +8,10 @@ stages:
 
 before_script:
   - apt update -y
-  - apt install -y build-essential libgl1-mesa-dev libxcb-xinerama0-dev libxcb-xinerama0 cmake python3 python3-pip python3-venv
-  - add-apt-repository ppa:beineri/opt-qt-6.4.0-focal
-  - apt-get update -y
-  - apt-get install -y qt-6.4.0 qt6-qmake
+  - apt install -y build-essential
+  - apt-get install -y qt6-base-dev
+  - qtchooser -install qt6 $(which qmake6)
+  - export QT_SELECT=qt6
 
 
 build:
