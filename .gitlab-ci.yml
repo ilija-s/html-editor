@@ -22,7 +22,7 @@ build:
 test:
   stage: test
   script:
-    - cd test
+    - cd tests
     - for dir in */; do
         if [[ $dir == *Test/ ]]; then
           cd $dir;
