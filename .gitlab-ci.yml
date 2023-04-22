@@ -28,7 +28,7 @@ test:
           cd $dir;
           qmake;
           make;
-          ./$(basename $dir)Test;
+          ./$(basename $dir);
           cd ..;
         fi
       done
