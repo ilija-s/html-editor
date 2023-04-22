@@ -9,11 +9,7 @@ stages:
 before_script:
   - apt-get update -y
   - apt-get install -y build-essential
-  - apt-get install -y qt6-base-dev
-  - qtchooser -install qt6 $(which qmake6)
-  - mv ~/.config/qtchooser/qt6.conf /usr/share/qtchooser/qt6.conf
-  - mkdir -p /usr/lib/$(uname -p)-linux-gnu/qt-default/qtchooser
-  - ln -n /usr/share/qtchooser/qt6.conf /usr/lib/$(uname -p)-linux-gnu/qt-default/qtchooser/default.conf
+  - apt-get install -y qt64base
 build:
   stage: build
   script:
