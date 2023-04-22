@@ -3,6 +3,7 @@ image: ubuntu:latest
 stages:
   - build
   - test
+  - before_script
 
 before_script:
   - apt-get update -y
