@@ -5,7 +5,7 @@
 ![alt text](project.png "Title")
 
 ## Requirements 
-- Qt version 6.4
+- Qt version 6.4.
 - Python library ``html5validator`` installed on your system. This is needed for HTML validation to work.
 
 ## Build manually
