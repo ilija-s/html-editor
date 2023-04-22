@@ -1,9 +1,10 @@
 image: ubuntu:latest
 
 stages:
+  - before_script
   - build
   - test
-  - before_script
+
 
 before_script:
   - apt-get update -y
