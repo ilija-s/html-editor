@@ -10,7 +10,7 @@ before_script:
   - apt install -y build-essential libgl1-mesa-dev
   - apt-get install -y qt6-base-dev
   - qtchooser -install qt6 $(which qmake6)
-  - export QT_SELECT=qt6
+  - export QT_SELECT=qt6  
 
 
 build:
@@ -26,12 +26,11 @@ test:
     - Xvfb :99 -screen 0 1024x768x24 &
     - export DISPLAY=:99
     - cd tests
-    - for dir in */; do
-        if [[ $dir == *Test/ ]]; then
-          cd $dir;
-          qmake;
-          make;
-          ./$(basename $dir);
-          cd ..;
-        fi
-      done
+    - cd ParserTest
+    - qmake
+    - make
+    - ./ParserTest
+    - cd ../TokenizerTest
+    - qmake
+    - make 
+    - ./TokenizerTest
