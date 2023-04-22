@@ -8,13 +8,14 @@ stages:
 
 before_script:
   - apt-get update -y
+  - apt-get install -y build-essential
   - apt-get install -y qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
 
 build:
   stage: build
   script:
     - qmake ./HTML_editor.pro
-    - make
+    - make -j$(nproc)
 
 test:
   stage: test
