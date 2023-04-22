@@ -1,19 +1,29 @@
-image: qt:latest
+image: ubuntu:latest
 
 stages:
   - build
   - test
 
+before_script:
+  - apt-get update -y
+  - apt-get install -y qt5-default qttools5-dev-tools
+
 build:
   stage: build
   script:
-    - qmake -r
+    - qmake
     - make
 
 test:
   stage: test
   script:
     - cd test
-    - for dir in */ ; do if [[ $dir == *Test/ ]]; then cd "$dir" && qmake && make && ./${dir%/} ; fi done
-  only:
-    - main
+    - for dir in */; do
+        if [[ $dir == *Test/ ]]; then
+          cd $dir;
+          qmake;
+          make;
+          ./$(basename $dir)Test;
+          cd ..;
+        fi
+      done
