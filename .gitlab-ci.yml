@@ -1,0 +1,19 @@
+image: qt:latest
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - qmake -r
+    - make
+
+test:
+  stage: test
+  script:
+    - cd test
+    - for dir in */ ; do if [[ $dir == *Test/ ]]; then cd "$dir" && qmake && make && ./${dir%/} ; fi done
+  only:
+    - main
