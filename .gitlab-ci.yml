@@ -22,6 +22,7 @@ build:
 test:
   stage: test
   script:
+    - export DISPLAY=:0
     - cd tests
     - for dir in */; do
         if [[ $dir == *Test/ ]]; then
