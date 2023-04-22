@@ -22,7 +22,9 @@ build:
 test:
   stage: test
   script:
-    - export DISPLAY=:0
+    - apt-get install -y xvfb
+    - Xvfb :99 -screen 0 1024x768x24 &
+    - export DISPLAY=:99
     - cd tests
     - for dir in */; do
         if [[ $dir == *Test/ ]]; then
