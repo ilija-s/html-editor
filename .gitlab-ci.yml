@@ -9,8 +9,7 @@ stages:
 before_script:
   - apt-get update -y
   - apt-get install -y build-essential
-  - apt-get install qtbase6-dev qt6-qmake qtbase6-dev-tools
-
+  - apt-get install -y qt6-base-dev qt6-qmake 
 
 build:
   stage: build
