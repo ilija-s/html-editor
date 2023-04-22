@@ -8,8 +8,7 @@ stages:
 
 before_script:
   - apt-get update -y
-  - apt-get upgrade -y
-  - apt-get install -y qt5-default qttools5-dev-tools
+  - apt-get install -y qtbase5-dev qttools5-dev-tools
 
 build:
   stage: build
