@@ -1,7 +1,6 @@
 image: ubuntu:latest
 
 stages:
-  - before_script
   - build
   - test
 
