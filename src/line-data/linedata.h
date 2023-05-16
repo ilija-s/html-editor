@@ -4,13 +4,14 @@
 #include <QString>
 #include <string>
 
-class LineData {
+class LineData
+{
 public:
   LineData() = default;
 
   QString filename;
   QString absoluteFilePath;
-  int lineNumber{-1};
+  int lineNumber{ -1 };
   QString content;
 };
 

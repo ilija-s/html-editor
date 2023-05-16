@@ -1,10 +1,13 @@
 #include "editorsearch.h"
 #include <QPlainTextEdit>
 
-EditorSearch::EditorSearch(QWidget *parent) : QWidget(parent) {}
+EditorSearch::EditorSearch(QWidget* parent)
+    : QWidget(parent)
+{}
 
-void EditorSearch::onSearchButtonClicked(const QString &searchString,
-                                         QTextDocument *document) {
+void
+EditorSearch::onSearchButtonClicked(const QString& searchString, QTextDocument* document)
+{
   // Used for resetting all the highlights from the previous search
   document->setPlainText(document->toPlainText());
 
@@ -19,12 +22,11 @@ void EditorSearch::onSearchButtonClicked(const QString &searchString,
   colorFormat.setForeground(Qt::black);
 
   while (!highlightCursor.isNull() && !highlightCursor.atEnd()) {
-    highlightCursor = document->find(searchString, highlightCursor,
-                                     QTextDocument::FindWholeWords);
+    highlightCursor =
+      document->find(searchString, highlightCursor, QTextDocument::FindWholeWords);
 
     if (!highlightCursor.isNull()) {
-        highlightCursor.movePosition(QTextCursor::NoMove,
-                                     QTextCursor::KeepAnchor);
+      highlightCursor.movePosition(QTextCursor::NoMove, QTextCursor::KeepAnchor);
       highlightCursor.mergeCharFormat(colorFormat);
     }
   }

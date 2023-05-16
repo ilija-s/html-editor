@@ -6,13 +6,14 @@
 
 #include <src/line-data/linedata.h>
 
-class TextFile {
+class TextFile
+{
 public:
   TextFile(QString filename, QString absoluteFilePath);
   QString filename() const;
   QString absoluteFilePath() const;
   std::string content();
-  QVector<LineData> find(const std::string &needle);
+  QVector<LineData> find(const std::string& needle);
 
 private:
   // This should really be QTextDocument
