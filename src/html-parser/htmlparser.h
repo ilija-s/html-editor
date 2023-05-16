@@ -3,7 +3,8 @@
 
 #include <QVariantList>
 
-class HTMLParser {
+class HTMLParser
+{
 public:
   HTMLParser(std::string document);
   QVariantList getMessages();

@@ -16,8 +16,9 @@
 #include <iostream>
 #include <string>
 
-static void saveStringToFile(const std::string &str,
-                             const std::string &filepath) {
+static void
+saveStringToFile(const std::string& str, const std::string& filepath)
+{
   std::ofstream file(filepath);
   if (file.is_open()) {
     file << str;
@@ -25,23 +26,25 @@ static void saveStringToFile(const std::string &str,
   }
 }
 
-static void callHtml5validatorAndSaveOutput(const std::string &fullpathJson,
-                                            const std::string &fullpathHtml) {
-  std::string command = "html5validator --format json files " + fullpathHtml +
-                        " > " + fullpathJson;
+static void
+callHtml5validatorAndSaveOutput(const std::string& fullpathJson,
+                                const std::string& fullpathHtml)
+{
+  std::string command =
+    "html5validator --format json files " + fullpathHtml + " > " + fullpathJson;
   std::system(command.c_str());
 }
 
 // Reads data from a file and stores data in a list of maps
-HTMLParser::HTMLParser(std::string document) {
-  std::string applicationDirPath =
-      QCoreApplication::applicationDirPath().toStdString();
+HTMLParser::HTMLParser(std::string document)
+{
+  std::string applicationDirPath = QCoreApplication::applicationDirPath().toStdString();
   std::string fullpathHtml = applicationDirPath + "/data.html";
   std::string fullpathJson = applicationDirPath + "/data.json";
   saveStringToFile(document, fullpathHtml);
   callHtml5validatorAndSaveOutput(fullpathJson, fullpathHtml);
 
-  QFile file{QString::fromStdString(fullpathJson)};
+  QFile file{ QString::fromStdString(fullpathJson) };
   if (!file.open(QIODevice::ReadOnly)) {
     qDebug() << "Json file couldn't be opened/found.";
     return;
@@ -65,4 +68,8 @@ HTMLParser::HTMLParser(std::string document) {
   m_messages = json["messages"].toList();
 }
 
-QVariantList HTMLParser::getMessages() { return m_messages; }
+QVariantList
+HTMLParser::getMessages()
+{
+  return m_messages;
+}

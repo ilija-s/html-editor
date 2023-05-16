@@ -1,33 +1,30 @@
 #ifndef FILETREEVIEW_H
 #define FILETREEVIEW_H
 
+#include <QFileInfo>
 #include <QFileSystemModel>
-#include <qtreeview.h>
 #include <QObject>
 #include <QWidget>
-#include <QFileInfo>
 #include <iostream>
-
-
+#include <qtreeview.h>
 
 class FileTreeView : public QTreeView
 {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    FileTreeView(QWidget* parent = nullptr);
-    ~FileTreeView() {};
-    QFileSystemModel* getModel();
+  FileTreeView(QWidget* parent = nullptr);
+  ~FileTreeView(){};
+  QFileSystemModel* getModel();
 public slots:
-    void SetFolder(QString path);
-    void SetModel(QString path);
-    void slDoubleClicked(const QModelIndex &index);
+  void SetFolder(QString path);
+  void SetModel(QString path);
+  void slDoubleClicked(const QModelIndex& index);
 
 signals:
-    void siDoubleClicked(const QString &path);
+  void siDoubleClicked(const QString& path);
 
 private:
-    QFileSystemModel *model;
-
+  QFileSystemModel* model;
 };
 
 #endif // FILETREEVIEW_H

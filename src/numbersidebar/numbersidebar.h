@@ -5,19 +5,18 @@
 
 class NumberSideBar : public QWidget
 {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    NumberSideBar(QWidget *parent);
-    QSize sizeHint() const override;
+  NumberSideBar(QWidget* parent);
+  QSize sizeHint() const override;
 
-    int width;
-    int unit_width;
+  int width;
+  int unit_width;
 signals:
-    void siPaintEvent(QPaintEvent* event);
+  void siPaintEvent(QPaintEvent* event);
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+  void paintEvent(QPaintEvent* event) override;
 };
-
 
 #endif // NUMBERSIDEBAR_H
