@@ -2,13 +2,12 @@ cmake_minimum_required(VERSION 3.10)
 project(HtmlEditor VERSION 1.0.0)
 
 set(CMAKE_PREFIX_PATH "/home/nata/Qt/6.4.3/gcc_64")
-set(Qt6 "/home/nata/Qt/6.4.3/gcc_64/lib/cmake/Qt6")
-
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+find_package(Qt6 REQUIRED COMPONENTS Gui Widgets)
 
 set(RESOURCES ${RESOURCES} resources/res.qrc)
 set(RESOURCES ${RESOURCES} resources/error.png)
@@ -58,4 +57,4 @@ qt6_wrap_ui(UI_HEADERS ${FORMS})
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${RES_SOURCES} ${UI_HEADERS})
 
-target_link_libraries(${PROJECT_NAME} Qt6::Widgets)
+target_link_libraries(${PROJECT_NAME} Qt6::Gui Qt6::Widgets)
