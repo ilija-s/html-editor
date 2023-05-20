@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(HtmlEditor VERSION 1.0.0)
 
-set(CMAKE_PREFIX_PATH "/home/nata/Qt/6.4.3/gcc_64")
+set(CMAKE_PREFIX_PATH "/home/mosa/Qt/6.4.3/gcc_64")
+set(Qt6 "/home/mosa/Qt/6.4.3/gcc_64/lib/cmake/Qt6")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -14,8 +15,6 @@ set(CMAKE_AUTOUIC OFF)
 find_package(Qt6 REQUIRED COMPONENTS Gui Widgets)
 
 set(RESOURCES ${RESOURCES} resources/res.qrc)
-set(RESOURCES ${RESOURCES} resources/error.png)
-set(RESOURCES ${RESOURCES} resources/warning.png)
 
 qt6_add_resources(RES_SOURCES ${RESOURCES})
 
