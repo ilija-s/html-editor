@@ -2,16 +2,18 @@
 #define HTMLPARSER_H
 
 #include <QVariantList>
+#include <QList>
+#include <QVariant>
 
 class HTMLParser
 {
 public:
   HTMLParser(std::string document);
-  QVariantList getMessages();
+  QList<QVariant> getMessages();
   ~HTMLParser() = default;
 
 private:
-  QVariantList m_messages;
+  QList<QVariant> m_messages;
 };
 
 #endif // HTMLPARSER_H
