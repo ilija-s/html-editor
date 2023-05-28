@@ -2,6 +2,8 @@
 #include "html-parser/htmlparser.h"
 #include "ui_mainwindow.h"
 
+#include <QShortcut>
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -13,10 +15,8 @@ MainWindow::MainWindow(QWidget* parent)
     QFontMetricsF(ui->htmlEditor->font()).horizontalAdvance(' ') * 2);
 
   // Shortcuts
-  auto showOrHideFindInProjectShortcut =
-    new QShortcut(QKeySequence(tr("Ctrl+Shift+F", "Find in project")), this);
-  auto showOrHideMessagesShortcut =
-    new QShortcut(QKeySequence(tr("Ctrl+M", "Open messages")), this);
+  auto showOrHideFindInProjectShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+F", "Find in project")), this);
+  auto showOrHideMessagesShortcut = new QShortcut(QKeySequence(tr("Ctrl+M", "Open messages")), this);
 
   // Menu bar signals
   connect(ui->actionNew_file,
@@ -202,7 +202,7 @@ MainWindow::parseHtmlFileAndDisplayMessages()
   std::unique_ptr<HTMLParser> htmlParser = std::make_unique<HTMLParser>(textDocument);
 
   // Add items to QListWidget
-  QList<QVariant> listOfMessages = htmlParser.get()->getMessages().toList();
+  QList<QVariant> listOfMessages = htmlParser.get()->getMessages();
   // TODO: This looks really bad, extract to a method or try using std::transform
   for (int i = 0; i < listOfMessages.length(); ++i) {
     QMap map = listOfMessages[i].toMap();
