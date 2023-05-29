@@ -5,34 +5,34 @@
 
 /* Token */
 
-TokenType
-Token::type() const
+auto
+Token::type() const -> TokenType
 {
   return m_type;
 }
 
-int
-Token::start() const
+auto
+Token::start() const -> int
 {
   return m_start;
 }
 
-int
-Token::length() const
+auto
+Token::length() const -> int
 {
   return m_length;
 }
 
-bool
-Token::operator==(const Token& other) const
+auto
+Token::operator==(const Token& other) const -> bool
 {
   return m_type == other.type() && m_start == other.start() && m_length == other.length();
 }
 
 /* Tokenizer */
 
-Token
-Tokenizer::next()
+auto
+Tokenizer::next() -> Token
 {
 
   m_offset += whitespace_offset();
@@ -60,14 +60,14 @@ Tokenizer::next()
   return m_current_token;
 }
 
-Token
-Tokenizer::peek()
+auto
+Tokenizer::peek() -> Token
 {
   return m_current_token;
 }
 
-int
-Tokenizer::whitespace_offset()
+auto
+Tokenizer::whitespace_offset() -> int
 {
 
   auto whitespace_match = m_white_space_re.match(m_text, m_offset);

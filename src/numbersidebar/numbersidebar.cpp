@@ -4,8 +4,8 @@ NumberSideBar::NumberSideBar(QWidget* parent)
     : QWidget{ parent }
 {}
 
-QSize
-NumberSideBar::sizeHint() const
+auto
+NumberSideBar::sizeHint() const -> QSize
 {
   return QSize(width, 1080);
 }

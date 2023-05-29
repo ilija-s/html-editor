@@ -3,7 +3,7 @@
 #include <QFileInfo>
 #include <QFileInfoList>
 
-Project::Project() {}
+Project::Project() = default;
 
 void
 Project::loadFileContents(QString directoryPath)
@@ -32,8 +32,8 @@ Project::deleteFileContents()
   m_textfiles.clear();
 }
 
-std::vector<TextFile>
-Project::textFiles() const
+auto
+Project::textFiles() const -> std::vector<TextFile>
 {
   return m_textfiles;
 }

@@ -68,8 +68,8 @@ HTMLParser::HTMLParser(std::string document)
   m_messages = json["messages"].toList();
 }
 
-QList<QVariant>
-HTMLParser::getMessages()
+auto
+HTMLParser::getMessages() -> QList<QVariant>
 {
   return m_messages;
 }

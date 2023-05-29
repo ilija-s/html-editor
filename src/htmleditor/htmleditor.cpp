@@ -27,14 +27,14 @@ HtmlEditor::SetNumberSideBar(NumberSideBar* sb)
   UpdateNumberBarWidth();
 }
 
-QString
-HtmlEditor::fileName()
+auto
+HtmlEditor::fileName() -> QString
 {
   return file_name;
 }
 
-NumberSideBar*
-HtmlEditor::getNumberBar()
+auto
+HtmlEditor::getNumberBar() -> NumberSideBar*
 {
   return number_bar;
 }
@@ -156,7 +156,7 @@ HtmlEditor::OpenFolder()
   QFileDialog dialog(this);
   dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
   QString dir =
-    QFileDialog::getExistingDirectory(0, ("Select Output Folder"), QDir::currentPath());
+    QFileDialog::getExistingDirectory(nullptr, ("Select Output Folder"), QDir::currentPath());
   if (dir != nullptr) {
     emit siOpenFolder(dir);
   }
@@ -221,8 +221,8 @@ HtmlEditor::slNumberBarPaintEvent(QPaintEvent* event)
   }
 }
 
-int
-HtmlEditor::NumberBarWidth()
+auto
+HtmlEditor::NumberBarWidth() -> int
 {
   int digits = 1;
   int max = qMax(1, blockCount());

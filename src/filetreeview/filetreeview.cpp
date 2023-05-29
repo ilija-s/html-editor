@@ -13,8 +13,8 @@ FileTreeView::FileTreeView(QWidget* parent)
   this->setVisible(false);
 }
 
-QFileSystemModel*
-FileTreeView::getModel()
+auto
+FileTreeView::getModel() -> QFileSystemModel*
 {
   return model;
 }

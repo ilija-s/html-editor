@@ -3,26 +3,28 @@
 #include <QDebug>
 #include <QFile>
 #include <sstream>
+#include <utility>
+
 
 TextFile::TextFile(QString filename, QString absoluteFilePath)
-    : m_filename(filename)
-    , m_absoluteFilePath(absoluteFilePath)
+    : m_filename(std::move(filename))
+    , m_absoluteFilePath(std::move(absoluteFilePath))
 {}
 
-QString
-TextFile::filename() const
+auto
+TextFile::filename() const -> QString
 {
   return m_filename;
 }
 
-QString
-TextFile::absoluteFilePath() const
+auto
+TextFile::absoluteFilePath() const -> QString
 {
   return m_absoluteFilePath;
 }
 
-std::string
-TextFile::content()
+auto
+TextFile::content() -> std::string
 {
   if (m_content.empty()) {
     auto file = QFile(m_absoluteFilePath);
@@ -33,8 +35,8 @@ TextFile::content()
   return m_content;
 }
 
-QVector<LineData>
-TextFile::find(const std::string& needle)
+auto
+TextFile::find(const std::string& needle) -> QVector<LineData>
 {
   content();
 

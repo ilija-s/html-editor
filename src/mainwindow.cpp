@@ -183,7 +183,7 @@ MainWindow::findInProjectClicked()
       QString content(data.content.trimmed());
       QString text(data.filename + ": " + std::to_string(data.lineNumber).c_str() + "\t" +
                    content);
-      QListWidgetItem* item = new QListWidgetItem(text);
+      auto* item = new QListWidgetItem(text);
       item->setWhatsThis(data.absoluteFilePath);
       ui->lwLinesFound->addItem(item);
     }
@@ -204,14 +204,14 @@ MainWindow::parseHtmlFileAndDisplayMessages()
   // Add items to QListWidget
   QList<QVariant> listOfMessages = htmlParser.get()->getMessages();
   // TODO: This looks really bad, extract to a method or try using std::transform
-  for (int i = 0; i < listOfMessages.length(); ++i) {
-    QMap map = listOfMessages[i].toMap();
+  for (auto & listOfMessage : listOfMessages) {
+    QMap map = listOfMessage.toMap();
     QString type = map["type"].toString();
     QString message = map["message"].toString();
     QString lastLine = map["lastLine"].toString();
     QString text = "Line: " + lastLine + " Message: " + message;
     QIcon icon = QIcon(":/images/" + type + ".png");
-    QListWidgetItem* item = new QListWidgetItem(icon, text);
+    auto* item = new QListWidgetItem(icon, text);
     ui->lwEditorMessages->addItem(item);
   }
 }

@@ -37,8 +37,8 @@ AttributeDeclaratio:
 
 */
 
-QSharedPointer<QVector<Token>>
-TagParser::parse()
+auto
+TagParser::parse() -> QSharedPointer<QVector<Token>>
 {
 
   m_tokens = QSharedPointer<QVector<Token>>(new QVector<Token>());
@@ -50,8 +50,8 @@ TagParser::parse()
   }
 }
 
-bool
-TagParser::parse_all_tags()
+auto
+TagParser::parse_all_tags() -> bool
 {
 
   Token lookahead;
@@ -84,8 +84,8 @@ TagParser::parse_all_tags()
   return true;
 }
 
-bool
-TagParser::parse_tag()
+auto
+TagParser::parse_tag() -> bool
 {
 
   Token lookahead = m_tokenizer.peek();
@@ -122,8 +122,8 @@ TagParser::parse_tag()
   }
 }
 
-bool
-TagParser::parse_attribute_list()
+auto
+TagParser::parse_attribute_list() -> bool
 {
 
   Token lookahead = m_tokenizer.peek();
@@ -148,8 +148,8 @@ TagParser::parse_attribute_list()
   }
 }
 
-bool
-TagParser::parse_attribute()
+auto
+TagParser::parse_attribute() -> bool
 {
 
   Token lookahead = m_tokenizer.peek();
@@ -172,8 +172,8 @@ TagParser::parse_attribute()
   }
 }
 
-bool
-TagParser::parse_attribute_declaration()
+auto
+TagParser::parse_attribute_declaration() -> bool
 {
 
   Token lookahead = m_tokenizer.peek();
