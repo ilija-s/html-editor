@@ -16,3 +16,5 @@ WORKDIR /Desktop/HtmlEditor
 RUN qmake HTML_editor.pro 
 
 RUN make
+
+CMD ["./HTML_editor"]
