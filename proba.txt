@@ -1,0 +1,5 @@
+commit 349861ac1df98191836d94a2c8e5eaf379c23b0f
+Author: Natalija Filipovic <natafil20@gmail.com>
+Date:   Mon May 29 21:40:58 2023 +0200
+
+    Promene napravljene pomocu ClangTidy alata
