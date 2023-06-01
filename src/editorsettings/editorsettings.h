@@ -8,24 +8,23 @@ namespace Ui {
 class EditorSettings;
 }
 
-class EditorSettings : public QDialog
-{
+class EditorSettings : public QDialog {
     Q_OBJECT
 
-public:
+   public:
     explicit EditorSettings(QWidget *parent = nullptr);
     ~EditorSettings();
 
-signals:
+   signals:
     void siFontSizeAccepted(int fontSize, bool ind);
 
-private slots:
+   private slots:
     void slOKClicked();
     void slFontSizeAccepted();
 
-private:
+   private:
     Ui::EditorSettings *ui;
     void fFontSize();
 };
 
-#endif // EDITORSETTINGS_H
+#endif  // EDITORSETTINGS_H

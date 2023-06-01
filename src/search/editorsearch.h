@@ -5,16 +5,15 @@
 #include <QWidget>
 
 class EditorSearch : public QWidget {
-  Q_OBJECT
+    Q_OBJECT
 
-public:
-  EditorSearch(QWidget *parent = nullptr);
+   public:
+    EditorSearch(QWidget *parent = nullptr);
 
-public slots:
-  void onSearchButtonClicked(const QString &searchString,
-                             QTextDocument *document);
+   public slots:
+    void onSearchButtonClicked(const QString &searchString, QTextDocument *document);
 
-private:
+   private:
 };
 
-#endif // EDITORSEARCH_H
+#endif  // EDITORSEARCH_H

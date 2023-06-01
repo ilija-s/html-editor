@@ -3,21 +3,19 @@
 
 #include <QWidget>
 
-class NumberSideBar : public QWidget
-{
+class NumberSideBar : public QWidget {
     Q_OBJECT
-public:
+   public:
     NumberSideBar(QWidget *parent);
     QSize sizeHint() const override;
 
     int width;
     int unit_width;
-signals:
-    void siPaintEvent(QPaintEvent* event);
+   signals:
+    void siPaintEvent(QPaintEvent *event);
 
-protected:
+   protected:
     void paintEvent(QPaintEvent *event) override;
 };
 
-
-#endif // NUMBERSIDEBAR_H
+#endif  // NUMBERSIDEBAR_H

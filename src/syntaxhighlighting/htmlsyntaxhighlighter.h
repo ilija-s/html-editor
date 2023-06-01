@@ -1,19 +1,17 @@
 #ifndef HTMLSYNTAXHIGHLIGHTER_H
 #define HTMLSYNTAXHIGHLIGHTER_H
 
-#include <QSyntaxHighlighter>
 #include <QRegularExpression>
+#include <QSyntaxHighlighter>
 
-class HtmlSyntaxHighlighter : public QSyntaxHighlighter
-{
-public:
+class HtmlSyntaxHighlighter : public QSyntaxHighlighter {
+   public:
     HtmlSyntaxHighlighter(QTextDocument* document = nullptr);
 
-protected:
-    void highlightBlock(const QString &text);
+   protected:
+    void highlightBlock(const QString& text);
 
-private:
-
+   private:
     QTextCharFormat m_bracket_format;
     QTextCharFormat m_tag_name_format;
     QTextCharFormat m_attribute_name_format;
@@ -22,4 +20,4 @@ private:
     QTextCharFormat m_blank_format;
 };
 
-#endif // HTMLSYNTAXHIGHLIGHTER_H
+#endif  // HTMLSYNTAXHIGHLIGHTER_H

@@ -1,46 +1,60 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "html-parser/htmlparser.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-    , _editorSearch(new EditorSearch(this))
-{
+#include "html-parser/htmlparser.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget* parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow), _editorSearch(new EditorSearch(this)) {
     ui->setupUi(this);
     ui->htmlEditor->SetNumberSideBar(ui->numberSideBar);
-    ui->htmlEditor->setTabStopDistance(QFontMetricsF(ui->htmlEditor->font()).horizontalAdvance(' ') * 2);
+    ui->htmlEditor->setTabStopDistance(
+        QFontMetricsF(ui->htmlEditor->font()).horizontalAdvance(' ') * 2);
 
     // Shortcuts
-    auto showOrHideFindInProjectShortcut = new QShortcut(QKeySequence(tr("Ctrl+Shift+F", "Find in project")), this);
-    auto showOrHideMessagesShortcut = new QShortcut(QKeySequence(tr("Ctrl+M", "Open messages")), this);
+    auto showOrHideFindInProjectShortcut =
+        new QShortcut(QKeySequence(tr("Ctrl+Shift+F", "Find in project")), this);
+    auto showOrHideMessagesShortcut =
+        new QShortcut(QKeySequence(tr("Ctrl+M", "Open messages")), this);
 
     // Menu bar signals
     connect(ui->actionNew_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slNewFileMenuBar);
-    connect(ui->actionOpen_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFileMenuBar);
-    connect(ui->actionOpen_folder, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slOpenFolderMenuBar);
-    connect(ui->actionSave_file, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveFileMenuBar);
-    connect(ui->htmlEditor, &HtmlEditor::siFileExists, this, &MainWindow::parseHtmlFileAndDisplayMessages);
-    connect(ui->actionSave_file_as, &QAction::triggered, ui->htmlEditor, &HtmlEditor::slSaveAsFileMenuBar);
-    connect(ui->numberSideBar, &NumberSideBar::siPaintEvent, ui->htmlEditor, &HtmlEditor::slNumberBarPaintEvent);
-    connect(this, &MainWindow::searchButtonClicked, _editorSearch, &EditorSearch::onSearchButtonClicked);
-    connect(ui->leSearchInput , &QLineEdit::textChanged, this, &MainWindow::searchForText);
-    connect(ui->treeView, &FileTreeView::doubleClicked, ui->treeView, &FileTreeView::slDoubleClicked);
-    connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor, &HtmlEditor::slTreeViewDoubleClicked);
+    connect(ui->actionOpen_file, &QAction::triggered, ui->htmlEditor,
+            &HtmlEditor::slOpenFileMenuBar);
+    connect(ui->actionOpen_folder, &QAction::triggered, ui->htmlEditor,
+            &HtmlEditor::slOpenFolderMenuBar);
+    connect(ui->actionSave_file, &QAction::triggered, ui->htmlEditor,
+            &HtmlEditor::slSaveFileMenuBar);
+    connect(ui->htmlEditor, &HtmlEditor::siFileExists, this,
+            &MainWindow::parseHtmlFileAndDisplayMessages);
+    connect(ui->actionSave_file_as, &QAction::triggered, ui->htmlEditor,
+            &HtmlEditor::slSaveAsFileMenuBar);
+    connect(ui->numberSideBar, &NumberSideBar::siPaintEvent, ui->htmlEditor,
+            &HtmlEditor::slNumberBarPaintEvent);
+    connect(this, &MainWindow::searchButtonClicked, _editorSearch,
+            &EditorSearch::onSearchButtonClicked);
+    connect(ui->leSearchInput, &QLineEdit::textChanged, this, &MainWindow::searchForText);
+    connect(ui->treeView, &FileTreeView::doubleClicked, ui->treeView,
+            &FileTreeView::slDoubleClicked);
+    connect(ui->treeView, &FileTreeView::siDoubleClicked, ui->htmlEditor,
+            &HtmlEditor::slTreeViewDoubleClicked);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, ui->treeView, &FileTreeView::SetFolder);
     connect(ui->htmlEditor, &HtmlEditor::siOpenFolder, this, &MainWindow::updateProjectFolder);
     connect(ui->htmlEditor, &HtmlEditor::siFileSaved, this, &MainWindow::updateProjectFolder);
     connect(ui->htmlEditor, &HtmlEditor::siSetCursorAtLine, this, &MainWindow::setCursorAtLine);
     connect(ui->htmlEditor, &HtmlEditor::siFileExists, this, &MainWindow::updateWindowTitle);
-    connect(ui->leFindInProjectSearchQuery, &QLineEdit::returnPressed, this, &MainWindow::findInProjectClicked);
+    connect(ui->leFindInProjectSearchQuery, &QLineEdit::returnPressed, this,
+            &MainWindow::findInProjectClicked);
     connect(ui->pbFindInProject, &QPushButton::clicked, this, &MainWindow::findInProjectClicked);
-    connect(ui->lwLinesFound, &QListWidget::itemDoubleClicked, ui->htmlEditor, &HtmlEditor::slOpenFileAtLine);
-    connect(showOrHideFindInProjectShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideFindInProjectTab);
-    connect(showOrHideMessagesShortcut , &QShortcut::activated, this, &MainWindow::toggleShowOrHideMessagesTab);
-
+    connect(ui->lwLinesFound, &QListWidget::itemDoubleClicked, ui->htmlEditor,
+            &HtmlEditor::slOpenFileAtLine);
+    connect(showOrHideFindInProjectShortcut, &QShortcut::activated, this,
+            &MainWindow::toggleShowOrHideFindInProjectTab);
+    connect(showOrHideMessagesShortcut, &QShortcut::activated, this,
+            &MainWindow::toggleShowOrHideMessagesTab);
 
     // Editor settings
-    connect(ui->actionSettings_2, &QAction::triggered, this, &MainWindow::MainWindow::slEditorSettingsWindowOpen);
+    connect(ui->actionSettings_2, &QAction::triggered, this,
+            &MainWindow::MainWindow::slEditorSettingsWindowOpen);
 
     // Menu bar shortcuts
     ui->actionNew_file->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
@@ -51,45 +65,41 @@ MainWindow::MainWindow(QWidget *parent)
     ui->htmlEditor->setFocus();
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
     delete _editorSearch;
 }
 
-void MainWindow::updateWindowTitle(QString filename)
-{
+void MainWindow::updateWindowTitle(QString filename) {
     if (filename.isEmpty()) {
         this->setWindowTitle("HtmlEditor");
-    }
-    else {
+    } else {
         QStringList tokens = filename.split("/");
-        this->setWindowTitle(tokens[tokens.length()-1] + " - HtmlEditor");
+        this->setWindowTitle(tokens[tokens.length() - 1] + " - HtmlEditor");
     }
 }
 
-void MainWindow::searchForText()
-{
+void MainWindow::searchForText() {
     QString searchString = ui->leSearchInput->text();
 
     emit searchButtonClicked(searchString, ui->htmlEditor->document());
 }
 
-void MainWindow::slEditorSettingsWindowOpen(){
+void MainWindow::slEditorSettingsWindowOpen() {
     editorSettingsWindow = new EditorSettings(this);
     editorSettingsWindow->show();
 
-    connect(editorSettingsWindow, &EditorSettings::siFontSizeAccepted, this, &MainWindow::slFontSizeAccepted);
+    connect(editorSettingsWindow, &EditorSettings::siFontSizeAccepted, this,
+            &MainWindow::slFontSizeAccepted);
 }
 
-void MainWindow::slFontSizeAccepted(int fontSize, int ind){
-    if(ind){
+void MainWindow::slFontSizeAccepted(int fontSize, int ind) {
+    if (ind) {
         ui->htmlEditor->fontSizeChange(fontSize);
     }
 }
 
-void MainWindow::updateProjectFolder(QString projectDirPath)
-{
+void MainWindow::updateProjectFolder(QString projectDirPath) {
     if (!projectDirPath.isEmpty()) {
         m_projectDirPath = projectDirPath;
     }
@@ -97,16 +107,14 @@ void MainWindow::updateProjectFolder(QString projectDirPath)
     m_project.loadFileContents(m_projectDirPath);
 }
 
-void MainWindow::setCursorAtLine(int linenumber)
-{
+void MainWindow::setCursorAtLine(int linenumber) {
     ui->htmlEditor->setFocus();
     QTextCursor cursor = ui->htmlEditor->textCursor();
     cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, linenumber - 1);
     ui->htmlEditor->setTextCursor(cursor);
 }
 
-void MainWindow::findInProjectClicked()
-{
+void MainWindow::findInProjectClicked() {
     ui->lwLinesFound->clear();
     if (m_projectDirPath.isEmpty()) {
         qDebug() << "Project directory is not set.";
@@ -117,16 +125,16 @@ void MainWindow::findInProjectClicked()
     foreach (TextFile textfile, m_project.textFiles()) {
         foreach (LineData data, textfile.find(needle.toStdString())) {
             QString content(data.content.trimmed());
-            QString text(data.filename + ": " + std::to_string(data.lineNumber).c_str() + "\t" + content);
+            QString text(data.filename + ": " + std::to_string(data.lineNumber).c_str() + "\t" +
+                         content);
             QListWidgetItem* item = new QListWidgetItem(text);
             item->setWhatsThis(data.absoluteFilePath);
             ui->lwLinesFound->addItem(item);
-       }
+        }
     }
 }
 
-void MainWindow::parseHtmlFileAndDisplayMessages()
-{
+void MainWindow::parseHtmlFileAndDisplayMessages() {
     // In the future this should underscore words that have errors
 
     // Clear all previous items
@@ -150,8 +158,7 @@ void MainWindow::parseHtmlFileAndDisplayMessages()
     }
 }
 
-void MainWindow::toggleShowOrHideFindInProjectTab()
-{
+void MainWindow::toggleShowOrHideFindInProjectTab() {
     m_isBottomTabWidgetVisible = !m_isBottomTabWidgetVisible;
     if (m_isBottomTabWidgetVisible) {
         ui->tabWidget->setVisible(true);
@@ -161,8 +168,7 @@ void MainWindow::toggleShowOrHideFindInProjectTab()
     }
 }
 
-void MainWindow::toggleShowOrHideMessagesTab()
-{
+void MainWindow::toggleShowOrHideMessagesTab() {
     m_isBottomTabWidgetVisible = !m_isBottomTabWidgetVisible;
     if (m_isBottomTabWidgetVisible) {
         ui->tabWidget->setVisible(true);
@@ -171,4 +177,3 @@ void MainWindow::toggleShowOrHideMessagesTab()
         ui->tabWidget->setVisible(false);
     }
 }
-

@@ -1,11 +1,12 @@
-#include "catch2/catch.hpp"
 #include <src/htmleditor/htmleditor.h>
-#include <QApplication>
-#include <QPlainTextEdit>
-#include <QPainter>
 
-TEST_CASE("Test HtmlEditor SetNumberSideBar function", "[htmleditor]")
-{
+#include <QApplication>
+#include <QPainter>
+#include <QPlainTextEdit>
+
+#include "catch2/catch.hpp"
+
+TEST_CASE("Test HtmlEditor SetNumberSideBar function", "[htmleditor]") {
     // Arrange
     int argc = 0;
     QApplication a{argc, nullptr};
@@ -16,7 +17,6 @@ TEST_CASE("Test HtmlEditor SetNumberSideBar function", "[htmleditor]")
     // Act
     editor->SetNumberSideBar(sb);
 
-
     // Assert
     // Verify that the number_bar field is set correctly
     REQUIRE(editor->getNumberBar() == sb);
@@ -24,5 +24,3 @@ TEST_CASE("Test HtmlEditor SetNumberSideBar function", "[htmleditor]")
     // Verify that the unit_width field of the NumberSideBar object is set correctly
     REQUIRE(sb->unit_width == 9 + editor->fontMetrics().horizontalAdvance(QLatin1Char('9')));
 }
-
-

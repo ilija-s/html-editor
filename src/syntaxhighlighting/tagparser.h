@@ -1,26 +1,20 @@
 #ifndef TAGPARSER_H
 #define TAGPARSER_H
 
-#include "tokenizer.h"
-
-#include <QVector>
-#include <QString>
 #include <QSharedPointer>
+#include <QString>
+#include <QVector>
 #include <optional>
 
+#include "tokenizer.h"
 
-class TagParser
-{
-public:
-
-    TagParser(const QString& text)
-        : m_tokenizer(text)
-    {};
+class TagParser {
+   public:
+    TagParser(const QString& text) : m_tokenizer(text){};
 
     QSharedPointer<QVector<Token>> parse();
 
-private:
-
+   private:
     Tokenizer m_tokenizer;
     QSharedPointer<QVector<Token>> m_tokens;
 
@@ -31,4 +25,4 @@ private:
     bool parse_attribute_declaration();
 };
 
-#endif // TAGPARSER_H
+#endif  // TAGPARSER_H

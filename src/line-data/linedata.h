@@ -5,13 +5,13 @@
 #include <string>
 
 class LineData {
-public:
-  LineData() = default;
+   public:
+    LineData() = default;
 
-  QString filename;
-  QString absoluteFilePath;
-  int lineNumber{-1};
-  QString content;
+    QString filename;
+    QString absoluteFilePath;
+    int lineNumber{-1};
+    QString content;
 };
 
-#endif // LINEDATA_H
+#endif  // LINEDATA_H

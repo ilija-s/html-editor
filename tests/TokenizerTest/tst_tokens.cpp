@@ -1,15 +1,14 @@
-#include <catch2/catch.hpp>
 #include <QString>
+#include <catch2/catch.hpp>
+
 #include "syntaxhighlighting/tokenizer.h"
 
-TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
-{
-    SECTION("Tokenizer matches open tag bracket")
-    {
+TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]") {
+    SECTION("Tokenizer matches open tag bracket") {
         // Arrange
-        QString input1 {"<"};
-        QString input2 {"<!"};
-        QString input3 {"</"};
+        QString input1{"<"};
+        QString input2{"<!"};
+        QString input3{"</"};
         Tokenizer tokenizer1 = Tokenizer(input1);
         Tokenizer tokenizer2 = Tokenizer(input2);
         Tokenizer tokenizer3 = Tokenizer(input3);
@@ -35,11 +34,10 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
         REQUIRE(result3_eof == TokenType::eof);
     }
 
-    SECTION("Tokenizer matches close tag brackets")
-    {
+    SECTION("Tokenizer matches close tag brackets") {
         // Arrange
-        QString input1 {">"};
-        QString input2 {"/>"};
+        QString input1{">"};
+        QString input2{"/>"};
         Tokenizer tokenizer1 = Tokenizer(input1);
         Tokenizer tokenizer2 = Tokenizer(input2);
 
@@ -56,15 +54,13 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
 
         REQUIRE(result2_type == TokenType::tag_close_bracket);
         REQUIRE(result2_eof == TokenType::eof);
-
     }
 
-    SECTION("Tokenizer matches tag names and attribute names")
-    {
+    SECTION("Tokenizer matches tag names and attribute names") {
         // Arrange
-        QString input1 {"h5"};
-        QString input2 {"style"};
-        QString input3 {"accept-charset"};
+        QString input1{"h5"};
+        QString input2{"style"};
+        QString input3{"accept-charset"};
         Tokenizer tokenizer1 = Tokenizer(input1);
         Tokenizer tokenizer2 = Tokenizer(input2);
         Tokenizer tokenizer3 = Tokenizer(input3);
@@ -90,10 +86,9 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
         REQUIRE(result3_eof == TokenType::eof);
     }
 
-    SECTION("Tokenizer matches equals sign")
-    {
+    SECTION("Tokenizer matches equals sign") {
         // Arrange
-        QString input1 {"="};
+        QString input1{"="};
         Tokenizer tokenizer1 = Tokenizer(input1);
 
         // Act
@@ -105,14 +100,12 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
         REQUIRE(result1_eof == TokenType::eof);
     }
 
-    SECTION("Tokenizer matches attribute value")
-    {
+    SECTION("Tokenizer matches attribute value") {
         // Arrange
-        QString input1 {"\"backgournd-color:green;\""};
-        QString input2 {"\"\""};
+        QString input1{"\"backgournd-color:green;\""};
+        QString input2{"\"\""};
         Tokenizer tokenizer1 = Tokenizer(input1);
         Tokenizer tokenizer2 = Tokenizer(input2);
-
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
@@ -129,12 +122,10 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
         REQUIRE(result2_eof == TokenType::eof);
     }
 
-    SECTION("Tokenizer matches comment start")
-    {
+    SECTION("Tokenizer matches comment start") {
         // Arrange
-        QString input1 {"<!--"};
+        QString input1{"<!--"};
         Tokenizer tokenizer1 = Tokenizer(input1);
-
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
@@ -145,12 +136,10 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
         REQUIRE(result1_eof == TokenType::eof);
     }
 
-    SECTION("Tokenizer matches comment end")
-    {
+    SECTION("Tokenizer matches comment end") {
         // Arrange
-        QString input1 {"-->"};
+        QString input1{"-->"};
         Tokenizer tokenizer1 = Tokenizer(input1);
-
 
         // Act
         TokenType result1_type = tokenizer1.next().type();
@@ -161,12 +150,10 @@ TEST_CASE("Tokenizer matches individual tokens", "[tokenizer][regex]")
         REQUIRE(result1_eof == TokenType::eof);
     }
 
-    SECTION("Tokenizer matches end of input")
-    {
+    SECTION("Tokenizer matches end of input") {
         // Arrange
-        QString input1 {""};
+        QString input1{""};
         Tokenizer tokenizer1 = Tokenizer(input1);
-
 
         // Act
         TokenType result1_type = tokenizer1.next().type();

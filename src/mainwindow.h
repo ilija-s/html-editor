@@ -3,23 +3,25 @@
 
 #include <QMainWindow>
 #include <QtGui>
+
 #include "editorsettings/editorsettings.h"
-#include "search/editorsearch.h"
 #include "project/project.h"
+#include "search/editorsearch.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
+   public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
+   private slots:
     void searchForText();
 
     void slEditorSettingsWindowOpen();
@@ -33,10 +35,10 @@ private slots:
     void setCursorAtLine(int linenumber);
     void updateWindowTitle(QString filename);
 
-signals:
-    void searchButtonClicked(const QString& searchString, QTextDocument *document);
+   signals:
+    void searchButtonClicked(const QString &searchString, QTextDocument *document);
 
-private:
+   private:
     Ui::MainWindow *ui;
     EditorSearch *_editorSearch;
     QString m_projectDirPath;
@@ -44,8 +46,6 @@ private:
 
     EditorSettings *editorSettingsWindow;
 
-
-    bool m_isBottomTabWidgetVisible{ true };
-
+    bool m_isBottomTabWidgetVisible{true};
 };
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H
