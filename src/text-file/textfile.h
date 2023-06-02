@@ -9,12 +9,12 @@
 class TextFile {
    public:
     TextFile(QString filename, QString absoluteFilePath);
-    QString filename() const;
-    QString absoluteFilePath() const;
-    std::string content();
-    QVector<LineData> find(const std::string &needle);
+    [[nodiscard]] auto filename() const -> QString;
+    [[nodiscard]] auto absoluteFilePath() const -> QString;
+    auto content() -> std::string;
+    auto find(const std::string &needle) -> QVector<LineData>;
 
-   private:
+private:
     // This should really be QTextDocument
     std::string m_content;
     QString m_filename;

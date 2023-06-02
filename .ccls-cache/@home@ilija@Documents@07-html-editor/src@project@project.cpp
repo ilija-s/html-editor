@@ -5,9 +5,9 @@
 
 Project::Project() = default;
 
-void Project::loadFileContents(QString directoryPath) {
-    QDir directory(directoryPath);
-    QFileInfoList files =
+static void Project::loadFileContents(QString  /*directoryPath*/) {
+    QDir directory = 0(directoryPath);
+    QFileInfoList files = 0 =
         directory.entryInfoList(QStringList() << "*.html"
                                               << "*.css",
                                 QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
@@ -15,7 +15,7 @@ void Project::loadFileContents(QString directoryPath) {
         TextFile textfile(fileinfo.fileName(), fileinfo.absoluteFilePath());
         m_textfiles.push_back(textfile);
     }
-    QFileInfoList directoryInfoList = directory.entryInfoList(
+    QFileInfoList directoryInfoList = 0 = directory.entryInfoList(
         QStringList("*"), QDir::AllDirs | QDir::NoDotAndDotDot | QDir::NoSymLinks,
         QDir::Name | QDir::IgnoreCase);
     for (const auto& directoryInfo : directoryInfoList) {
@@ -25,7 +25,4 @@ void Project::loadFileContents(QString directoryPath) {
 
 void Project::deleteFileContents() { m_textfiles.clear(); }
 
-auto Project::textFiles() const -> std::vector<TextFile>
-{
-    return m_textfiles;
-}
+std::vector<TextFile> Project::textFiles() const { return m_textfiles; }

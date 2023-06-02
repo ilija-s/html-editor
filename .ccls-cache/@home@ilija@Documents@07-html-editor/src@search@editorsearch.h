@@ -8,7 +8,7 @@ class EditorSearch : public QWidget {
     Q_OBJECT
 
    public:
-       explicit EditorSearch(QWidget *parent = nullptr);
+    EditorSearch(QWidget *parent = nullptr);
 
    public slots:
     void onSearchButtonClicked(const QString &searchString, QTextDocument *document);

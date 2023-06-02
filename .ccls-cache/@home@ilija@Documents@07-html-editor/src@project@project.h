@@ -12,10 +12,10 @@ class Project {
     Project();
     void loadFileContents(QString directoryPath);
     void deleteFileContents();
-    [[nodiscard]] auto textFiles() const -> std::vector<TextFile>;
+    std::vector<TextFile> textFiles() const;
 
-private:
-    std::vector<TextFile> m_textfiles;
+   private:
+    std::vector<TextFile> m_textfiles{};
 };
 
 #endif  // PROJECT_H

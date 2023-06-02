@@ -1,0 +1,108 @@
+---
+MainSourceFile:  '/home/ilija/Documents/07-html-editor/./src/project/project.cpp'
+Diagnostics:
+  - DiagnosticName:  cppcoreguidelines-pro-type-member-init
+    DiagnosticMessage:
+      Message:         'constructor does not initialize these fields: m_textfiles'
+      FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+      FileOffset:      69
+      Replacements:
+        - FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.h'
+          Offset:          346
+          Length:          0
+          ReplacementText: '{}'
+    Level:           Warning
+    BuildDirectory:  '/home/ilija/Documents/07-html-editor'
+  - DiagnosticName:  hicpp-use-equals-default
+    DiagnosticMessage:
+      Message:         'use ''= default'' to define a trivial default constructor'
+      FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+      FileOffset:      78
+      Replacements:
+        - FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+          Offset:          88
+          Length:          2
+          ReplacementText: '= default;'
+    Level:           Warning
+    BuildDirectory:  '/home/ilija/Documents/07-html-editor'
+  - DiagnosticName:  readability-convert-member-functions-to-static
+    DiagnosticMessage:
+      Message:         'method ''loadFileContents'' can be made static'
+      FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+      FileOffset:      106
+      Replacements:
+        - FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+          Offset:          92
+          Length:          0
+          ReplacementText: 'static '
+    Level:           Warning
+    BuildDirectory:  '/home/ilija/Documents/07-html-editor'
+  - DiagnosticName:  misc-unused-parameters
+    DiagnosticMessage:
+      Message:         'parameter ''directoryPath'' is unused'
+      FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+      FileOffset:      131
+      Replacements:
+        - FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+          Offset:          131
+          Length:          13
+          ReplacementText: ' /*directoryPath*/'
+    Level:           Warning
+    BuildDirectory:  '/home/ilija/Documents/07-html-editor'
+  - DiagnosticName:  cppcoreguidelines-init-variables
+    DiagnosticMessage:
+      Message:         'variable ''directory'' is not initialized'
+      FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+      FileOffset:      157
+      Replacements:
+        - FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+          Offset:          166
+          Length:          0
+          ReplacementText: ' = 0'
+    Level:           Warning
+    BuildDirectory:  '/home/ilija/Documents/07-html-editor'
+  - DiagnosticName:  cppcoreguidelines-init-variables
+    DiagnosticMessage:
+      Message:         'variable ''files'' is not initialized'
+      FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+      FileOffset:      201
+      Replacements:
+        - FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+          Offset:          206
+          Length:          0
+          ReplacementText: ' = 0'
+    Level:           Warning
+    BuildDirectory:  '/home/ilija/Documents/07-html-editor'
+  - DiagnosticName:  cppcoreguidelines-init-variables
+    DiagnosticMessage:
+      Message:         'variable ''directoryInfoList'' is not initialized'
+      FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+      FileOffset:      596
+      Replacements:
+        - FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+          Offset:          613
+          Length:          0
+          ReplacementText: ' = 0'
+    Level:           Warning
+    BuildDirectory:  '/home/ilija/Documents/07-html-editor'
+  - DiagnosticName:  modernize-use-trailing-return-type
+    DiagnosticMessage:
+      Message:         use a trailing return type for this function
+      FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.cpp'
+      FileOffset:      983
+      Replacements:    []
+    Level:           Warning
+    BuildDirectory:  '/home/ilija/Documents/07-html-editor'
+  - DiagnosticName:  clang-diagnostic-error
+    DiagnosticMessage:
+      Message:         '''src/text-file/textfile.h'' file not found'
+      FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.h'
+      FileOffset:      46
+      Replacements:    []
+      Ranges:
+        - FilePath:        '/home/ilija/Documents/07-html-editor/src/project/project.h'
+          FileOffset:      46
+          Length:          26
+    Level:           Error
+    BuildDirectory:  '/home/ilija/Documents/07-html-editor'
+...
