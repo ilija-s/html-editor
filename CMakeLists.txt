@@ -12,6 +12,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC OFF)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
+
 find_package(Qt6 REQUIRED COMPONENTS Gui Widgets)
 
 set(RESOURCES ${RESOURCES} resources/res.qrc)

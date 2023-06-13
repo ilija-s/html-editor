@@ -1,16 +1,15 @@
 #include "tagparser.h"
 #include "tokenizer.h"
 
-#include <QRegularExpression>
-#include <QSharedPointer>
-#include <QString>
 #include <QVector>
+#include <QString>
+#include <QSharedPointer>
+#include <QRegularExpression>
 
 /*
 Grammer:
 
-Tag ->                      OpenTagBracket TagName AttributeList CloseTagBracket {
-OpenTagBracket }
+Tag ->                      OpenTagBracket TagName AttributeList CloseTagBracket { OpenTagBracket }
 
 AttributeList ->            Attribute AttributeList { AttributeName }
                             eps { CloseTagBracket }
@@ -37,166 +36,184 @@ AttributeDeclaratio:
 
 */
 
-QSharedPointer<QVector<Token>>
-TagParser::parse()
+auto
+TagParser::parse() -> QSharedPointer<QVector<Token>>
 {
 
-  m_tokens = QSharedPointer<QVector<Token>>(new QVector<Token>());
+    m_tokens = QSharedPointer<QVector<Token>>(new QVector<Token>());
 
-  if (parse_all_tags()) {
-    return m_tokens;
-  } else {
-    return nullptr;
-  }
+    if (parse_all_tags()) {
+       return m_tokens;
+    }
+    else {
+        return nullptr;
+    }
 }
 
-bool
-TagParser::parse_all_tags()
+auto
+TagParser::parse_all_tags() -> bool
 {
 
-  Token lookahead;
+    Token lookahead;
 
-  while (lookahead.type() != TokenType::eof) {
+    while (lookahead.type() != TokenType::eof) {
 
-    do {
-      lookahead = m_tokenizer.next();
-    } while (lookahead.type() != TokenType::tag_open_bracket &&
-             lookahead.type() != TokenType::eof &&
-             lookahead.type() != TokenType::comment_start &&
-             lookahead.type() != TokenType::comment_end);
+        do {
+            lookahead = m_tokenizer.next();
+        } while (lookahead.type() != TokenType::tag_open_bracket
+                 && lookahead.type() != TokenType::eof
+                 && lookahead.type() != TokenType::comment_start
+                 && lookahead.type() != TokenType::comment_end);
 
-    if (lookahead.type() == TokenType::eof) {
-      continue;
-    } else if (lookahead.type() == TokenType::comment_end ||
-               lookahead.type() == TokenType::comment_start) {
+        if (lookahead.type() == TokenType::eof) {
+            continue;
+        }
+        else if (lookahead.type() == TokenType::comment_end
+            || lookahead.type() == TokenType::comment_start) {
 
-      m_tokens->push_back(lookahead);
+            m_tokens->push_back(lookahead);
 
-      continue;
-    } else {
-      bool parse_success = parse_tag();
-      if (!parse_success) {
+            continue;
+        }
+        else {
+            bool parse_success = parse_tag();
+            if (!parse_success) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+auto
+TagParser::parse_tag() -> bool
+{
+
+    Token lookahead = m_tokenizer.peek();
+
+    if (lookahead.type() == TokenType::tag_open_bracket) {
+
+        m_tokens->push_back(lookahead);
+        lookahead = m_tokenizer.next();
+
+        if (lookahead.type() != TokenType::tag_or_attribute_name) {
+            return false;
+        }
+
+        Token mod_token = Token(
+            TokenType::tag_name,
+            lookahead.start(),
+            lookahead.length()
+        );
+        m_tokens->push_back(mod_token);
+        lookahead = m_tokenizer.next();
+
+        bool parse_success = parse_attribute_list();
+        if (!parse_success) {
+            return false;
+        }
+
+        lookahead = m_tokenizer.peek();
+
+        if (lookahead.type() != TokenType::tag_close_bracket) {
+            return false;
+        }
+
+        m_tokens->push_back(lookahead);
+
+        return true;
+    }
+    else {
         return false;
-      }
     }
-  }
-
-  return true;
 }
 
-bool
-TagParser::parse_tag()
+auto
+TagParser::parse_attribute_list() -> bool
 {
 
-  Token lookahead = m_tokenizer.peek();
+    Token lookahead = m_tokenizer.peek();
 
-  if (lookahead.type() == TokenType::tag_open_bracket) {
+    if (lookahead.type() == TokenType::tag_or_attribute_name) {
 
-    m_tokens->push_back(lookahead);
-    lookahead = m_tokenizer.next();
+        bool parse_succes = parse_attribute();
+        if (!parse_succes) {
+            return false;
+        }
 
-    if (lookahead.type() != TokenType::tag_or_attribute_name) {
-      return false;
+        parse_succes = parse_attribute_list();
+        if (!parse_succes) {
+            return false;
+        }
+
+        return true;
     }
-
-    Token mod_token = Token(TokenType::tag_name, lookahead.start(), lookahead.length());
-    m_tokens->push_back(mod_token);
-    lookahead = m_tokenizer.next();
-
-    bool parse_success = parse_attribute_list();
-    if (!parse_success) {
-      return false;
+    else if (lookahead.type() == TokenType::tag_close_bracket) {
+        return true;
     }
-
-    lookahead = m_tokenizer.peek();
-
-    if (lookahead.type() != TokenType::tag_close_bracket) {
-      return false;
+    else {
+        return false;
     }
-
-    m_tokens->push_back(lookahead);
-
-    return true;
-  } else {
-    return false;
-  }
 }
 
-bool
-TagParser::parse_attribute_list()
+auto
+TagParser::parse_attribute() -> bool
 {
 
-  Token lookahead = m_tokenizer.peek();
+    Token lookahead = m_tokenizer.peek();
 
-  if (lookahead.type() == TokenType::tag_or_attribute_name) {
+    if (lookahead.type() == TokenType::tag_or_attribute_name) {
 
-    bool parse_succes = parse_attribute();
-    if (!parse_succes) {
-      return false;
+        Token mod_token = Token(
+            TokenType::attribute_name,
+            lookahead.start(),
+            lookahead.length()
+        );
+        m_tokens->push_back(mod_token);
+        m_tokenizer.next();
+
+        bool parse_succes = parse_attribute_declaration();
+        if (!parse_succes) {
+            return false;
+        }
+
+        return true;
     }
-
-    parse_succes = parse_attribute_list();
-    if (!parse_succes) {
-      return false;
+    else {
+        return false;
     }
-
-    return true;
-  } else if (lookahead.type() == TokenType::tag_close_bracket) {
-    return true;
-  } else {
-    return false;
-  }
 }
 
-bool
-TagParser::parse_attribute()
+auto
+TagParser::parse_attribute_declaration() -> bool
 {
 
-  Token lookahead = m_tokenizer.peek();
+    Token lookahead = m_tokenizer.peek();
 
-  if (lookahead.type() == TokenType::tag_or_attribute_name) {
+    if (lookahead.type() == TokenType::equals) {
 
-    Token mod_token =
-      Token(TokenType::attribute_name, lookahead.start(), lookahead.length());
-    m_tokens->push_back(mod_token);
-    m_tokenizer.next();
+        m_tokens->push_back(lookahead);
+        lookahead = m_tokenizer.next();
 
-    bool parse_succes = parse_attribute_declaration();
-    if (!parse_succes) {
-      return false;
+        if (lookahead.type() != TokenType::attribute_value) {
+            return false;
+        }
+
+        m_tokens->push_back(lookahead);
+        lookahead = m_tokenizer.next();
+
+        return true;
+
     }
+    else if (lookahead.type() == TokenType::tag_or_attribute_name
+             || lookahead.type() == TokenType::tag_close_bracket) {
 
-    return true;
-  } else {
-    return false;
-  }
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
-bool
-TagParser::parse_attribute_declaration()
-{
 
-  Token lookahead = m_tokenizer.peek();
-
-  if (lookahead.type() == TokenType::equals) {
-
-    m_tokens->push_back(lookahead);
-    lookahead = m_tokenizer.next();
-
-    if (lookahead.type() != TokenType::attribute_value) {
-      return false;
-    }
-
-    m_tokens->push_back(lookahead);
-    lookahead = m_tokenizer.next();
-
-    return true;
-
-  } else if (lookahead.type() == TokenType::tag_or_attribute_name ||
-             lookahead.type() == TokenType::tag_close_bracket) {
-
-    return true;
-  } else {
-    return false;
-  }
-}

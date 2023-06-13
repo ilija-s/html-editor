@@ -1,17 +1,16 @@
 #include "numbersidebar.h"
 
-NumberSideBar::NumberSideBar(QWidget* parent)
-    : QWidget{ parent }
-{}
-
-QSize
-NumberSideBar::sizeHint() const
+NumberSideBar::NumberSideBar(QWidget *parent)
+    : QWidget{parent}
 {
-  return QSize(width, 1080);
+
+auto
+NumberSideBar::sizeHint() const -> QSize
+{
+    return QSize(width, 1080);
 }
 
-void
-NumberSideBar::paintEvent(QPaintEvent* event)
+void NumberSideBar::paintEvent(QPaintEvent *event)
 {
-  emit siPaintEvent(event);
+    emit siPaintEvent(event);
 }

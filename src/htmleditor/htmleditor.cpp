@@ -1,292 +1,275 @@
 #include "htmleditor.h"
 #include "src/syntaxhighlighting/htmlsyntaxhighlighter.h"
 #include <QFileDialog>
+#include <string>
 #include <QPainter>
 #include <QTextBlock>
-#include <string>
 
-HtmlEditor::HtmlEditor(QWidget* parent)
-    : QPlainTextEdit(parent)
+HtmlEditor::HtmlEditor(QWidget *parent) :
+    QPlainTextEdit(parent)
 {
-  connect(this, &HtmlEditor::blockCountChanged, this, &HtmlEditor::UpdateNumberBarWidth);
-  connect(this, &HtmlEditor::updateRequest, this, &HtmlEditor::UpdateNumberBar);
+    connect(this, &HtmlEditor::blockCountChanged, this, &HtmlEditor::UpdateNumberBarWidth);
+    connect(this, &HtmlEditor::updateRequest, this, &HtmlEditor::UpdateNumberBar);
 
-  highlighter = new HtmlSyntaxHighlighter(document());
+    highlighter = new HtmlSyntaxHighlighter(document());
 }
 
 HtmlEditor::~HtmlEditor()
 {
-  delete highlighter;
+    delete highlighter;
 }
 
-void
-HtmlEditor::SetNumberSideBar(NumberSideBar* sb)
+void HtmlEditor::SetNumberSideBar(NumberSideBar *sb)
 {
-  number_bar = sb;
-  number_bar->unit_width = 9 + fontMetrics().horizontalAdvance(QLatin1Char('9'));
-  UpdateNumberBarWidth();
+    number_bar = sb;
+    number_bar->unit_width = 9 + fontMetrics().horizontalAdvance(QLatin1Char('9'));
+    UpdateNumberBarWidth();
+
 }
 
-QString
-HtmlEditor::fileName()
+auto
+HtmlEditor::fileName() -> QString
 {
-  return file_name;
+    return file_name;
 }
 
-NumberSideBar*
-HtmlEditor::getNumberBar()
+auto
+HtmlEditor::getNumberBar() -> NumberSideBar*
 {
-  return number_bar;
+    return number_bar;
 }
 
-void
-HtmlEditor::NewFile()
-{
-  this->html_file.setFileName(QString{});
-  this->setPlainText(QString{});
-  emit siFileExists("");
+void HtmlEditor::NewFile() {
+    this->html_file.setFileName(QString{});
+    this->setPlainText(QString{});
+    emit siFileExists("");
 }
 
-void
-HtmlEditor::SaveFile()
-{
+void HtmlEditor::SaveFile(){
 
-  if (this->html_file.exists()) {
+    if (this->html_file.exists()) {
 
-    this->html_file.open(QIODevice::WriteOnly);
+        this->html_file.open(QIODevice::WriteOnly);
 
-    QString content = this->toPlainText();
-    QTextStream out(&this->html_file);
+        QString content = this->toPlainText();
+        QTextStream out(&this->html_file);
 
-    out << content;
+        out << content;
 
-    this->html_file.close();
-    emit siFileExists(this->html_file.fileName());
-    emit siFileSaved("");
+        this->html_file.close();
+        emit siFileExists(this->html_file.fileName());
+        emit siFileSaved("");
 
-  } else {
-    this->SaveAsFile();
-  }
+    }
+    else {
+        this->SaveAsFile();
+    }
+
 }
 
-void
-HtmlEditor::SaveAsFile()
-{
+void HtmlEditor::SaveAsFile() {
 
-  QFileDialog dialog(this);
-  dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptSave);
-  dialog.setMimeTypeFilters({ "text/html" });
+    QFileDialog dialog(this);
+    dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptSave);
+    dialog.setMimeTypeFilters({"text/html"});
 
-  if (dialog.exec()) {
+    if(dialog.exec()) {
 
-    this->html_file.setFileName(dialog.selectedFiles()[0]);
+        this->html_file.setFileName(dialog.selectedFiles()[0]);
 
-    this->html_file.open(QIODevice::WriteOnly);
+        this->html_file.open(QIODevice::WriteOnly);
 
-    QString content = this->toPlainText();
-    QTextStream out(&this->html_file);
+        QString content = this->toPlainText();
+        QTextStream out(&this->html_file);
 
-    out << content;
+        out << content;
 
-    this->html_file.close();
-    emit siFileExists(this->html_file.fileName());
-    emit siFileSaved("");
-  }
+        this->html_file.close();
+        emit siFileExists(this->html_file.fileName());
+        emit siFileSaved("");
+    }
+
 }
 
-void
-HtmlEditor::OpenFile(QString path)
-{
-  if (!path.isEmpty()) {
-    this->html_file.setFileName(path);
-    file_name = path;
-    this->html_file.open(QIODevice::ReadOnly);
+void HtmlEditor::OpenFile(QString path) {
+    if(!path.isEmpty()){
+        this->html_file.setFileName(path);
+        file_name = path;
+        this->html_file.open(QIODevice::ReadOnly);
 
-    QTextStream in(&this->html_file);
-    QString file_content;
+        QTextStream in(&this->html_file);
+        QString file_content;
 
-    file_content = in.readAll();
+        file_content = in.readAll();
 
-    this->setPlainText(file_content);
+        this->setPlainText(file_content);
 
-    QString content = this->toPlainText();
-    QTextCursor cursor = this->textCursor();
-    cursor.setPosition(content.length());
-    this->setTextCursor(cursor);
+        QString content = this->toPlainText();
+        QTextCursor cursor = this->textCursor();
+        cursor.setPosition(content.length());
+        this->setTextCursor(cursor);
 
-    this->html_file.close();
-    emit siFileExists(this->html_file.fileName());
-    return;
-  }
+        this->html_file.close();
+        emit siFileExists(this->html_file.fileName());
+        return;
+    }
 
-  QFileDialog dialog(this);
-  dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
-  dialog.setFileMode(QFileDialog::ExistingFile);
-  dialog.setMimeTypeFilters({ "text/html" });
+    QFileDialog dialog(this);
+    dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    dialog.setMimeTypeFilters({"text/html"});
 
-  if (dialog.exec()) {
+    if(dialog.exec()) {
 
-    QString file_name = dialog.selectedFiles()[0];
+        QString file_name = dialog.selectedFiles()[0];
 
-    QFileInfo fi(file_name);
+        QFileInfo fi(file_name);
 
-    this->html_file.setFileName(file_name);
-    this->html_file.open(QIODevice::ReadOnly);
+        this->html_file.setFileName(file_name);
+        this->html_file.open(QIODevice::ReadOnly);
 
-    QTextStream in(&this->html_file);
-    QString file_content;
+        QTextStream in(&this->html_file);
+        QString file_content;
 
-    file_content = in.readAll();
+        file_content = in.readAll();
 
-    this->setPlainText(file_content);
+        this->setPlainText(file_content);
 
-    QString content = this->toPlainText();
-    QTextCursor cursor = this->textCursor();
-    cursor.setPosition(content.length());
-    this->setTextCursor(cursor);
+        QString content = this->toPlainText();
+        QTextCursor cursor = this->textCursor();
+        cursor.setPosition(content.length());
+        this->setTextCursor(cursor);
 
-    this->html_file.close();
-    emit siFileExists(this->html_file.fileName());
-  }
+        this->html_file.close();
+        emit siFileExists(this->html_file.fileName());
+    }
+
 }
 
-void
-HtmlEditor::OpenFolder()
+void HtmlEditor::OpenFolder()
 {
   QFileDialog dialog(this);
   dialog.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
   QString dir =
-    QFileDialog::getExistingDirectory(0, ("Select Output Folder"), QDir::currentPath());
+    QFileDialog::getExistingDirectory(nullptr, ("Select Output Folder"), QDir::currentPath());
   if (dir != nullptr) {
     emit siOpenFolder(dir);
   }
 }
 
-void
-HtmlEditor::slNewFileMenuBar()
-{
-  this->NewFile();
+void HtmlEditor::slNewFileMenuBar() {
+    this->NewFile();
 }
 
-void
-HtmlEditor::slOpenFileMenuBar()
+void HtmlEditor::slOpenFileMenuBar()
 {
-  this->OpenFile();
+    this->OpenFile();
 }
 
-void
-HtmlEditor::slOpenFolderMenuBar()
+void HtmlEditor::slOpenFolderMenuBar()
 {
-  this->OpenFolder();
+    this->OpenFolder();
 }
 
-void
-HtmlEditor::slSaveFileMenuBar()
+void HtmlEditor::slSaveFileMenuBar()
 {
-  this->SaveFile();
+    this->SaveFile();
 }
 
-void
-HtmlEditor::slSaveAsFileMenuBar()
+void HtmlEditor::slSaveAsFileMenuBar()
 {
-  this->SaveAsFile();
+    this->SaveAsFile();
 }
 
-void
-HtmlEditor::slNumberBarPaintEvent(QPaintEvent* event)
+void HtmlEditor::slNumberBarPaintEvent(QPaintEvent *event)
 {
 
-  number_bar->width = NumberBarWidth();
+    number_bar->width = NumberBarWidth();
 
-  QPainter painter(number_bar);
-  painter.fillRect(event->rect(),
-                   QPlainTextEdit::palette().color(QPlainTextEdit::backgroundRole()));
+    QPainter painter(number_bar);
+    painter.fillRect(event->rect(), QPlainTextEdit::palette(). color(QPlainTextEdit::backgroundRole()));
 
-  QTextBlock block = firstVisibleBlock();
-  int blockNumber = block.blockNumber();
-  int top = 0;
-  int bottom = top + qRound(blockBoundingRect(block).height());
-  while (block.isValid() && top <= event->rect().bottom()) {
-    if (block.isVisible() && bottom >= event->rect().top()) {
-      QString number = QString::number(blockNumber + 1);
-      painter.setPen(Qt::lightGray);
-      painter.drawText(
-        0, top, number_bar->width, fontMetrics().height(), Qt::AlignCenter, number);
+    QTextBlock block = firstVisibleBlock();
+    int blockNumber = block.blockNumber();
+    int top = 0;
+    int bottom = top + qRound(blockBoundingRect(block).height());
+    while (block.isValid() && top <= event->rect().bottom()) {
+        if (block.isVisible() && bottom >= event->rect().top()) {
+            QString number = QString::number(blockNumber + 1);
+            painter.setPen(Qt::lightGray);
+            painter.drawText(0, top, number_bar->width, fontMetrics().height(),
+                             Qt::AlignCenter, number);
+        }
+
+        block = block.next();
+        top = bottom;
+        bottom = top + qRound(blockBoundingRect(block).height());
+        ++blockNumber;
+    }
+}
+
+auto
+HtmlEditor::NumberBarWidth() -> int
+{
+    int digits = 1;
+    int max = qMax(1, blockCount());
+    while (max >= 10) {
+        max /= 10;
+        ++digits;
     }
 
-    block = block.next();
-    top = bottom;
-    bottom = top + qRound(blockBoundingRect(block).height());
-    ++blockNumber;
-  }
+    int space = 9 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
+
+    return space;
 }
 
-int
-HtmlEditor::NumberBarWidth()
+void HtmlEditor::UpdateNumberBarWidth()
 {
-  int digits = 1;
-  int max = qMax(1, blockCount());
-  while (max >= 10) {
-    max /= 10;
-    ++digits;
-  }
+    number_bar->width = NumberBarWidth();
+    setViewportMargins(number_bar->width - number_bar->unit_width, 0, 0, 0);
 
-  int space = 9 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
-
-  return space;
 }
 
-void
-HtmlEditor::UpdateNumberBarWidth()
+void HtmlEditor::UpdateNumberBar(const QRect &rect, int dy)
 {
-  number_bar->width = NumberBarWidth();
-  setViewportMargins(number_bar->width - number_bar->unit_width, 0, 0, 0);
+    if (dy)
+        number_bar->scroll(0, dy);
+    else
+        number_bar->update(0, rect.y(), number_bar->width, rect.height());
+
+    if (rect.contains(viewport()->rect()))
+        UpdateNumberBarWidth();
 }
 
-void
-HtmlEditor::UpdateNumberBar(const QRect& rect, int dy)
+void HtmlEditor::resizeEvent(QResizeEvent *e)
 {
-  if (dy)
-    number_bar->scroll(0, dy);
-  else
-    number_bar->update(0, rect.y(), number_bar->width, rect.height());
+    QPlainTextEdit::resizeEvent(e);
 
-  if (rect.contains(viewport()->rect()))
-    UpdateNumberBarWidth();
+    number_bar->width = NumberBarWidth();
+    number_bar->setFixedWidth(number_bar->width);
 }
 
-void
-HtmlEditor::resizeEvent(QResizeEvent* e)
+void HtmlEditor::slTreeViewDoubleClicked(const QString &path)
 {
-  QPlainTextEdit::resizeEvent(e);
-
-  number_bar->width = NumberBarWidth();
-  number_bar->setFixedWidth(number_bar->width);
+    this->OpenFile(path);
 }
 
-void
-HtmlEditor::slTreeViewDoubleClicked(const QString& path)
+void HtmlEditor::fontSizeChange(int mainSize)
 {
-  this->OpenFile(path);
+     this->size = mainSize;
+
+     QFont font = QFont();
+     font.setPointSize(size);
+     this->setFont(font);
+
 }
 
-void
-HtmlEditor::fontSizeChange(int mainSize)
+void HtmlEditor::slOpenFileAtLine(QListWidgetItem *item)
 {
-  this->size = mainSize;
-
-  QFont font = QFont();
-  font.setPointSize(size);
-  this->setFont(font);
-}
-
-void
-HtmlEditor::slOpenFileAtLine(QListWidgetItem* item)
-{
-  QString filenameAndLineNumber = item->text().split("\t")[0];
-  int linenumber = filenameAndLineNumber.split(" ")[1].toInt();
-  QString filename = item->whatsThis();
-  this->SaveFile();
-  this->OpenFile(filename);
-  emit siSetCursorAtLine(linenumber);
+    QString filenameAndLineNumber = item->text().split("\t")[0];
+    int  linenumber = filenameAndLineNumber.split(" ")[1].toInt();
+    QString filename = item->whatsThis();
+    this->SaveFile();
+    this->OpenFile(filename);
+    emit siSetCursorAtLine(linenumber);
 }
