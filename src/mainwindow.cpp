@@ -124,6 +124,7 @@ void MainWindow::findInProjectClicked()
       ui->lwLinesFound->addItem(item);
     }
 }
+}
 
 void MainWindow::parseHtmlFileAndDisplayMessages()
 {

@@ -2,7 +2,7 @@
 
 NumberSideBar::NumberSideBar(QWidget *parent)
     : QWidget{parent}
-{
+{}
 
 auto
 NumberSideBar::sizeHint() const -> QSize
